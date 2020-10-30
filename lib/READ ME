@@ -1,0 +1,7 @@
+
+
+Keeping track of items in the cart will be done by setting/saving the count in sharedPrev,
+we use this to rebuild the cart when the app terminates. We also set the count in stockInCart[itemID],
+this is easier to work with while the app is running.
+
+When removing or adjusting an item, make sure you set and save in sharedPrev, stockInCart[itemID], and sharedPrev StringList.

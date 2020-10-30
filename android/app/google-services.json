@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "985431209967",
+    "firebase_url": "https://verossa-b291a.firebaseio.com",
+    "project_id": "verossa-b291a",
+    "storage_bucket": "verossa-b291a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985431209967:android:796e4d6aa6746f3ec0681a",
+        "android_client_info": {
+          "package_name": "com.lev.verossa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985431209967-25skfvlo7gtgmsnb9jvd8tp3t7t8kqbp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB041oZaisF6hWTohrafPkIWU3wmw2BixE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985431209967-25skfvlo7gtgmsnb9jvd8tp3t7t8kqbp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
