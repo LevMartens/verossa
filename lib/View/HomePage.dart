@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
 
     contextForBadgeProv = context;
 
+
   }
 
 
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
     String priceItem6 =
         currency['item6Small'];
 
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     return Scaffold(
         extendBodyBehindAppBar: true,
                     key:
@@ -63,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               color: Colors.white70,
                               child: Column(children: <Widget>[
-                                SizedBox(height: 100,),
+                                SizedBox(height: startScroll,),
                                 Container(
                                   child: Center(
                                     child: Text(
@@ -157,11 +159,12 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 18,
-                                          left: 20.0,
+                                          left: 0.0, //20
                                           bottom: 13,
                                           right: 10),
                                       child: GestureDetector(
@@ -172,7 +175,6 @@ class _HomePageState extends State<HomePage> {
                                               .pushReplacementNamed('item1FromHome');
                                         },
                                         child: Container(
-
                                           height: 200,
                                           width: 175,
                                           child: Column(
@@ -298,11 +300,12 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 18,
-                                          left: 20.0,
+                                          left: 0.0,
                                           bottom: 13,
                                           right: 10),
                                       child: GestureDetector(
@@ -441,11 +444,12 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 18,
-                                          left: 20.0,
+                                          left: 0.0,
                                           bottom: 13,
                                           right: 10),
                                       child: GestureDetector(

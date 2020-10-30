@@ -370,7 +370,7 @@ bool currentlyOnResetPassword = false;
 
       }
     }
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     return  Scaffold(
       extendBodyBehindAppBar: true,
       key: scaffoldKey,
@@ -383,7 +383,7 @@ bool currentlyOnResetPassword = false;
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll,),
                   Container(
                     child: Center(
                       child: Text(

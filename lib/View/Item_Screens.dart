@@ -63,7 +63,7 @@ class _InputPageState extends State<Item1Screen>
   @override
   Widget build(BuildContext context) {
 
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
 
     Container a() {
       return Container(
@@ -133,7 +133,7 @@ class _InputPageState extends State<Item1Screen>
                   Container(
                     color: Colors.white70,
                     child: Column(children: <Widget>[
-                      SizedBox(height: 100,),
+                      SizedBox(height: startScroll),
                       Container(
                         child: Center(
                           child: Text(
@@ -169,8 +169,9 @@ class _InputPageState extends State<Item1Screen>
                       ),
                       SizedBox(height: 10),
                       Padding(
-                        padding: const EdgeInsets.only(left: 60.0, top: 45),
+                        padding: const EdgeInsets.only(left: 0.0, top: 45),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(right: 8.0),
@@ -492,11 +493,12 @@ class _InputPageState extends State<Item1Screen>
                         height: 8,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 18,
-                                left: 32.0,
+                                left: 0.0,
                                 bottom: 13,
                                 right: 10),
                             child: GestureDetector(
@@ -638,11 +640,12 @@ class _InputPageState extends State<Item1Screen>
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 0,
-                                left: 32.0,
+                                left: 0.0,
                                 bottom: 13,
                                 right: 10),
                             child: GestureDetector(
@@ -1178,6 +1181,7 @@ contextForBadgeProv = context;
 
   @override
   Widget build(BuildContext context) {
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
 
     Container a() {
       return Container(
@@ -1242,7 +1246,7 @@ contextForBadgeProv = context;
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(
@@ -1278,8 +1282,9 @@ contextForBadgeProv = context;
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 60.0, top: 45),
+                    padding: const EdgeInsets.only(left: 0.0, top: 45),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
@@ -1600,11 +1605,12 @@ contextForBadgeProv = context;
                     height: 8,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 18,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -1746,11 +1752,12 @@ contextForBadgeProv = context;
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 0,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -2283,7 +2290,7 @@ contextForBadgeProv = context;
 
   @override
   Widget build(BuildContext context) {
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     Container a() {
       return Container(
         height: 425,
@@ -2347,7 +2354,7 @@ contextForBadgeProv = context;
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(
@@ -2383,8 +2390,9 @@ contextForBadgeProv = context;
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 60.0, top: 45),
+                    padding: const EdgeInsets.only(left: 0.0, top: 45),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
@@ -2707,11 +2715,12 @@ contextForBadgeProv = context;
                     height: 8,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 18,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -2853,11 +2862,12 @@ contextForBadgeProv = context;
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 0,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -3393,7 +3403,7 @@ class _InputPageState4 extends State<Item4Screen>
 
   @override
   Widget build(BuildContext context) {
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     Container a() {
       return Container(
         height: 425,
@@ -3457,7 +3467,7 @@ class _InputPageState4 extends State<Item4Screen>
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(
@@ -3493,8 +3503,9 @@ class _InputPageState4 extends State<Item4Screen>
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 60.0, top: 45),
+                    padding: const EdgeInsets.only(left: 0.0, top: 45),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
@@ -3814,11 +3825,12 @@ class _InputPageState4 extends State<Item4Screen>
                     height: 8,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 18,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -3960,11 +3972,12 @@ class _InputPageState4 extends State<Item4Screen>
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 0,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -4502,7 +4515,7 @@ class _InputPageState5 extends State<Item5Screen>
 
   @override
   Widget build(BuildContext context) {
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     Container a() {
       return Container(
         height: 425,
@@ -4566,7 +4579,7 @@ class _InputPageState5 extends State<Item5Screen>
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(
@@ -4602,8 +4615,9 @@ class _InputPageState5 extends State<Item5Screen>
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 60.0, top: 45),
+                    padding: const EdgeInsets.only(left: 0.0, top: 45),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
@@ -4924,11 +4938,12 @@ class _InputPageState5 extends State<Item5Screen>
                     height: 8,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 18,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -5070,11 +5085,12 @@ class _InputPageState5 extends State<Item5Screen>
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 0,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -5612,7 +5628,7 @@ class _InputPageState6 extends State<Item6Screen>
 
   @override
   Widget build(BuildContext context) {
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     Container a() {
       return Container(
         height: 425,
@@ -5676,7 +5692,7 @@ class _InputPageState6 extends State<Item6Screen>
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(
@@ -5712,8 +5728,9 @@ class _InputPageState6 extends State<Item6Screen>
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 60.0, top: 45),
+                    padding: const EdgeInsets.only(left: 0.0, top: 45),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
@@ -6034,11 +6051,12 @@ class _InputPageState6 extends State<Item6Screen>
                     height: 8,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 18,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(
@@ -6180,11 +6198,12 @@ class _InputPageState6 extends State<Item6Screen>
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 0,
-                            left: 32.0,
+                            left: 0.0,
                             bottom: 13,
                             right: 10),
                         child: GestureDetector(

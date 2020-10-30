@@ -23,7 +23,7 @@ class _InputPageState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     return Scaffold(
       extendBodyBehindAppBar: true,
       key: scaffoldKey,
@@ -36,7 +36,7 @@ class _InputPageState extends State<ContactUs> {
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll,),
                   Container(
                     child: Center(
                       child: Text(

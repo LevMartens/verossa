@@ -56,6 +56,7 @@ flutter:
       fonts:
         - asset: fonts/Cormorant-Medium.ttf
   assets:
+    - images/IMG_1394.jpg
     - images/IMG_1368.jpg
     - images/Verossa-Reiger.jpg
     - images/Verossa-Cameraman.jpg

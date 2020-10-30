@@ -25,7 +25,7 @@ class _InputPageState extends State<Shipping> {
 
   @override
   Widget build(BuildContext context) {
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     return Scaffold(
       extendBodyBehindAppBar: true,
       key: scaffoldKey,
@@ -38,7 +38,7 @@ class _InputPageState extends State<Shipping> {
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100,),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(

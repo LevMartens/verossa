@@ -37,7 +37,7 @@ class _InputPageState extends State<PersonalPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
 
     Widget getStreet(BuildContext context) {
 
@@ -148,7 +148,7 @@ class _InputPageState extends State<PersonalPage> {
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 100),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(

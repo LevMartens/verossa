@@ -17,6 +17,7 @@ class _InputPageState extends State<Item1Detail> {
   @override
   Widget build(BuildContext context) {
     final transformationController = TransformationController();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
