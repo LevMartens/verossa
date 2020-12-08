@@ -22,6 +22,13 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+
+  cloud_functions: ^0.7.0+1
+  webview_flutter: ^1.0.7
+  http_auth: ^0.3.1
+  flutter_svg: ^0.19.1
+  modal_progress_hud: ^0.1.3
+  stripe_payment: ^1.0.8
   url_launcher: ^5.7.2
   flutter:
     sdk: flutter
@@ -80,6 +87,11 @@ flutter:
     - images/Verossa-Scotland.jpg
     - images/Verossa-ScotlandBW.jpg
     - images/Verossa-ScotlandCL.jpg
+    - images/Verossa-CheckoutLogo.png
+    - images/Apple_Pay_Mark_RGB_041619.svg
+    - images/Google_Pay-Logo.wine.svg
+    - images/PayPal.svg
+
 
 
 
