@@ -24,8 +24,8 @@ class CreateAccount extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 class _InputPageState extends State<CreateAccount> {
-  
 
+  final _scrollController = ScrollController(keepScrollOffset: false);
 
   @override
   void initState() {
@@ -41,6 +41,7 @@ class _InputPageState extends State<CreateAccount> {
       key: scaffoldKey,
       appBar: VerossaAppBar(),
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
             itemExtent: 1700,
@@ -71,7 +72,7 @@ class _InputPageState extends State<CreateAccount> {
                       ),
                       Container(
                         child: Center(
-                          child: Text('VALEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
+                          child: Text('VALLEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
                         ),
                       ),
                       Container(
@@ -113,6 +114,7 @@ class _InputPageState extends State<CreateAccount> {
                             onChanged: (value) {
                               firstName = value;
                             },
+                            autofillHints: [AutofillHints.givenName],
                             decoration: const InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -146,6 +148,7 @@ class _InputPageState extends State<CreateAccount> {
                             onChanged: (value) {
                               lastName = value;
                             },
+                            autofillHints: [AutofillHints.familyName],
                             decoration: const InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -172,6 +175,7 @@ class _InputPageState extends State<CreateAccount> {
                             onChanged: (value) {
                               email = value;
                             },
+                            autofillHints: [AutofillHints.email],
                             decoration: const InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(

@@ -17,6 +17,7 @@ class Shipping extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 class _InputPageState extends State<Shipping> {
+  final _scrollController = ScrollController(keepScrollOffset: false);
   @override
   void initState() {
     super.initState();
@@ -31,6 +32,7 @@ class _InputPageState extends State<Shipping> {
       key: scaffoldKey,
       appBar: VerossaAppBar(),
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
             itemExtent: 1750,
@@ -62,7 +64,7 @@ class _InputPageState extends State<Shipping> {
                       ),
                       Container(
                         child: Center(
-                          child: Text('VALEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
+                          child: Text('VALLEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
                         ),
                       ),
                       Container(

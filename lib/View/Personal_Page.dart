@@ -22,6 +22,7 @@ class PersonalPage extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 class _InputPageState extends State<PersonalPage> {
+  final _scrollController = ScrollController(keepScrollOffset: false);
   @override
   void initState() {
     super.initState();
@@ -33,116 +34,238 @@ class _InputPageState extends State<PersonalPage> {
     // TODO: implement dispose
     super.dispose();
     currentlyOnPersonalPage = false;
+
+  }
+
+  static final _formKey1 = GlobalKey<FormState>();
+  Widget theForm() {
+
+
+    final textControllerStreet = TextEditingController();
+    final textControllerPlace = TextEditingController();
+    final textControllerPostcode = TextEditingController();
+    return Form(
+      key: _formKey1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 3.0),
+            child: Container(
+              height: 30,
+              width: 300,
+
+              child: Text(
+                'Address'
+
+                ,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  height: 2,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 6),
+          Container(
+            height: 40,
+            width: 300,
+            child: TextFormField(
+              controller: textControllerStreet,
+              decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black12,
+                  ),
+                ),
+
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontSize: 14,
+                ),
+              ),
+
+              validator: (value) {
+
+                if (value.isEmpty) {
+
+                  return 'Please enter your address';
+
+                }
+
+
+                return null;
+              },
+            ),
+          ),
+          SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 3.0),
+            child: Container(
+              height: 30,
+              width: 300,
+
+              child: Text(
+                'Suburb'
+
+                ,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  height: 2,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 12),
+          Container(
+            height: 40,
+            width: 300,
+            child: TextFormField(
+              controller: textControllerPlace,
+              decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black12,
+                  ),
+                ),
+
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontSize: 14,
+                ),
+              ),
+
+              validator: (value) {
+
+                if (value.isEmpty) {
+
+                  return 'Please enter your suburb';
+
+                }
+
+
+                return null;
+              },
+            ),
+          ),
+          SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.only(left: 3.0),
+            child: Container(
+              height: 30,
+              width: 300,
+
+              child: Text(
+                'Postcode'
+
+                ,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  height: 2,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 8),
+          Container(
+            height: 40,
+            width: 300,
+            child: TextFormField(
+
+              textAlignVertical: TextAlignVertical.top,
+              maxLines: 1,
+              controller: textControllerPostcode,
+              decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black12,
+                  ),
+                ),
+                hintText: 'Postcode',
+                hintStyle: TextStyle(fontSize: 14, height: 0.5, color: Colors.black38),
+
+              ),
+            ),
+
+          ),
+          SizedBox(height: 20),
+          Container(
+            height: 40,
+            width: 300,
+            decoration: BoxDecoration(
+              color: Colors.grey[800],
+              borderRadius: BorderRadius.all(
+                Radius.circular(4.0),
+              ),
+            ),
+            child: FlatButton(
+              onPressed: () async {
+                final User user = await auth.currentUser;
+                final uid = user.uid;
+                if (_formKey1.currentState.validate()) {
+                  street = textControllerStreet.text;
+                  place = textControllerPlace.text;
+                  postcode = textControllerPostcode.text;
+
+
+
+                  firestore.collection("$uid").add({
+                    'Street': street,
+                    'Place': place,
+                    'Postcode': postcode,
+                  });
+
+                  // final prefs = await SharedPreferences.getInstance();
+                  // await prefs.setString('street', street);
+                  // await prefs.setString('place', place);
+                  // await prefs.setString('postcode', postcode);
+
+                  setState(() {
+
+                  });
+
+
+
+
+
+
+                  scaffoldKey.currentState
+                      .showSnackBar(SnackBar(content: Text('Address saved', textAlign: TextAlign.center,)));
+                  _formKey1.currentState.reset();
+
+                }
+              },
+              child: Text(
+                'SAVE',
+                style: TextStyle(
+                    color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
 
-    Widget getStreet(BuildContext context) {
 
-
-
-
-      if(street != null) {
-
-        print('street != null');
-        return Column(
-          children: [
-            SizedBox(height: 8),
-            Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                '$street'
-                , textAlign: TextAlign.left,
-                style: TextStyle(
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
-            Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                '$place'
-                , textAlign: TextAlign.left,
-                style: TextStyle(
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
-            Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                '$postcode'
-                , textAlign: TextAlign.left,
-                style: TextStyle(
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
-            Container(
-              height: 40,
-              width: 300,
-              decoration: BoxDecoration(
-                color: Colors.grey[800],
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4.0),
-                ),
-              ),
-              child: FlatButton(
-                onPressed: () async {
-                  street = null;
-                  place = null;
-                  postcode = null;
-
-                  final prefs = await SharedPreferences.getInstance();
-
-                  await prefs.setString('street', null);
-                  await prefs.setString('place', null);
-                  await prefs.setString('postcode', null);
-
-                    setState(() {
-
-                    });
-
-                },
-                child: Text(
-                  'CHANGE ADDRESS',
-                  style: TextStyle(
-                      color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
-                ),
-              ),
-            ),
-
-          ],
-        );
-      } else {
-
-        return PersonalForm();
-
-      }
-    }
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       key: scaffoldKey,
       appBar: VerossaAppBar(),
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
-            itemExtent: 1750,
+            itemExtent: 2060,
             delegate: SliverChildListDelegate([
 
               Container(
@@ -172,7 +295,7 @@ class _InputPageState extends State<PersonalPage> {
                       ),
                       Container(
                         child: Center(
-                          child: Text('VALEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
+                          child: Text('VALLEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
                         ),
                       ),
                       Container(
@@ -223,12 +346,18 @@ class _InputPageState extends State<PersonalPage> {
                       '$email'
                       , textAlign: TextAlign.left,
                       style: TextStyle(
-                        height: 2,
+                        height: 1,
                         color: Colors.black87,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600
                       ),
                     ),
                   ),
-                  getStreet(context),
+                  SizedBox(height: 20),
+
+                  PersonalForm(),
+
+                  //getStreet(context),
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0, bottom: 0.0),

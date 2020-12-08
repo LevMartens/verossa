@@ -22,12 +22,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  final _scrollController = ScrollController(keepScrollOffset: false);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
 
     contextForBadgeProv = context;
+
+
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
 
 
   }
@@ -37,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-
+    theWidth = MediaQuery.of(context).size.width;
     String priceItem1 =
         currency['item1Small'];
     String priceItem2 =
@@ -55,9 +65,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         extendBodyBehindAppBar: true,
                     key:
-                        scaffoldKey,
-                    appBar: VerossaAppBar(),
+                        _scaffoldKey,
+                    appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
                     body: CustomScrollView(
+                      controller: _scrollController,
                       slivers: [
                         SliverFixedExtentList(
                           itemExtent: 2200,
@@ -89,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Container(
                                       child: Center(
-                                        child: Text('VALEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
+                                        child: Text('VALLEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
                                       ),
                                     ),
                                     Container(
@@ -173,6 +184,8 @@ class _HomePageState extends State<HomePage> {
 
                                           Navigator.of(context)
                                               .pushReplacementNamed('item1FromHome');
+
+                                          _scrollController.jumpTo(0);
                                         },
                                         child: Container(
                                           height: 200,
@@ -235,6 +248,7 @@ class _HomePageState extends State<HomePage> {
                                           print("Container 2 clicked");
                                           Navigator.of(context)
                                               .pushReplacementNamed('item2FromHome');
+                                          _scrollController.jumpTo(0);
 
 
                                         },
@@ -314,6 +328,7 @@ class _HomePageState extends State<HomePage> {
 
                                           Navigator.of(context)
                                               .pushReplacementNamed('item3FromHome');
+                                          _scrollController.jumpTo(0);
                                         },
                                         child: Container(
 
@@ -380,6 +395,7 @@ class _HomePageState extends State<HomePage> {
                                           print("Container 4 clicked");
                                           Navigator.of(context)
                                               .pushReplacementNamed('item4FromHome');
+                                          _scrollController.jumpTo(0);
                                         },
                                         child: Container(
 
@@ -458,6 +474,7 @@ class _HomePageState extends State<HomePage> {
 
                                           Navigator.of(context)
                                               .pushReplacementNamed('item5FromHome');
+                                          _scrollController.jumpTo(0);
                                         },
                                         child: Container(
 
@@ -524,6 +541,7 @@ class _HomePageState extends State<HomePage> {
                                           print("Container 6 clicked");
                                           Navigator.of(context)
                                               .pushReplacementNamed('item6FromHome');
+                                          _scrollController.jumpTo(0);
                                         },
                                         child: Container(
 
@@ -867,7 +885,12 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 SizedBox(height: 10,),
+
+
+
                                 NewsLetterFormForHome(),
+
+
                                 Padding(
                                   padding: const EdgeInsets.only(
                                     top: 15.0,

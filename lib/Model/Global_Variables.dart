@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:verossa/Controller/Global_Methods.dart';
 import 'package:verossa/View/Item_Tiles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verossa/View/Pre_Check_Out_Page.dart';
+import 'package:badges/badges.dart';
+import 'dart:math';
 
 
 
@@ -117,7 +122,7 @@ Map<String, StreamController> streamControllers = {
 
 ///--------GobalKeys-------------------------------------------
 
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+ GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>(); //final
 
 final GlobalKey drawerKey = GlobalKey();
 
@@ -138,7 +143,7 @@ Widget buildItem(BuildContext context, Widget item, Animation<double> animation)
 
 Widget subtotalContainer = Container();
 
-Widget subtotal(String totalAmount) {
+Widget subtotal(String totalAmount, BuildContext context) {
   final textControllerCheckOut = TextEditingController();
   return Container(
     child: Column(
@@ -196,7 +201,7 @@ Widget subtotal(String totalAmount) {
           child: Padding(
             padding: const EdgeInsets.only(left: 0.0),
             child: Container(
-              width: 220,
+              width: 240,
               height: 45,
               decoration: BoxDecoration(
                 color: Color(0xff3d3939),
@@ -205,11 +210,29 @@ Widget subtotal(String totalAmount) {
                 ),
               ),
               child: FlatButton(
-                onPressed: () {
-                  textControllerCheckOut.text = 'Thanks for using my demo app, please See the About Us page for more info on check out.';
-                  scaffoldKey.currentState
-                      .showSnackBar(SnackBar(
-                      content: Text('Thanks for using my demo app, please see About Us page for more info on the check out process', textAlign: TextAlign.center,)));
+                onPressed: () async {
+                  orderNotes = textControllerCheckOut.text;
+                  textControllerCheckOut.text = '';
+                  print('first: $cartSubtotal');
+                  await getCurrencyData(0);
+                  print('second: $cartSubtotal');
+
+                  await fillList();
+
+                  bool userLoggedIn;
+
+                  if (auth.currentUser != null ) {
+                    print('user signed in');
+                    userLoggedIn = true;
+                  } else {
+                    print('user signed out');
+                    userLoggedIn = false;
+                  }
+
+                  Navigator.pushReplacement(context, new MaterialPageRoute(
+                      builder: (context) =>
+                          PreCheckOut(dropdownMenuItems: dropdownItems, userIsLoggedIn: userLoggedIn, )));
+
                 },
                 child: Text(
                   'CHECKOUT',
@@ -223,6 +246,15 @@ Widget subtotal(String totalAmount) {
             ),
           ),
         ),
+        SizedBox(height: 10,),
+        Container(
+          width: 240,
+
+
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text('All transactions are processed in AUD', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),textAlign: TextAlign.left,),
+            )),
       ],
     ),
   );
@@ -347,6 +379,8 @@ final firestore = FirebaseFirestore.instance;
 
 final auth = FirebaseAuth.instance;
 
+var randomNumber = Random();
+
 bool userLoggedIn;
 bool currentlyOnPersonalPage;
 
@@ -358,6 +392,131 @@ String fullName;
 String street;
 String place;
 String postcode;
+String apartment;
+String country;
+String state;
+int orderNumber;
 
+///--------CheckOut---------------------------------------------
+String orderNotes = 'No order notes';
+
+int theValue = 0;
+
+var subtotalForCheckout = '';
+
+double totalItemsTilesForCheckout;
+
+List<Container> dropdownItems = [];
+List<String> itemListForCheckout = [];
+
+double theWidth;
+bool freeShipping = false;
+
+Container itemDD(AssetImage image, String title, int numberOfItems, String totalItemPrice, int value) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.transparent
+    ),
+    height: 70,
+    width: theWidth,
+    child: Padding(
+      padding: const EdgeInsets.only(left: 15.0, top: 7),
+      child: Row(
+        children: [
+          SizedBox(height: 15,),
+          Badge(
+            animationType: BadgeAnimationType.scale,
+            animationDuration:
+            Duration(milliseconds: 300),
+            borderRadius: BorderRadius.circular(0),
+            badgeColor: Colors.grey[700],
+            shape: BadgeShape.circle,
+            position:
+            BadgePosition.topEnd(top: -5, end: -12),
+            showBadge: true,
+            badgeContent: Text('$numberOfItems' , style: TextStyle(color: Colors.white),),
+
+            child: Container(
+              height: 75,
+              width: 75,
+              child: Image(image: image),
+            ),
+          ),
+
+          SizedBox(width: 10,),
+          Container(
+            child: Text(title, style: TextStyle(fontWeight: FontWeight.w600),),
+          ),
+          Spacer(),
+          Container(
+            child: Text(totalItemPrice, style: TextStyle(fontWeight: FontWeight.w600),),
+          ),
+          SizedBox(width: 15,)
+        ],
+      ),
+    ),
+  );
+}
+
+void totalWithShipping() {
+  var f = cartSubtotal.substring(1, cartSubtotal.length - 4);
+  var r = double.parse(f);
+  if (r > 150) {
+    freeShipping = true;
+  }
+  var g;
+  if (freeShipping == false) {
+   g = r + 9; } else { g = r;}
+  var currentCurSymbol = cartSubtotal[0];
+
+  subtotalForCheckout = '$currentCurSymbol$g $currencyInUse';
+  print(subtotalForCheckout);
+}
+
+Future<void> fillList() async {
+  totalWithShipping();
+  final prefs = await SharedPreferences.getInstance();
+  var a = prefs.getStringList('currentItems');
+  itemListForCheckout = a;
+
+  Container spacer = Container(
+    child: Divider(
+  indent: 15 ,
+  endIndent: 15,
+  color: Colors.brown[100],
+  thickness: 1,
+)
+  );
+
+  currency.forEach((k, v) {
+    var f = v.substring(1, v.length - 4);
+    var l = double.parse(f);
+    priceToCalculateSubtotal[k] = l;
+
+  });
+
+  var totalItemTiles = 0.0;
+
+  a.forEach((k) async {
+    totalItemTiles = totalItemTiles + 1;
+    var v = currency[k];
+    var t = v.substring(1, v.length - 4);
+    var b = double.parse(t);
+    var c = b * stockInCart[k];
+    var totalItemPrice = c.toStringAsFixed(2);
+    var totalItemPriceAsString = '$currencySymbolInUse$totalItemPrice $currencyInUse';
+
+
+    print(theValue);
+    dropdownItems.add(itemDD(itemImages[k], itemTitles[k], stockInCart[k], totalItemPriceAsString, theValue));
+    dropdownItems.add(spacer);
+
+    theValue = theValue + 1;
+  });
+
+  totalItemsTilesForCheckout = totalItemTiles;
+
+
+}
 
 

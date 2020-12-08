@@ -11,16 +11,16 @@ class ContactUsForm extends StatefulWidget {
 
 class ContactUsFormState extends State<ContactUsForm> {
 
-
+static final _formKey708 = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+
     final textControllerEmail = TextEditingController();
     final textControllerName = TextEditingController();
     final textControllerMessage = TextEditingController();
     return Form(
-      key: _formKey,
+      key: _formKey708,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -187,7 +187,7 @@ class ContactUsFormState extends State<ContactUsForm> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
+                if (_formKey708.currentState.validate()) {
                   firestore.collection("ClientMessages").add({
                     textControllerName.text: 'From ${textControllerEmail.text} : ${textControllerMessage.text} '
 
@@ -195,7 +195,7 @@ class ContactUsFormState extends State<ContactUsForm> {
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  _formKey708.currentState.reset();
 
                 }
               },

@@ -12,7 +12,8 @@ import 'Personal_Page.dart';
 
 
 class VerossaAppBar extends StatefulWidget implements PreferredSizeWidget {
-  VerossaAppBar({Key key})
+  final GlobalKey<ScaffoldState> aScaffoldKey;
+  VerossaAppBar({this.aScaffoldKey, Key key})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -20,10 +21,13 @@ class VerossaAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Size preferredSize; // default is 56.0
 
   @override
-  _VerossaAppBarState createState() => _VerossaAppBarState();
+  _VerossaAppBarState createState() => _VerossaAppBarState(aScaffoldKey: aScaffoldKey);
 }
 
 class _VerossaAppBarState extends State<VerossaAppBar> {
+  final GlobalKey<ScaffoldState> aScaffoldKey;
+
+  _VerossaAppBarState({this.aScaffoldKey});
   @override
   void initState() {
     // TODO: implement initState
@@ -73,7 +77,7 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                       builder: (context) {
                         return GestureDetector(
                           onTap: () {
-                            scaffoldKey.currentState.openEndDrawer();
+                            aScaffoldKey.currentState.openEndDrawer();
                           },
                           child: Row(
                             children: [
@@ -83,7 +87,7 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                                   animationType: BadgeAnimationType.scale,
                                   animationDuration:
                                       Duration(milliseconds: 300),
-                                  borderRadius: 5,
+                                  borderRadius: BorderRadius.circular(5),
                                   badgeColor: Colors.white70,
                                   shape: BadgeShape.square,
                                   position:
@@ -228,10 +232,12 @@ class _MyDrawerState extends State<MyDrawer> {
 
                 if (await auth.currentUser != null) {
                   Navigator.pop(context);
-                  Navigator.pushReplacement(context, new MaterialPageRoute(
-                      builder: (context) =>
-                      PersonalPage())
-                  );
+                  // Navigator.pushReplacement(context, new MaterialPageRoute(
+                  //     builder: (context) =>
+                  //     PersonalPage())
+                  // );
+                  Navigator.of(context).pushReplacementNamed('personalPage');
+
                 } else {
                   Navigator.pop(context);
                 Navigator.of(context).pushReplacementNamed('customerLogin');
@@ -303,7 +309,7 @@ class MyEndDrawerState extends State<MyEndDrawer> {
     if (cartItems.isEmpty == true) {
       cartItems.add(yourCartIsEmpty());
     } else {
-      subtotalContainer = subtotal(cartSubtotal);
+      subtotalContainer = subtotal(cartSubtotal, context);
       cartItems.add(subtotalContainer);
     }
 

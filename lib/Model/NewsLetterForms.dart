@@ -13,15 +13,45 @@ class NewsLetterFormForHome extends StatefulWidget {
 }
 
 class NewsLetterFormStateHome extends State<NewsLetterFormForHome> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey5 = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey5,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -30,13 +60,16 @@ class NewsLetterFormStateHome extends State<NewsLetterFormForHome> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -78,15 +111,16 @@ class NewsLetterFormStateHome extends State<NewsLetterFormForHome> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey5.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey5.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -111,15 +145,45 @@ class NewsLetterFormForItem extends StatefulWidget {
 }
 
 class NewsLetterFormStateItem extends State<NewsLetterFormForItem> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -128,13 +192,16 @@ class NewsLetterFormStateItem extends State<NewsLetterFormForItem> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -176,15 +243,16 @@ class NewsLetterFormStateItem extends State<NewsLetterFormForItem> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -210,15 +278,45 @@ class NewsLetterFormForItem2 extends StatefulWidget {
 }
 
 class NewsLetterFormStateItem2 extends State<NewsLetterFormForItem2> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -227,13 +325,16 @@ class NewsLetterFormStateItem2 extends State<NewsLetterFormForItem2> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -275,15 +376,16 @@ class NewsLetterFormStateItem2 extends State<NewsLetterFormForItem2> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -298,6 +400,9 @@ class NewsLetterFormStateItem2 extends State<NewsLetterFormForItem2> {
       ),
     );
   }
+
+
+
 }
 
 ///-------------------------------------------------------------
@@ -309,15 +414,45 @@ class NewsLetterFormForItem3 extends StatefulWidget {
 }
 
 class NewsLetterFormStateItem3 extends State<NewsLetterFormForItem3> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -326,13 +461,16 @@ class NewsLetterFormStateItem3 extends State<NewsLetterFormForItem3> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -374,15 +512,16 @@ class NewsLetterFormStateItem3 extends State<NewsLetterFormForItem3> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -397,6 +536,9 @@ class NewsLetterFormStateItem3 extends State<NewsLetterFormForItem3> {
       ),
     );
   }
+
+
+
 }
 
 ///-------------------------------------------------------------
@@ -408,15 +550,45 @@ class NewsLetterFormForItem4 extends StatefulWidget {
 }
 
 class NewsLetterFormStateItem4 extends State<NewsLetterFormForItem4> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -425,13 +597,16 @@ class NewsLetterFormStateItem4 extends State<NewsLetterFormForItem4> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -473,15 +648,16 @@ class NewsLetterFormStateItem4 extends State<NewsLetterFormForItem4> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -507,15 +683,45 @@ class NewsLetterFormForItem5 extends StatefulWidget {
 }
 
 class NewsLetterFormStateItem5 extends State<NewsLetterFormForItem5> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -524,13 +730,16 @@ class NewsLetterFormStateItem5 extends State<NewsLetterFormForItem5> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -572,15 +781,16 @@ class NewsLetterFormStateItem5 extends State<NewsLetterFormForItem5> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -595,6 +805,9 @@ class NewsLetterFormStateItem5 extends State<NewsLetterFormForItem5> {
       ),
     );
   }
+
+
+
 }
 
 ///-------------------------------------------------------------
@@ -606,15 +819,45 @@ class NewsLetterFormForItem6 extends StatefulWidget {
 }
 
 class NewsLetterFormStateItem6 extends State<NewsLetterFormForItem6> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -623,13 +866,16 @@ class NewsLetterFormStateItem6 extends State<NewsLetterFormForItem6> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -671,15 +917,16 @@ class NewsLetterFormStateItem6 extends State<NewsLetterFormForItem6> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -694,6 +941,7 @@ class NewsLetterFormStateItem6 extends State<NewsLetterFormForItem6> {
       ),
     );
   }
+
 }
 
 ///-------------------------------------------------------------
@@ -707,13 +955,45 @@ class NewsLetterFormForAbout extends StatefulWidget {
 class NewsLetterFormStateAbout extends State<NewsLetterFormForAbout> {
 
 
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -722,13 +1002,16 @@ class NewsLetterFormStateAbout extends State<NewsLetterFormForAbout> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -770,15 +1053,16 @@ class NewsLetterFormStateAbout extends State<NewsLetterFormForAbout> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -805,15 +1089,45 @@ class NewsLetterFormForContact extends StatefulWidget {
 }
 
 class NewsLetterFormStateContact extends State<NewsLetterFormForContact> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -822,13 +1136,16 @@ class NewsLetterFormStateContact extends State<NewsLetterFormForContact> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -870,15 +1187,16 @@ class NewsLetterFormStateContact extends State<NewsLetterFormForContact> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -905,15 +1223,45 @@ class NewsLetterFormForPersonal extends StatefulWidget {
 }
 
 class NewsLetterFormStatePersonal extends State<NewsLetterFormForPersonal> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey2 = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey2,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -922,13 +1270,16 @@ class NewsLetterFormStatePersonal extends State<NewsLetterFormForPersonal> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -970,15 +1321,16 @@ class NewsLetterFormStatePersonal extends State<NewsLetterFormForPersonal> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey2.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey2.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -1005,15 +1357,45 @@ class NewsLetterFormForCreate extends StatefulWidget {
 }
 
 class NewsLetterFormStateCreate extends State<NewsLetterFormForCreate> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey2 = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey2,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1022,13 +1404,16 @@ class NewsLetterFormStateCreate extends State<NewsLetterFormForCreate> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -1070,15 +1455,16 @@ class NewsLetterFormStateCreate extends State<NewsLetterFormForCreate> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey2.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey2.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -1105,15 +1491,45 @@ class NewsLetterFormForLogIn extends StatefulWidget {
 }
 
 class NewsLetterFormStateLogIn extends State<NewsLetterFormForLogIn> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey2 = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
 
     return Form(
-      key: _formKey2,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1122,13 +1538,16 @@ class NewsLetterFormStateLogIn extends State<NewsLetterFormForLogIn> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -1170,15 +1589,16 @@ class NewsLetterFormStateLogIn extends State<NewsLetterFormForLogIn> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey2.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey2.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -1205,15 +1625,45 @@ class NewsLetterFormForReturn extends StatefulWidget {
 }
 
 class NewsLetterFormStateReturn extends State<NewsLetterFormForReturn> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey2 = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey2,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1222,13 +1672,16 @@ class NewsLetterFormStateReturn extends State<NewsLetterFormForReturn> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -1270,15 +1723,16 @@ class NewsLetterFormStateReturn extends State<NewsLetterFormForReturn> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey2.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey2.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },
@@ -1305,15 +1759,45 @@ class NewsLetterFormForShip extends StatefulWidget {
 }
 
 class NewsLetterFormStateShip extends State<NewsLetterFormForShip> {
+  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  ModalRoute _mountRoute;
+  final textController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    _mountRoute ??= ModalRoute.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _formKey5.currentState?.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+  }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-    final _formKey2 = GlobalKey<FormState>();
-    final textController = TextEditingController();
+    final formKey = _mountRoute == ModalRoute.of(context)
+        ? _formKey5
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+
+
+
+
     return Form(
-      key: _formKey2,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1322,13 +1806,16 @@ class NewsLetterFormStateShip extends State<NewsLetterFormForShip> {
             width: 300,
             child: TextFormField(
               controller: textController,
+              autofillHints: [AutofillHints.email],
               decoration: const InputDecoration(
+                hintText: 'Enter your email address...',
+                hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.black12,
                   ),
                 ),
-                labelText: 'Enter your email address...',
+
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontSize: 14,
@@ -1370,15 +1857,16 @@ class NewsLetterFormStateShip extends State<NewsLetterFormForShip> {
             ),
             child: FlatButton(
               onPressed: () {
-                if (_formKey2.currentState.validate()) {
-                  firestore.collection("NewsLetterSubs").add({
-                    'email': textController.text
+                if (formKey.currentState.validate()) {
+                  String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
+                  firestore.collection("NewsLetterSubscribers").doc('Email').update({
+                    '$subscriber': textController.text
 
                   });
 
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  _formKey2.currentState.reset();
+                  formKey.currentState.reset();
 
                 }
               },

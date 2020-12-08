@@ -47,6 +47,18 @@ class DrawerProvider extends ChangeNotifier {
     await prefs.setString('street', null);
     await prefs.setString('place', null);
     await prefs.setString('postcode', null);
+    userLoggedIn = false;
+    firstName = null;
+    lastName = null;
+    email =  null;
+    password = null;
+    fullName = null;
+    street = null;
+    place = null;
+    postcode = null;
+    apartment = null;
+    country = null;
+    state = null;
     getUsersName();
   }
 

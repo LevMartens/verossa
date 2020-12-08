@@ -93,6 +93,8 @@ Future<void> getCurrencyData(int i) async {
   cur.add(gbp);
   cur.add(eur);
   cur.add(jpy);
+
+
     
 
   var newPriceItem1 = cur[i] * basePrice[0];
@@ -152,11 +154,11 @@ Future<void> getCurrencyData(int i) async {
   currency['item6Medium'] = '$currencySymbol$priceItem6 $currencyName';
   currency['item6Large'] = '$currencySymbol$priceItem6 $currencyName';
 
-  setCurrencyForSubtotalTile();
+  await setCurrencyForSubtotalTile();
 
 }
 
-void setCurrencyForSubtotalTile() async{
+Future<void> setCurrencyForSubtotalTile() async{
   print('setCurrencyForSubtotalTile() called');
 
   final prefs = await SharedPreferences.getInstance();
@@ -253,7 +255,7 @@ Future<void> onChangedItemStock(String itemID, int value, BuildContext context) 
 
 
       Future.delayed(const Duration(milliseconds: 200), () {
-        subtotalContainer = subtotal(cartSubtotal);
+        subtotalContainer = subtotal(cartSubtotal, context);
         cartItems.insert(locationSubtotal, subtotalContainer);
         listKey.currentState.insertItem(locationSubtotal);
       });
@@ -293,7 +295,7 @@ Future<void> onChangedItemStock(String itemID, int value, BuildContext context) 
 
 
     Future.delayed(const Duration(milliseconds: 200), () {
-      subtotalContainer = subtotal(cartSubtotal);
+      subtotalContainer = subtotal(cartSubtotal, context);
       cartItems.insert(locationSubtotal, subtotalContainer);
       listKey.currentState.insertItem(locationSubtotal);
     });
@@ -350,7 +352,7 @@ Future<void> subtractItemStock(String itemID, BuildContext context) async {
     );
 
     Future.delayed(const Duration(milliseconds: 200), () {
-      subtotalContainer = subtotal(cartSubtotal);
+      subtotalContainer = subtotal(cartSubtotal, context);
       cartItems.insert(locationSubtotal, subtotalContainer);
       listKey.currentState.insertItem(locationSubtotal);
 
@@ -390,7 +392,7 @@ Future<void> subtractItemStock(String itemID, BuildContext context) async {
     );
 
     Future.delayed(const Duration(milliseconds: 200), () {
-      subtotalContainer = subtotal(cartSubtotal);
+      subtotalContainer = subtotal(cartSubtotal, context);
       cartItems.insert(locationSubtotal, subtotalContainer);
       listKey.currentState.insertItem(locationSubtotal);
     });
@@ -445,16 +447,17 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
           duration: const Duration(milliseconds: 0),
         );
 
-
-        Future.delayed(const Duration(milliseconds: 200), () {
-          subtotalContainer = subtotal(cartSubtotal);
+         ///duration was 200 and crashed by rapid tapping
+        Future.delayed(const Duration(milliseconds: 0), () {
+          subtotalContainer = subtotal(cartSubtotal, context);
           cartItems.insert(locationSubtotal, subtotalContainer);
           listKey.currentState.insertItem(locationSubtotal);
         });
       }
 
       cartBadgeIncrease();
-      Future.delayed(const Duration(milliseconds: 200), () {
+      ///duration was 200 and crashed by rapid tapping
+      Future.delayed(const Duration(milliseconds: 0), () {
         Provider.of<DrawerProvider>(context, listen: false).cartToCart();
       });
 
@@ -470,8 +473,8 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
       cartItems.add(itemTiles[itemID]);
       setCurrencyForSubtotalTile();
       cartBadgeIncrease();
-
-      Future.delayed(const Duration(milliseconds: 200), () {
+      ///duration was 200 and crashed by rapid tapping
+      Future.delayed(const Duration(milliseconds: 0), () {
         Provider.of<DrawerProvider>(context, listen: false).cartToCart();
       });
 
@@ -480,6 +483,29 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
 
 
   }
+
+Future<void> updateStockAndCartAfterOrderConfirmation() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  itemListForCheckout.forEach((itemID) async {
+    firestore.collection("Stock").doc('Items').update({
+      '$itemID': stockLimit[itemID] - 1,
+    });
+    await prefs.setInt(itemID, 0);
+    stockLimit[itemID] = stockLimit[itemID] -1;
+    stockInCart[itemID] = 0;
+
+  });
+  await prefs.setStringList('currentItems', []);
+  cartItems = [];
+  dropdownItems = [];
+  cartSubtotal = '';
+  cartBadgeOnChanged(0);
+  freeShipping = false;
+
+
+
+}
 
 
 ///---------------------------Set Up---------------------------------
@@ -563,7 +589,7 @@ Future<void> getStockLimitFromFirestore() async{
   print('getStockLimitFromFirestore() called');
   final firestore = FirebaseFirestore.instance;
   
-  var stockList = await firestore.collection('stock').get();
+  var stockList = await firestore.collection('Stock').get();
   
   for (var a in stockList.docs) {
     var b = Map<String, int>.from(a.data());
@@ -588,33 +614,100 @@ Future<void> getUserDetails() async {
   print('getUserDetails() called');
   final User user = await auth.currentUser;
   final uid = user.uid;
-  final v = await firestore.collection('$uid').get().then((value) async {
+// leave out doc. to go back to previous
+  final v = await firestore.collection('UserData').doc('$uid').get().then((value) async {
 
-    List<UserDetails> _nameList = [];
-    value.docs.forEach((result) {
+   // List<UserDetails> _nameList = [];
 
-      UserDetails name = UserDetails.fromMap(result.data());
+    //value.docs.forEach((result) {
 
-      _nameList.add(name);
+
+    value.data().forEach((key, value) {
+      print('$key $value');
+      // UserDetails name = UserDetails.fromMap(key.data()); //result.data()
+      //
+      // _nameList.add(name);
+
+
+      switch (key) {
+
+        case 'Email':
+          email = value;
+          break;
+
+        case 'FirstName':
+          firstName = value;
+          break;
+
+        case 'LastName':
+          lastName = value;
+          break;
+
+        case 'Street':
+          street = value;
+          break;
+
+        case 'Place':
+          place = value;
+          break;
+
+        case 'Postcode':
+          postcode = value;
+          break;
+
+        case 'Country':
+          country = value;
+          break;
+
+        case 'State':
+          state = value;
+          break;
+
+        case 'Apartment':
+          apartment = value;
+          break;
+
+
+
+
+      }
     });
-    final prefs = await SharedPreferences.getInstance();
+
+      // UserDetails name = UserDetails.fromMap(value.data()); //result.data()
+      //
+      // _nameList.add(name);
 
 
-    var iFirstName = _nameList[0].firstName;
-    var iLastName = _nameList[0].lastName;
-    var iEmail = _nameList[0].email;
-    var iStreet = prefs.getString('street');
-    var iPlace = prefs.getString('place');
-    var iPostcode = prefs.getString('postcode');
+    //});
+    //final prefs = await SharedPreferences.getInstance();
 
 
-    email = iEmail;
-    street = iStreet;
-    place = iPlace;
-    postcode = iPostcode;
-    fullName = '$iFirstName $iLastName';
+    // var iFirstName = _nameList[0].firstName;
+    // var iLastName = _nameList[0].lastName;
+    // var iEmail = _nameList[0].email;
+    // var iStreet = _nameList[0].street;
+    // var iPlace = _nameList[0].place; //prefs.getString('place')
+    // var iPostcode = _nameList[0].postcode;
+    // var iCountry = _nameList[0].country;
+    // var iApartment = _nameList[0].apartment;
+    // var iState = _nameList[0].state;
 
-    print('this is street $street');
+    // lastName = iLastName;
+    // firstName = iFirstName;
+    // email = iEmail;
+    // street = iStreet;
+    // place = iPlace;
+    // postcode = iPostcode;
+    // fullName = '$iFirstName $iLastName';
+    // country = iCountry;
+    // state = iState;
+    // apartment = iApartment;
+
+    fullName = '$firstName $lastName';
+
+    print('User ID: $uid');
+    print('These are the user details fetched from fire base: $firstName, $lastName, $email, $fullName');
+    print('These are the users shipping details fetched from fire base: $street, $place, $postcode, $country, $state, $apartment');
 
     setFullNameInSP(fullName);
 
@@ -631,21 +724,35 @@ Future<void> addNewUserDetailsToFireStore() async {
 
 
 
+//switch userDetails and $uid to go back to previous setup
 
-
-  firestore.collection("$uid").add({
+  firestore.collection("UserData").doc('$uid').set({
     'FirstName': firstName,
     'LastName': lastName,
     'Email': email,
     'Password': password,
+
+  });
+}
+
+Future<void> addShippingDetailsToFireStore() async {
+  final User user = await auth.currentUser;
+  final uid = user.uid;
+
+  firestore.collection("UserData").doc('$uid').update({
     'Street': street,
     'Place': place,
     'Postcode': postcode,
-
+    'Apartment': apartment,
+    'Country': country,
+    'State': state
   });
+
 }
 
 Future<void> setFullNameInSP(String name) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString('name', name);
 }
+
+

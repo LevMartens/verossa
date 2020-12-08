@@ -28,6 +28,7 @@ final _auth = FirebaseAuth.instance;
 String email;
 String password;
 bool currentlyOnResetPassword = false;
+final _scrollController = ScrollController(keepScrollOffset: false);
 
   @override
   void initState() {
@@ -376,6 +377,7 @@ bool currentlyOnResetPassword = false;
       key: scaffoldKey,
       appBar: VerossaAppBar(),
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
             itemExtent: 1550,
@@ -406,7 +408,7 @@ bool currentlyOnResetPassword = false;
                       ),
                       Container(
                         child: Center(
-                          child: Text('VALEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
+                          child: Text('VALLEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
                         ),
                       ),
                       Container(
