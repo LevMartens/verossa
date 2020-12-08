@@ -16,6 +16,8 @@ import 'View/Personal_Page.dart';
 import 'View/Thank_You_For_Order_Page.dart';
 import 'View/Create_Account_Screen.dart';
 
+// TODO: reimplement scaffoldKey and appbar like homePage.dart and itemScreen2
+// TODO: add _scrollController.jumpTo(0) to every navigation
 // valey and cart are spelled wrong. DONE
 // free shipping when total hits 150. DONE
 // photo's are not changing to colour its just random. DONE
