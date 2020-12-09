@@ -61,7 +61,7 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                       size: 35,
                       color: Colors.black,
                     ),
-                    onPressed: () => scaffoldKey.currentState.openDrawer(),
+                    onPressed: () => aScaffoldKey.currentState.openDrawer(),
                   ),
                   title: Row(
                     children: [
@@ -129,12 +129,15 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
 }
 
 class MyDrawer extends StatefulWidget {
+  final GlobalKey<ScaffoldState> aScaffoldKey;
+  MyDrawer({this.aScaffoldKey});
   @override
-  _MyDrawerState createState() => _MyDrawerState();
+  _MyDrawerState createState() => _MyDrawerState(aScaffoldKey: aScaffoldKey);
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-
+  final GlobalKey<ScaffoldState> aScaffoldKey;
+  _MyDrawerState({this.aScaffoldKey});
   @override
   void initState() {
     // TODO: implement initState
@@ -142,7 +145,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
         Provider.of<DrawerProvider>(context, listen: false).getUsersName();
         Provider.of<DrawerProvider>(context, listen: false)
-            .getLogOutButton(context);
+            .getLogOutButton(context, aScaffoldKey);
   }
 
   @override
@@ -232,10 +235,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
                 if (await auth.currentUser != null) {
                   Navigator.pop(context);
-                  // Navigator.pushReplacement(context, new MaterialPageRoute(
-                  //     builder: (context) =>
-                  //     PersonalPage())
-                  // );
+
                   Navigator.of(context).pushReplacementNamed('personalPage');
 
                 } else {

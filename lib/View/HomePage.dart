@@ -31,16 +31,8 @@ class _HomePageState extends State<HomePage> {
 
     contextForBadgeProv = context;
 
-
-
   }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
 
-
-  }
 
 
 
@@ -71,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                       controller: _scrollController,
                       slivers: [
                         SliverFixedExtentList(
-                          itemExtent: 2200,
+                          itemExtent: 2300,
                           delegate: SliverChildListDelegate([
                             Container(
                               color: Colors.white70,
@@ -136,14 +128,14 @@ class _HomePageState extends State<HomePage> {
                                   child: Column(
                                     children: [
                                       Container(
-                                        child: Text('BECOME WHO YOU ARE', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w200, fontSize: 25),),
-                                        width: 300,
+                                        child: Text('\“The ability to observe without evaluating is the highest form of intelligence.\”', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w200, fontSize: 27),),
+                                        width: 350,
                                     ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Container(
-                                        child: Text('- Friedrich Nietzsche', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[800],  fontWeight: FontWeight.bold, fontSize: 13),),
+                                        child: Text('― J. Krishnamurti', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[800],  fontWeight: FontWeight.bold, fontSize: 13),),
                                         width: 250,
                                       ),
                                       Center(
@@ -642,6 +634,7 @@ class _HomePageState extends State<HomePage> {
                                                 pageBuilder:
                                                     (context, animation, secondaryAnimation) =>
                                                     ContactUs()));
+                                            _scrollController.jumpTo(0);
                                           },
                                           child: Container(
                                             child: Text(
@@ -669,6 +662,7 @@ class _HomePageState extends State<HomePage> {
                                                 pageBuilder:
                                                     (context, animation, secondaryAnimation) =>
                                                     AboutUs()));
+                                            _scrollController.jumpTo(0);
                                           },
                                           child: Container(
                                             child: Text(
@@ -696,6 +690,7 @@ class _HomePageState extends State<HomePage> {
                                                 pageBuilder:
                                                     (context, animation, secondaryAnimation) =>
                                                     ReturnsPolicy()));
+                                            _scrollController.jumpTo(0);
                                           },
                                           child: Container(
                                             child: Text(
@@ -723,6 +718,7 @@ class _HomePageState extends State<HomePage> {
                                                 pageBuilder:
                                                     (context, animation, secondaryAnimation) =>
                                                     Shipping()));
+                                            _scrollController.jumpTo(0);
                                           },
                                           child: Container(
                                             child: Text(
@@ -885,12 +881,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 SizedBox(height: 10,),
-
-
-
                                 NewsLetterFormForHome(),
-
-
                                 Padding(
                                   padding: const EdgeInsets.only(
                                     top: 15.0,
@@ -958,7 +949,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    drawer: MyDrawer(),
+                    drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
                     endDrawer: MyEndDrawer(),
                   );
 

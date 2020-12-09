@@ -29,6 +29,7 @@ String email;
 String password;
 bool currentlyOnResetPassword = false;
 final _scrollController = ScrollController(keepScrollOffset: false);
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -374,8 +375,8 @@ final _scrollController = ScrollController(keepScrollOffset: false);
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     return  Scaffold(
       extendBodyBehindAppBar: true,
-      key: scaffoldKey,
-      appBar: VerossaAppBar(),
+      key: _scaffoldKey,
+      appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -458,6 +459,7 @@ final _scrollController = ScrollController(keepScrollOffset: false);
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -485,6 +487,7 @@ final _scrollController = ScrollController(keepScrollOffset: false);
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -512,6 +515,7 @@ final _scrollController = ScrollController(keepScrollOffset: false);
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -539,6 +543,7 @@ final _scrollController = ScrollController(keepScrollOffset: false);
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(

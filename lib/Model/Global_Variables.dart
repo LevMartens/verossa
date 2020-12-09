@@ -35,19 +35,19 @@ Map<String, Widget> itemTiles = {
   'item1Medium': ItemTile1M(itemID: 'item1Medium'),
   'item1Large': ItemTile1L(itemID: 'item1Large'),
   'item2Small': ItemTile2S(itemID: 'item2Small'),
-  'item2Medium': ItemTile2M(itemID: 'item2SMedium'),
+  'item2Medium': ItemTile2M(itemID: 'item2Medium'),
   'item2Large': ItemTile2L(itemID: 'item2Large'),
   'item3Small': ItemTile3S(itemID: 'item3Small'),
-  'item3Medium': ItemTile3M(itemID: 'item3SMedium'),
+  'item3Medium': ItemTile3M(itemID: 'item3Medium'),
   'item3Large': ItemTile3L(itemID: 'item3Large'),
   'item4Small': ItemTile4S(itemID: 'item4Small'),
-  'item4Medium': ItemTile4M(itemID: 'item4SMedium'),
+  'item4Medium': ItemTile4M(itemID: 'item4Medium'),
   'item4Large': ItemTile4L(itemID: 'item4Large'),
   'item5Small': ItemTile5S(itemID: 'item5Small'),
-  'item5Medium': ItemTile5M(itemID: 'item5SMedium'),
+  'item5Medium': ItemTile5M(itemID: 'item5Medium'),
   'item5Large': ItemTile5L(itemID: 'item5Large'),
   'item6Small': ItemTile6S(itemID: 'item6Small'),
-  'item6Medium': ItemTile6M(itemID: 'item6SMedium'),
+  'item6Medium': ItemTile6M(itemID: 'item6Medium'),
   'item6Large': ItemTile6L(itemID: 'item6Large'),
 };
 
@@ -122,7 +122,7 @@ Map<String, StreamController> streamControllers = {
 
 ///--------GobalKeys-------------------------------------------
 
- GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>(); //final
+ //GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>(); //final
 
 final GlobalKey drawerKey = GlobalKey();
 

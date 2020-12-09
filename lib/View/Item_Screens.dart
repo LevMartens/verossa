@@ -24,22 +24,29 @@ class Item1Screen extends StatefulWidget {
 }
 
 class _InputPageState extends State<Item1Screen> {
+
   final String directory;
 
   _InputPageState({this.directory});
 
-  bool startImageOne = false;
 
   final _scrollController = ScrollController(keepScrollOffset: false);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   double opacityOne = 1.0;
   double opacityTwo = 0.8;
   double opacityThree = 0.8;
   double opacityFour = 0.8;
 
+  bool startImageOne = false;
   bool onImageA = true;
   bool onImageB = false;
   bool onImageC = false;
+
+  Container imageFirst;
+  Container imageSecond;
+
+  String currentlySelected = 'item1Small';
 
   Container a() {
     return Container(
@@ -73,11 +80,7 @@ class _InputPageState extends State<Item1Screen> {
       ),
     );
   }
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Container imageFirst;
-  Container imageSecond;
 
-  String currentlySelected = 'item1Small';
 
   @override
   void initState() {
@@ -87,6 +90,7 @@ class _InputPageState extends State<Item1Screen> {
     imageSecond = b();
 
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -108,7 +112,7 @@ class _InputPageState extends State<Item1Screen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       key: _scaffoldKey,
-      appBar: VerossaAppBar(),
+      appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -189,6 +193,7 @@ class _InputPageState extends State<Item1Screen> {
                             onTap: () {
                               Navigator.of(context)
                                   .pushReplacementNamed('homePage');
+                              _scrollController.jumpTo(0);
                             },
                             child: Text('Home'),
                           ),
@@ -216,7 +221,7 @@ class _InputPageState extends State<Item1Screen> {
                     padding: const EdgeInsets.only(left: 0, top: 30.0),
                     child: Center(
                       child: Container(
-                        color: Colors.red,
+
                         height: 230,
                         width: 360,
                         child: GestureDetector(
@@ -575,10 +580,12 @@ class _InputPageState extends State<Item1Screen> {
                             top: 18, left: 0.0, bottom: 13, right: 10),
                         child: GestureDetector(
                           onTap: () {
-                            print("Container 3 clicked");
+
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item3FromHome');
+
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -702,10 +709,10 @@ class _InputPageState extends State<Item1Screen> {
                             top: 0, left: 0.0, bottom: 13, right: 10),
                         child: GestureDetector(
                           onTap: () {
-                            print("Container 5 clicked");
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item5FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -865,6 +872,7 @@ class _InputPageState extends State<Item1Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -892,6 +900,7 @@ class _InputPageState extends State<Item1Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -919,6 +928,7 @@ class _InputPageState extends State<Item1Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -946,6 +956,7 @@ class _InputPageState extends State<Item1Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -1187,6 +1198,9 @@ class _InputPageState2 extends State<Item2Screen> {
   _InputPageState2({this.directory});
 
   final _scrollController = ScrollController(keepScrollOffset: false);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   bool startImageOne = false;
 
   double opacityOne = 1.0;
@@ -1197,6 +1211,11 @@ class _InputPageState2 extends State<Item2Screen> {
   bool onImageA = true;
   bool onImageB = false;
   bool onImageC = false;
+
+  Container imageFirst;
+  Container imageSecond;
+
+  String currentlySelected = 'item2Small';
 
   Container a() {
     return Container(
@@ -1230,11 +1249,8 @@ class _InputPageState2 extends State<Item2Screen> {
       ),
     );
   }
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Container imageFirst;
-  Container imageSecond;
 
-  String currentlySelected = 'item2Small';
+
 
   @override
   void initState() {
@@ -1346,6 +1362,7 @@ class _InputPageState2 extends State<Item2Screen> {
                             onTap: () {
                               Navigator.of(context)
                                   .pushReplacementNamed('homePage');
+                              _scrollController.jumpTo(0);
                             },
                             child: Text('Home'),
                           ),
@@ -1574,17 +1591,17 @@ class _InputPageState2 extends State<Item2Screen> {
                         onSelectedItemChanged: (selectedIndex) {
                           if (selectedIndex == 0) {
                             setState(() {
-                              currentlySelected = 'item1Small';
+                              currentlySelected = 'item2Small';
                             });
                           }
                           if (selectedIndex == 1) {
                             setState(() {
-                              currentlySelected = 'item1Medium';
+                              currentlySelected = 'item2Medium';
                             });
                           }
                           if (selectedIndex == 2) {
                             setState(() {
-                              currentlySelected = 'item1Large';
+                              currentlySelected = 'item2Large';
                             });
                           }
                         },
@@ -1737,6 +1754,7 @@ class _InputPageState2 extends State<Item2Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item3FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -1796,6 +1814,7 @@ class _InputPageState2 extends State<Item2Screen> {
                             print("Container 4 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item4FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -1864,6 +1883,7 @@ class _InputPageState2 extends State<Item2Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item5FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -1923,6 +1943,7 @@ class _InputPageState2 extends State<Item2Screen> {
                             print("Container 6 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item6FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -2023,6 +2044,7 @@ class _InputPageState2 extends State<Item2Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -2050,6 +2072,7 @@ class _InputPageState2 extends State<Item2Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -2077,6 +2100,7 @@ class _InputPageState2 extends State<Item2Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -2104,6 +2128,7 @@ class _InputPageState2 extends State<Item2Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -2340,17 +2365,21 @@ class Item3Screen extends StatefulWidget {
 }
 
 class _InputPageState3 extends State<Item3Screen> {
+
   final String directory;
 
   _InputPageState3({this.directory});
+
   final _scrollController = ScrollController(keepScrollOffset: false);
-  bool startImageOne = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   double opacityOne = 1.0;
   double opacityTwo = 0.8;
   double opacityThree = 0.8;
   double opacityFour = 0.8;
 
+  bool startImageOne = false;
   bool onImageA = true;
   bool onImageB = false;
   bool onImageC = false;
@@ -2414,8 +2443,8 @@ class _InputPageState3 extends State<Item3Screen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      key: scaffoldKey,
-      appBar: VerossaAppBar(),
+      key: _scaffoldKey,
+      appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -2496,6 +2525,7 @@ class _InputPageState3 extends State<Item3Screen> {
                             onTap: () {
                               Navigator.of(context)
                                   .pushReplacementNamed('homePage');
+                              _scrollController.jumpTo(0);
                             },
                             child: Text('Home'),
                           ),
@@ -2523,7 +2553,6 @@ class _InputPageState3 extends State<Item3Screen> {
                     padding: const EdgeInsets.only(left: 0, top: 30.0),
                     child: Center(
                       child: Container(
-                        color: Colors.red,
                         height: 230,
                         width: 360,
                         child: GestureDetector(
@@ -2724,17 +2753,17 @@ class _InputPageState3 extends State<Item3Screen> {
                         onSelectedItemChanged: (selectedIndex) {
                           if (selectedIndex == 0) {
                             setState(() {
-                              currentlySelected = 'item1Small';
+                              currentlySelected = 'item3Small';
                             });
                           }
                           if (selectedIndex == 1) {
                             setState(() {
-                              currentlySelected = 'item1Medium';
+                              currentlySelected = 'item3Medium';
                             });
                           }
                           if (selectedIndex == 2) {
                             setState(() {
-                              currentlySelected = 'item1Large';
+                              currentlySelected = 'item3Large';
                             });
                           }
                         },
@@ -2887,6 +2916,8 @@ class _InputPageState3 extends State<Item3Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item1FromHome');
+
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -2946,6 +2977,7 @@ class _InputPageState3 extends State<Item3Screen> {
                             print("Container 4 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item4FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -3014,6 +3046,7 @@ class _InputPageState3 extends State<Item3Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item5FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -3073,6 +3106,7 @@ class _InputPageState3 extends State<Item3Screen> {
                             print("Container 6 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item6FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -3173,6 +3207,7 @@ class _InputPageState3 extends State<Item3Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -3200,6 +3235,7 @@ class _InputPageState3 extends State<Item3Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -3227,6 +3263,7 @@ class _InputPageState3 extends State<Item3Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -3254,6 +3291,7 @@ class _InputPageState3 extends State<Item3Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -3495,6 +3533,7 @@ class _InputPageState4 extends State<Item4Screen> {
   _InputPageState4({this.directory});
 
   final _scrollController = ScrollController(keepScrollOffset: false);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool startImageOne = false;
 
@@ -3566,8 +3605,8 @@ class _InputPageState4 extends State<Item4Screen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      key: scaffoldKey,
-      appBar: VerossaAppBar(),
+      key: _scaffoldKey,
+      appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -3648,6 +3687,7 @@ class _InputPageState4 extends State<Item4Screen> {
                             onTap: () {
                               Navigator.of(context)
                                   .pushReplacementNamed('homePage');
+                              _scrollController.jumpTo(0);
                             },
                             child: Text('Home'),
                           ),
@@ -3675,7 +3715,6 @@ class _InputPageState4 extends State<Item4Screen> {
                     padding: const EdgeInsets.only(left: 0, top: 30.0),
                     child: Center(
                       child: Container(
-                        color: Colors.red,
                         height: 230,
                         width: 360,
                         child: GestureDetector(
@@ -3702,7 +3741,6 @@ class _InputPageState4 extends State<Item4Screen> {
                       ),
                     ),
                   ),
-                  ///CrossfadeImages
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0, bottom: 30),
                     child: Center(
@@ -3877,17 +3915,17 @@ class _InputPageState4 extends State<Item4Screen> {
                         onSelectedItemChanged: (selectedIndex) {
                           if (selectedIndex == 0) {
                             setState(() {
-                              currentlySelected = 'item1Small';
+                              currentlySelected = 'item4Small';
                             });
                           }
                           if (selectedIndex == 1) {
                             setState(() {
-                              currentlySelected = 'item1Medium';
+                              currentlySelected = 'item4Medium';
                             });
                           }
                           if (selectedIndex == 2) {
                             setState(() {
-                              currentlySelected = 'item1Large';
+                              currentlySelected = 'item4Large';
                             });
                           }
                         },
@@ -4039,6 +4077,7 @@ class _InputPageState4 extends State<Item4Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item3FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -4098,6 +4137,7 @@ class _InputPageState4 extends State<Item4Screen> {
                             print("Container 2 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item2FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -4107,7 +4147,6 @@ class _InputPageState4 extends State<Item4Screen> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
                                     height: 80,
                                     width: 163,
                                     child: Image(
@@ -4139,7 +4178,7 @@ class _InputPageState4 extends State<Item4Screen> {
                                       height: 20,
                                       width: 120,
                                       child: Text(
-                                        priceItem4,
+                                        priceItem2,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -4166,6 +4205,7 @@ class _InputPageState4 extends State<Item4Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item5FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -4225,6 +4265,7 @@ class _InputPageState4 extends State<Item4Screen> {
                             print("Container 6 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item6FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -4234,7 +4275,6 @@ class _InputPageState4 extends State<Item4Screen> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
                                     height: 80,
                                     width: 163,
                                     child: Image(
@@ -4325,6 +4365,7 @@ class _InputPageState4 extends State<Item4Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -4352,6 +4393,7 @@ class _InputPageState4 extends State<Item4Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -4379,6 +4421,7 @@ class _InputPageState4 extends State<Item4Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -4406,6 +4449,7 @@ class _InputPageState4 extends State<Item4Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -4647,6 +4691,7 @@ class _InputPageState5 extends State<Item5Screen> {
   _InputPageState5({this.directory});
 
   final _scrollController = ScrollController(keepScrollOffset: false);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool startImageOne = false;
 
@@ -4719,8 +4764,8 @@ class _InputPageState5 extends State<Item5Screen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      key: scaffoldKey,
-      appBar: VerossaAppBar(),
+      key: _scaffoldKey,
+      appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -4801,6 +4846,7 @@ class _InputPageState5 extends State<Item5Screen> {
                             onTap: () {
                               Navigator.of(context)
                                   .pushReplacementNamed('homePage');
+                              _scrollController.jumpTo(0);
                             },
                             child: Text('Home'),
                           ),
@@ -4828,7 +4874,6 @@ class _InputPageState5 extends State<Item5Screen> {
                     padding: const EdgeInsets.only(left: 0, top: 30.0),
                     child: Center(
                       child: Container(
-                        color: Colors.red,
                         height: 230,
                         width: 360,
                         child: GestureDetector(
@@ -4855,7 +4900,6 @@ class _InputPageState5 extends State<Item5Screen> {
                       ),
                     ),
                   ),
-                  ///crossfadeImages
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0, bottom: 30),
                     child: Center(
@@ -5030,17 +5074,17 @@ class _InputPageState5 extends State<Item5Screen> {
                         onSelectedItemChanged: (selectedIndex) {
                           if (selectedIndex == 0) {
                             setState(() {
-                              currentlySelected = 'item1Small';
+                              currentlySelected = 'item5Small';
                             });
                           }
                           if (selectedIndex == 1) {
                             setState(() {
-                              currentlySelected = 'item1Medium';
+                              currentlySelected = 'item5Medium';
                             });
                           }
                           if (selectedIndex == 2) {
                             setState(() {
-                              currentlySelected = 'item1Large';
+                              currentlySelected = 'item5Large';
                             });
                           }
                         },
@@ -5192,6 +5236,7 @@ class _InputPageState5 extends State<Item5Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item3FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -5251,6 +5296,7 @@ class _InputPageState5 extends State<Item5Screen> {
                             print("Container 2 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item2FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -5260,7 +5306,6 @@ class _InputPageState5 extends State<Item5Screen> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
                                     height: 80,
                                     width: 163,
                                     child: Image(
@@ -5292,7 +5337,7 @@ class _InputPageState5 extends State<Item5Screen> {
                                       height: 20,
                                       width: 120,
                                       child: Text(
-                                        priceItem4,
+                                        priceItem2,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -5319,6 +5364,7 @@ class _InputPageState5 extends State<Item5Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item1FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -5357,7 +5403,7 @@ class _InputPageState5 extends State<Item5Screen> {
                                       height: 20,
                                       width: 120,
                                       child: Text(
-                                        priceItem5,
+                                        priceItem1,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -5378,6 +5424,7 @@ class _InputPageState5 extends State<Item5Screen> {
                             print("Container 6 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item6FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -5387,7 +5434,7 @@ class _InputPageState5 extends State<Item5Screen> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
+
                                     height: 80,
                                     width: 163,
                                     child: Image(
@@ -5478,6 +5525,7 @@ class _InputPageState5 extends State<Item5Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -5505,6 +5553,7 @@ class _InputPageState5 extends State<Item5Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -5532,6 +5581,7 @@ class _InputPageState5 extends State<Item5Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -5559,6 +5609,7 @@ class _InputPageState5 extends State<Item5Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -5800,6 +5851,7 @@ class _InputPageState6 extends State<Item6Screen> {
   _InputPageState6({this.directory});
 
   final _scrollController = ScrollController(keepScrollOffset: false);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool startImageOne = false;
 
@@ -5872,8 +5924,8 @@ class _InputPageState6 extends State<Item6Screen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      key: scaffoldKey,
-      appBar: VerossaAppBar(),
+      key: _scaffoldKey,
+      appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -5954,6 +6006,7 @@ class _InputPageState6 extends State<Item6Screen> {
                             onTap: () {
                               Navigator.of(context)
                                   .pushReplacementNamed('homePage');
+                              _scrollController.jumpTo(0);
                             },
                             child: Text('Home'),
                           ),
@@ -5981,7 +6034,6 @@ class _InputPageState6 extends State<Item6Screen> {
                     padding: const EdgeInsets.only(left: 0, top: 30.0),
                     child: Center(
                       child: Container(
-                        color: Colors.red,
                         height: 230,
                         width: 360,
                         child: GestureDetector(
@@ -6182,17 +6234,17 @@ class _InputPageState6 extends State<Item6Screen> {
                         onSelectedItemChanged: (selectedIndex) {
                           if (selectedIndex == 0) {
                             setState(() {
-                              currentlySelected = 'item1Small';
+                              currentlySelected = 'item6Small';
                             });
                           }
                           if (selectedIndex == 1) {
                             setState(() {
-                              currentlySelected = 'item1Medium';
+                              currentlySelected = 'item6Medium';
                             });
                           }
                           if (selectedIndex == 2) {
                             setState(() {
-                              currentlySelected = 'item1Large';
+                              currentlySelected = 'item6Large';
                             });
                           }
                         },
@@ -6344,6 +6396,7 @@ class _InputPageState6 extends State<Item6Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item3FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -6403,6 +6456,7 @@ class _InputPageState6 extends State<Item6Screen> {
                             print("Container 2 clicked");
                             Navigator.of(context)
                                 .pushReplacementNamed('item2FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -6412,7 +6466,6 @@ class _InputPageState6 extends State<Item6Screen> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
                                     height: 80,
                                     width: 163,
                                     child: Image(
@@ -6444,7 +6497,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       height: 20,
                                       width: 120,
                                       child: Text(
-                                        priceItem4,
+                                        priceItem2,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -6471,6 +6524,7 @@ class _InputPageState6 extends State<Item6Screen> {
 
                             Navigator.of(context)
                                 .pushReplacementNamed('item1FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -6509,7 +6563,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       height: 20,
                                       width: 120,
                                       child: Text(
-                                        priceItem5,
+                                        priceItem1,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -6527,9 +6581,10 @@ class _InputPageState6 extends State<Item6Screen> {
                             top: 0, left: 10.0, bottom: 13, right: 0),
                         child: GestureDetector(
                           onTap: () {
-                            print("Container 6 clicked");
+                            print("Container 5 clicked");
                             Navigator.of(context)
-                                .pushReplacementNamed('item6FromHome');
+                                .pushReplacementNamed('item5FromHome');
+                            _scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -6539,13 +6594,12 @@ class _InputPageState6 extends State<Item6Screen> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
                                     height: 80,
                                     width: 163,
                                     child: Image(
                                       fit: BoxFit.fill,
                                       image: AssetImage(
-                                          'images/Verossa-Scotland.jpg'),
+                                          'images/Verossa-Thunder.jpg'),
                                     ),
                                   ),
                                 ),
@@ -6557,7 +6611,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       height: 30,
                                       width: 120,
                                       child: Text(
-                                        'Scotland High',
+                                        'Michigan Thunder',
                                         style: TextStyle(height: 1.6),
                                       ),
                                     ),
@@ -6571,7 +6625,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       height: 20,
                                       width: 120,
                                       child: Text(
-                                        priceItem6,
+                                        priceItem5,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -6630,6 +6684,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -6657,6 +6712,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -6684,6 +6740,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -6711,6 +6768,7 @@ class _InputPageState6 extends State<Item6Screen> {
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(

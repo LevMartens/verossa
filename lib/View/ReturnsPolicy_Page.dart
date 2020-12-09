@@ -18,6 +18,7 @@ class ReturnsPolicy extends StatefulWidget {
 }
 class _InputPageState extends State<ReturnsPolicy> {
   final _scrollController = ScrollController(keepScrollOffset: false);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -29,8 +30,8 @@ class _InputPageState extends State<ReturnsPolicy> {
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      key: scaffoldKey,
-      appBar: VerossaAppBar(),
+      key: _scaffoldKey,
+      appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -146,6 +147,7 @@ class _InputPageState extends State<ReturnsPolicy> {
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       ContactUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -173,6 +175,7 @@ class _InputPageState extends State<ReturnsPolicy> {
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       AboutUs()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -200,6 +203,7 @@ class _InputPageState extends State<ReturnsPolicy> {
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       ReturnsPolicy()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(
@@ -227,6 +231,7 @@ class _InputPageState extends State<ReturnsPolicy> {
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) =>
                                       Shipping()));
+                              _scrollController.jumpTo(0);
                             },
                             child: Container(
                               child: Text(

@@ -62,7 +62,7 @@ class DrawerProvider extends ChangeNotifier {
     getUsersName();
   }
 
-  void getLogOutButton(BuildContext context) async {
+  void getLogOutButton(BuildContext context, GlobalKey<ScaffoldState> aScaffoldKey) async {
     print('getLogOutButton() called');
     if (await auth.currentUser != null) {
       // signed in
@@ -88,7 +88,7 @@ class DrawerProvider extends ChangeNotifier {
               }
 
 
-              scaffoldKey.currentState
+              aScaffoldKey.currentState
                   .showSnackBar(SnackBar(content: Text('Successfully logged out ', textAlign: TextAlign.center,)));
             },
             child: Container(

@@ -16,8 +16,8 @@ import 'View/Personal_Page.dart';
 import 'View/Thank_You_For_Order_Page.dart';
 import 'View/Create_Account_Screen.dart';
 
-// TODO: reimplement scaffoldKey and appbar like homePage.dart and itemScreen2
-// TODO: add _scrollController.jumpTo(0) to every navigation
+// reimplement scaffoldKey and appbar like homePage.dart and itemScreen2. DONE
+// add _scrollController.jumpTo(0) to every navigation. DONE
 // valey and cart are spelled wrong. DONE
 // free shipping when total hits 150. DONE
 // photo's are not changing to colour its just random. DONE
@@ -40,6 +40,7 @@ import 'View/Create_Account_Screen.dart';
 ///*no priority* TODO: when user is logged in but didn't save his shipping details the height of the slivers needs to have a height adjustment
 ///*no priority* TODO: for names used in the app use ItemTitles[itemID] instead of writing out name.
 ///*no priority* TODO: when a user creates an account and fills in the name and adds a space after the name, this should be prevented as it fucks with other things.
+///*no priority* TODO: some of the navigations are a bit flicky this might be because the contact page, about us etc on the bottom have a navigation duration
 
 
 // TODO: remove todo list when committing to github
