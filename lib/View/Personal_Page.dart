@@ -234,7 +234,7 @@ class _InputPageState extends State<PersonalPage> {
 
 
 
-                  scaffoldKey.currentState
+                  _scaffoldKey.currentState
                       .showSnackBar(SnackBar(content: Text('Address saved', textAlign: TextAlign.center,)));
                   _formKey1.currentState.reset();
 
@@ -356,7 +356,7 @@ class _InputPageState extends State<PersonalPage> {
                   ),
                   SizedBox(height: 20),
 
-                  PersonalForm(),
+                  PersonalForm(aScaffoldKey: _scaffoldKey,),
 
                   //getStreet(context),
                   SizedBox(height: 10),
@@ -745,7 +745,7 @@ class _InputPageState extends State<PersonalPage> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
 

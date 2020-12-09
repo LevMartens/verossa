@@ -463,7 +463,7 @@ class _InputPageState extends State<Shipping> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }

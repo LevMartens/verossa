@@ -461,7 +461,7 @@ class _InputPageState extends State<Item1Screen> {
 
                         if (stockInCart[currentlySelected] >=
                             stockLimit[currentlySelected]) {
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
                               content: Text(
                             'Item sold out',
                             textAlign: TextAlign.center,
@@ -1176,7 +1176,7 @@ class _InputPageState extends State<Item1Screen> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }
@@ -1631,7 +1631,7 @@ class _InputPageState2 extends State<Item2Screen> {
 
                         if (stockInCart[currentlySelected] >=
                             stockLimit[currentlySelected]) {
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
                               content: Text(
                             'Item sold out',
                             textAlign: TextAlign.center,
@@ -2348,7 +2348,7 @@ class _InputPageState2 extends State<Item2Screen> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }
@@ -2793,7 +2793,7 @@ class _InputPageState3 extends State<Item3Screen> {
 
                         if (stockInCart[currentlySelected] >=
                             stockLimit[currentlySelected]) {
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
                               content: Text(
                             'Item sold out',
                             textAlign: TextAlign.center,
@@ -3511,7 +3511,7 @@ class _InputPageState3 extends State<Item3Screen> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }
@@ -3954,7 +3954,7 @@ class _InputPageState4 extends State<Item4Screen> {
                         print("ADD $currentlySelected Tapped");
                         if (stockInCart[currentlySelected] >=
                             stockLimit[currentlySelected]) {
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
                               content: Text(
                             'Item sold out',
                             textAlign: TextAlign.center,
@@ -4669,7 +4669,7 @@ class _InputPageState4 extends State<Item4Screen> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }
@@ -5113,7 +5113,7 @@ class _InputPageState5 extends State<Item5Screen> {
                         print("ADD $currentlySelected Tapped");
                         if (stockInCart[currentlySelected] >=
                             stockLimit[currentlySelected]) {
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
                               content: Text(
                             'Item sold out',
                             textAlign: TextAlign.center,
@@ -5829,7 +5829,7 @@ class _InputPageState5 extends State<Item5Screen> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }
@@ -6273,7 +6273,7 @@ class _InputPageState6 extends State<Item6Screen> {
                         print("ADD $currentlySelected Tapped");
                         if (stockInCart[currentlySelected] >=
                             stockLimit[currentlySelected]) {
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
                               content: Text(
                             'Item sold out',
                             textAlign: TextAlign.center,
@@ -6988,7 +6988,7 @@ class _InputPageState6 extends State<Item6Screen> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }

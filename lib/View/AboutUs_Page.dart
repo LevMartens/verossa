@@ -478,7 +478,7 @@ class _InputPageState extends State<AboutUs> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
 

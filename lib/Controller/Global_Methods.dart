@@ -509,7 +509,7 @@ Future<void> updateStockAndCartAfterOrderConfirmation() async {
 
 
 ///---------------------------Set Up---------------------------------
-Future<void> setUpAfterStartup(BuildContext context) async {
+Future<void> setUpAfterStartup(BuildContext context, ) async {
   print('setUpAfterStartUp() Called');
   ///----StockSetUp--------------------------
   await updateStock();
@@ -576,9 +576,9 @@ Future<void> updateStock() async{
       stockInCart[k] = stockLimit[k];
       prefs.setInt(k, stockInCart[k]);
 
-      scaffoldKey.currentState
-          .showSnackBar(SnackBar(
-          content: Text('Stock has been updated, your cart had been adjusted', textAlign: TextAlign.center,)));
+      // aScaffoldKey.currentState
+      //     .showSnackBar(SnackBar(
+      //     content: Text('Stock has been updated, your cart had been adjusted', textAlign: TextAlign.center,)));
 
       cartHasBeenAdjusted = true;
     }

@@ -263,7 +263,7 @@ class _InputPageState extends State<CreateAccount> {
                                   }
                                 } catch (e) {
                                   Navigator.pop(context);
-                                  scaffoldKey.currentState
+                                  _scaffoldKey.currentState
                                       .showSnackBar(SnackBar(content: Text('$e', textAlign: TextAlign.center,)));
                                   print(e);}
                               },
@@ -655,7 +655,8 @@ class _InputPageState extends State<CreateAccount> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
+      endDrawer: MyEndDrawer(),
     );
   }
 

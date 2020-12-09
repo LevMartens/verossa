@@ -12,13 +12,17 @@ import 'package:verossa/Model/Global_Variables.dart';
 
 
 class PersonalForm extends StatefulWidget {
+  final GlobalKey<ScaffoldState> aScaffoldKey;
+  PersonalForm({this.aScaffoldKey});
   @override
   PersonalFormState createState() {
-    return PersonalFormState();
+    return PersonalFormState(aScaffoldKey: aScaffoldKey);
   }
 }
 
 class PersonalFormState extends State<PersonalForm> {
+  final GlobalKey<ScaffoldState> aScaffoldKey;
+  PersonalFormState({this.aScaffoldKey});
   bool apartmentIsNull = true;
   double containerHeight = 580;
   double apartmentHeight() {
@@ -584,7 +588,7 @@ class PersonalFormState extends State<PersonalForm> {
                       addShippingDetailsToFireStore();
 
 
-                      scaffoldKey.currentState
+                      aScaffoldKey.currentState
                           .showSnackBar(SnackBar(content: Text('Address saved', textAlign: TextAlign.center,)));
                       _formKey112.currentState.reset();
 

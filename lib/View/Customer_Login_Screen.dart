@@ -161,7 +161,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
                         } } catch (e){
                         Navigator.pop(context);
-                        scaffoldKey.currentState
+                        _scaffoldKey.currentState
                             .showSnackBar(SnackBar(content: Text('$e', textAlign: TextAlign.center,)));
                         print(e);}
 
@@ -338,7 +338,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
 
-                      scaffoldKey.currentState
+                      _scaffoldKey.currentState
                           .showSnackBar(SnackBar(content: Text('Password reset email sent, please check your inbox', textAlign: TextAlign.center,)));
                       _formKey1.currentState.reset();
 
@@ -774,7 +774,8 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
+      endDrawer: MyEndDrawer(),
     );
   }
 

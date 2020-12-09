@@ -472,7 +472,7 @@ class _InputPageState extends State<ContactUs> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
 

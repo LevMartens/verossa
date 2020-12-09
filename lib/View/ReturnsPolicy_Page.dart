@@ -462,7 +462,7 @@ class _InputPageState extends State<ReturnsPolicy> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
   }
