@@ -12,6 +12,7 @@ import '../Model/Global_Variables.dart';
 import '../Controller/Drawer_Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../Model/User_Details.dart';
+import 'package:verossa/View/Pre_Check_Out_Page.dart';
 
 
 
@@ -512,7 +513,7 @@ Future<void> updateStockAndCartAfterOrderConfirmation() async {
 Future<void> setUpAfterStartup(BuildContext context, ) async {
   print('setUpAfterStartUp() Called');
   ///----StockSetUp--------------------------
-  await updateStock();
+  await updateStock(context);
 
   ///------CartSetUp--------------------------
   final prefs = await SharedPreferences.getInstance();
@@ -558,7 +559,7 @@ Future<void> setUpAfterStartup(BuildContext context, ) async {
 
 }
 
-Future<void> updateStock() async{
+Future<void> updateStock(BuildContext context) async{
   print('updateStockLimit() called');
 
   await getStockLimitFromFirestore();
@@ -576,9 +577,8 @@ Future<void> updateStock() async{
       stockInCart[k] = stockLimit[k];
       prefs.setInt(k, stockInCart[k]);
 
-      // aScaffoldKey.currentState
-      //     .showSnackBar(SnackBar(
-      //     content: Text('Stock has been updated, your cart had been adjusted', textAlign: TextAlign.center,)));
+
+
 
       cartHasBeenAdjusted = true;
     }
@@ -673,41 +673,12 @@ Future<void> getUserDetails() async {
       }
     });
 
-      // UserDetails name = UserDetails.fromMap(value.data()); //result.data()
-      //
-      // _nameList.add(name);
 
 
-    //});
-    //final prefs = await SharedPreferences.getInstance();
-
-
-    // var iFirstName = _nameList[0].firstName;
-    // var iLastName = _nameList[0].lastName;
-    // var iEmail = _nameList[0].email;
-    // var iStreet = _nameList[0].street;
-    // var iPlace = _nameList[0].place; //prefs.getString('place')
-    // var iPostcode = _nameList[0].postcode;
-    // var iCountry = _nameList[0].country;
-    // var iApartment = _nameList[0].apartment;
-    // var iState = _nameList[0].state;
-
-    // lastName = iLastName;
-    // firstName = iFirstName;
-    // email = iEmail;
-    // street = iStreet;
-    // place = iPlace;
-    // postcode = iPostcode;
-    // fullName = '$iFirstName $iLastName';
-    // country = iCountry;
-    // state = iState;
-    // apartment = iApartment;
 
     fullName = '$firstName $lastName';
 
-    print('User ID: $uid');
-    print('These are the user details fetched from fire base: $firstName, $lastName, $email, $fullName');
-    print('These are the users shipping details fetched from fire base: $street, $place, $postcode, $country, $state, $apartment');
+
 
     setFullNameInSP(fullName);
 

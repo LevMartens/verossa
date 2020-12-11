@@ -30,6 +30,15 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     contextForBadgeProv = context;
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      if (cartHasBeenAdjusted == true) {
+        _scaffoldKey.currentState
+            .showSnackBar(SnackBar(
+            content: Text('Stock has been updated, your cart has been adjusted', textAlign: TextAlign.center,)));
+        cartHasBeenAdjusted = false;
+      }
+    });
+
 
   }
 
@@ -109,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                                       height: 170.0,
                                       width: 500.0,
                                       child: Carousel(
+
                                         animationCurve: Curves.easeInOut,
                                         animationDuration:
                                             Duration(milliseconds: 1400),

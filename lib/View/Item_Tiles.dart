@@ -83,7 +83,7 @@ class _ItemTile1SState extends State<ItemTile1S> {
                       child:
                       StreamBuilder(
                         stream: streamControllers[itemID].stream,
-                        builder: (context, snapshot) {
+                        builder: (context, snapshot) {git
                           return Text(
                             '${snapshot.data}',
                             style: TextStyle(
@@ -159,7 +159,7 @@ class _ItemTile1SState extends State<ItemTile1S> {
                                   });
                                 }
                               },
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.numberWithOptions(signed: true, decimal: false),
                               controller: _textController,
                               textAlign: TextAlign.center,
                               maxLines: 1,
@@ -182,15 +182,23 @@ class _ItemTile1SState extends State<ItemTile1S> {
                           child: GestureDetector(
                             onTap: () {
                               print('add tapped');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
-
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -391,13 +399,23 @@ class _ItemTile1MState extends State<ItemTile1M> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -598,13 +616,23 @@ class _ItemTile1LState extends State<ItemTile1L> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -806,13 +834,23 @@ class _ItemTile2SState extends State<ItemTile2S> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -1013,13 +1051,23 @@ class _ItemTile2MState extends State<ItemTile2M> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -1220,13 +1268,23 @@ class _ItemTile2LState extends State<ItemTile2L> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -1428,13 +1486,23 @@ class _ItemTile3SState extends State<ItemTile3S> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
 
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -1635,13 +1703,23 @@ class _ItemTile3MState extends State<ItemTile3M> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -1842,13 +1920,23 @@ class _ItemTile3LState extends State<ItemTile3L> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -2050,13 +2138,23 @@ class _ItemTile4SState extends State<ItemTile4S> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -2257,13 +2355,23 @@ class _ItemTile4MState extends State<ItemTile4M> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -2464,13 +2572,23 @@ class _ItemTile4LState extends State<ItemTile4L> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -2671,13 +2789,23 @@ class _ItemTile5SState extends State<ItemTile5S> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -2878,13 +3006,23 @@ class _ItemTile5MState extends State<ItemTile5M> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -3085,13 +3223,23 @@ class _ItemTile5LState extends State<ItemTile5L> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -3292,13 +3440,23 @@ class _ItemTile6SState extends State<ItemTile6S> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -3499,13 +3657,23 @@ class _ItemTile6MState extends State<ItemTile6M> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
@@ -3706,13 +3874,23 @@ class _ItemTile6LState extends State<ItemTile6L> {
                               print('add tapped');
 
 
-                              addCartItem(itemID, true, context);
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                setState(() {
-                                  print('stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                              var a = int.parse(_textController.text);
 
+                              if (a == stockLimit[itemID]) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
+
+                              } else {
+                                addCartItem(itemID, true, context);
+                                Future.delayed(
+                                    const Duration(milliseconds: 200), () {
+                                  setState(() {
+                                    print(
+                                        'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
+                                  });
                                 });
-                              });
+                              }
                             },
                             child: Icon(
                               Icons.add,
