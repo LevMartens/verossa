@@ -83,7 +83,7 @@ class _ItemTile1SState extends State<ItemTile1S> {
                       child:
                       StreamBuilder(
                         stream: streamControllers[itemID].stream,
-                        builder: (context, snapshot) {git
+                        builder: (context, snapshot) {
                           return Text(
                             '${snapshot.data}',
                             style: TextStyle(
