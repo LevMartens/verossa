@@ -9,7 +9,7 @@ import 'package:verossa/Model/Global_Variables.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import '../Model/Global_Variables.dart';
-import '../Controller/Drawer_Provider.dart';
+import 'Drawer_Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../Model/User_Details.dart';
 import 'package:verossa/View/Pre_Check_Out_Page.dart';
@@ -76,7 +76,7 @@ Future<void> getCurrencyData(int i) async {
   List cur = [];
 
   Response response =
-  await get('https://api.exchangeratesapi.io/latest?base=AUD');
+  await get(Uri.https('https://api.exchangeratesapi.io', '/latest?base=AUD'));
   String data = response.body;
      print(data);
   var usd = jsonDecode(data)['rates']['USD'];

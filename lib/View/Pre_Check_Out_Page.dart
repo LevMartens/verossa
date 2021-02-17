@@ -35,8 +35,8 @@ String secret = 'sk_test_51HaWL0DNMiEsQiX2ERExuL0FP0OuhH60LKA3sY9lxxZBd0XGJFzoIN
 int amount = 0;
 bool showSpinner = false;
 String url ='https://us-central1-demostripe-b9557.cloudfunctions.net/StripePI';
-String apiBase = 'https://api.stripe.com/v1';
-String paymentApiUrl = '$apiBase/payment_intents';
+String apiBase = 'https://api.stripe.com';
+String paymentApiUrl = '$apiBase';
 Map<String, String> headers = {
   'Authorization': 'Bearer $secret',
   'Content_Type': 'application/x-www-form-urlencoded'
@@ -241,7 +241,7 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
 
 
       final http.Response response = await http
-          .post(paymentApiUrl, body: body, headers: headers
+          .post(Uri.https('$paymentApiUrl', '/v1/payment_intents'), body: body, headers: headers
       );
 
 

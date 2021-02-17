@@ -53,7 +53,7 @@ class _InputPageState extends State<OrderConfirmation> {
     });
 
     try {
-      var response = await http.post("https://api.sendgrid.com/v3/mail/send",
+      var response = await http.post(Uri.https("https://api.sendgrid.com","/v3/mail/send"),
           headers: {
           'Authorization': 'Bearer ' + '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',
            'Content-Type': 'application/json',
