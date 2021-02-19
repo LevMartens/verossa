@@ -9,12 +9,7 @@ import '../Model/Global_Variables.dart';
 class DrawerProvider extends ChangeNotifier {
 
 ///-------EndDrawer------------------------
-  int cartBadgeCount = 0;
 
-  void cartToCart() {
-    cartBadgeCount = cartBadgeCountNoProv;
-    notifyListeners();
-  }
 
 ///-------FrontDrawer----------------------
   String name = '';

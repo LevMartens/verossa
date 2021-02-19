@@ -14,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../Model/User_Details.dart';
 import 'package:verossa/View/Pre_Check_Out_Page.dart';
 
+import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
 
 
 
@@ -459,7 +460,7 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
       cartBadgeIncrease();
       ///duration was 200 and crashed by rapid tapping
       Future.delayed(const Duration(milliseconds: 0), () {
-        Provider.of<DrawerProvider>(context, listen: false).cartToCart();
+        Provider.of<AppBarProvider>(context, listen: false).cartToCart();
       });
 
 
@@ -476,7 +477,7 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
       cartBadgeIncrease();
       ///duration was 200 and crashed by rapid tapping
       Future.delayed(const Duration(milliseconds: 0), () {
-        Provider.of<DrawerProvider>(context, listen: false).cartToCart();
+        Provider.of<AppBarProvider>(context, listen: false).cartToCart();
       });
 
 
@@ -550,7 +551,7 @@ Future<void> setUpAfterStartup(BuildContext context, ) async {
   }
   await cartBadgeAfterStartup();
 
-  Provider.of<DrawerProvider>(contextForBadgeProv, listen: false).cartToCart();
+  Provider.of<AppBarProvider>(contextForBadgeProv, listen: false).cartToCart();
   if (await auth.currentUser != null) {
     userLoggedIn = true;
     getUserDetails();
