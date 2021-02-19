@@ -7,7 +7,7 @@ import 'package:verossa/View/Item_Screens.dart';
 import 'package:verossa/Controller/Drawer_Provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:verossa/View/Pre_Check_Out_Page.dart';
-import 'View/HomePage.dart';
+import 'Pages/Home/UI/HomePage.dart';
 import 'Controller/Global_Methods.dart';
 import 'View/AboutUs_Page.dart';
 import 'View/ReturnsPolicy_Page.dart';
