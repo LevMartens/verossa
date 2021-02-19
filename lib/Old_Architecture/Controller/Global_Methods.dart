@@ -5,14 +5,14 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
-import 'package:verossa/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
-import '../Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'Drawer_Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Model/User_Details.dart';
-import 'package:verossa/View/Pre_Check_Out_Page.dart';
+import 'package:verossa/Old_Architecture/Model/User_Details.dart';
+import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
 
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
 

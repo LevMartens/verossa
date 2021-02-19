@@ -6,7 +6,7 @@ import 'AppBar+Drawers.dart';
 import '../Model/Global_Variables.dart';
 import '../Controller/Global_Methods.dart';
 import 'package:share/share.dart';
-import 'package:verossa/Model/NewsLetterForms.dart';
+import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'ContactUs_Page.dart';
 import 'AboutUs_Page.dart';
 import 'ReturnsPolicy_Page.dart';

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/View/ContactUs_Page.dart';
-import 'package:verossa/View/Customer_Login_Screen.dart';
-import 'package:verossa/View/Item_Screens.dart';
-import 'package:verossa/Controller/Drawer_Provider.dart';
+import 'package:verossa/Old_Architecture/View/ContactUs_Page.dart';
+import 'package:verossa/Old_Architecture/View/Customer_Login_Screen.dart';
+import 'package:verossa/Old_Architecture/View/Item_Screens.dart';
+import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:verossa/View/Pre_Check_Out_Page.dart';
+import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
 import 'Pages/Home/UI/HomePage.dart';
-import 'Controller/Global_Methods.dart';
-import 'View/AboutUs_Page.dart';
-import 'View/ReturnsPolicy_Page.dart';
-import 'View/Shipping_Page.dart';
-import 'View/Personal_Page.dart';
-import 'View/Thank_You_For_Order_Page.dart';
-import 'View/Create_Account_Screen.dart';
+import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
+import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
+import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
+import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
+import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
+import 'package:verossa/Old_Architecture/View/Thank_You_For_Order_Page.dart';
+import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
 
 // reimplement scaffoldKey and appbar like homePage.dart and itemScreen2. DONE
 // add _scrollController.jumpTo(0) to every navigation. DONE

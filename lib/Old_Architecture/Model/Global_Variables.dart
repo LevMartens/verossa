@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:verossa/Controller/Global_Methods.dart';
-import 'package:verossa/View/Item_Tiles.dart';
+import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
+import 'package:verossa/Old_Architecture/View/Item_Tiles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:verossa/View/Pre_Check_Out_Page.dart';
+import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
 import 'package:badges/badges.dart';
 import 'dart:math';
 

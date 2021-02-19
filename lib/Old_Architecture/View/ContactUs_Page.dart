@@ -1,265 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:verossa/Model/NewsLetterForms.dart';
-import 'package:verossa/Model/Personal_Page_Form.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:verossa/Old_Architecture/Model/Contact_Us_From.dart';
+import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'AppBar+Drawers.dart';
 import '../Model/Global_Variables.dart';
 import '../Controller/Global_Methods.dart';
-import 'ContactUs_Page.dart';
 import 'ReturnsPolicy_Page.dart';
 import 'Shipping_Page.dart';
 import 'AboutUs_Page.dart';
-import 'package:verossa/Model/Global_Variables.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
 
-
-
-
-class PersonalPage extends StatefulWidget {
+class ContactUs extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
-class _InputPageState extends State<PersonalPage> {
+class _InputPageState extends State<ContactUs> {
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
     contextForBadgeProv = context;
-    currentlyOnPersonalPage = true;
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    currentlyOnPersonalPage = false;
-
-  }
-
-  static final _formKey1 = GlobalKey<FormState>();
-  Widget theForm() {
-
-
-    final textControllerStreet = TextEditingController();
-    final textControllerPlace = TextEditingController();
-    final textControllerPostcode = TextEditingController();
-    return Form(
-      key: _formKey1,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                'Address'
-
-                ,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 6),
-          Container(
-            height: 40,
-            width: 300,
-            child: TextFormField(
-              controller: textControllerStreet,
-              decoration: const InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black12,
-                  ),
-                ),
-
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontSize: 14,
-                ),
-              ),
-
-              validator: (value) {
-
-                if (value.isEmpty) {
-
-                  return 'Please enter your address';
-
-                }
-
-
-                return null;
-              },
-            ),
-          ),
-          SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                'Suburb'
-
-                ,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 12),
-          Container(
-            height: 40,
-            width: 300,
-            child: TextFormField(
-              controller: textControllerPlace,
-              decoration: const InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black12,
-                  ),
-                ),
-
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontSize: 14,
-                ),
-              ),
-
-              validator: (value) {
-
-                if (value.isEmpty) {
-
-                  return 'Please enter your suburb';
-
-                }
-
-
-                return null;
-              },
-            ),
-          ),
-          SizedBox(height: 6),
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                'Postcode'
-
-                ,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          Container(
-            height: 40,
-            width: 300,
-            child: TextFormField(
-
-              textAlignVertical: TextAlignVertical.top,
-              maxLines: 1,
-              controller: textControllerPostcode,
-              decoration: const InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black12,
-                  ),
-                ),
-                hintText: 'Postcode',
-                hintStyle: TextStyle(fontSize: 14, height: 0.5, color: Colors.black38),
-
-              ),
-            ),
-
-          ),
-          SizedBox(height: 20),
-          Container(
-            height: 40,
-            width: 300,
-            decoration: BoxDecoration(
-              color: Colors.grey[800],
-              borderRadius: BorderRadius.all(
-                Radius.circular(4.0),
-              ),
-            ),
-            child: FlatButton(
-              onPressed: () async {
-                final User user = await auth.currentUser;
-                final uid = user.uid;
-                if (_formKey1.currentState.validate()) {
-                  street = textControllerStreet.text;
-                  place = textControllerPlace.text;
-                  postcode = textControllerPostcode.text;
-
-
-
-                  firestore.collection("$uid").add({
-                    'Street': street,
-                    'Place': place,
-                    'Postcode': postcode,
-                  });
-
-                  // final prefs = await SharedPreferences.getInstance();
-                  // await prefs.setString('street', street);
-                  // await prefs.setString('place', place);
-                  // await prefs.setString('postcode', postcode);
-
-                  setState(() {
-
-                  });
-
-
-
-
-
-
-                  _scaffoldKey.currentState
-                      .showSnackBar(SnackBar(content: Text('Address saved', textAlign: TextAlign.center,)));
-                  _formKey1.currentState.reset();
-
-                }
-              },
-              child: Text(
-                'SAVE',
-                style: TextStyle(
-                    color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
-
-
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       key: _scaffoldKey,
@@ -268,13 +36,12 @@ class _InputPageState extends State<PersonalPage> {
         controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
-            itemExtent: 2060,
+            itemExtent: 1800,
             delegate: SliverChildListDelegate([
-
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: startScroll),
+                  SizedBox(height: startScroll,),
                   Container(
                     child: Center(
                       child: Text(
@@ -317,86 +84,46 @@ class _InputPageState extends State<PersonalPage> {
                       child: Container(
                         width: 300,
 
-                        child: Text('ACCOUNT DETAILS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 0.0),
-                    child: Opacity(
-                      opacity: 0.9,
-                      child: Container(
-                        width: 300,
-
-                        child: Text(fullName.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black87), ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    indent: 58 ,
-                    endIndent: 58,
-                    color: Colors.black,
-                    thickness: 0.75,
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    height: 30,
-                    width: 300,
-
-                    child: Text(
-                      '$email'
-                      , textAlign: TextAlign.left,
-                      style: TextStyle(
-                        height: 1,
-                        color: Colors.black87,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
+                        child: Text('CONTACT US', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
                       ),
                     ),
                   ),
                   SizedBox(height: 20),
-
-                  PersonalForm(aScaffoldKey: _scaffoldKey,),
-
-                  //getStreet(context),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 0.0),
-                    child: Opacity(
-                      opacity: 0.9,
-                      child: Container(
-                        width: 300,
-
-                        child: Text('ORDER HISTORY', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black87), ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    indent: 58 ,
-                    endIndent: 58,
-                    color: Colors.black,
-                    thickness: 0.75,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   Container(
-                    height: 30,
+                    height: 55,
                     width: 300,
 
                     child: Text(
-                      'You haven\'t placed any orders yet'
-                      , textAlign: TextAlign.left,
+                      'Got any questions, comments or feedback?'
+
+                      , textAlign: TextAlign.center,
                       style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
                         height: 2,
                         color: Colors.black87,
                       ),
                     ),
                   ),
+                  Container(
+                    height: 120,
+                    width: 300,
+
+                    child: Text(
+                      'Send us a pigeon at 148 Canning St, Melbourne and we\'ll generally reply within 2 yottaseconds!'
+
+                      , textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        height: 2,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  ContactUsForm(),
                   SizedBox(
-                    height: 100,
+                    height: 80,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -679,7 +406,7 @@ class _InputPageState extends State<PersonalPage> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  NewsLetterFormForPersonal(),
+                  NewsLetterFormForContact(),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 15.0,

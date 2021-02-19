@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import '../Model/Global_Variables.dart';
-import 'package:verossa/Model/Global_Variables.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:verossa/Model/NewsLetterForms.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'AppBar+Drawers.dart';
+import '../Model/Global_Variables.dart';
 import '../Controller/Global_Methods.dart';
 import 'ContactUs_Page.dart';
+import 'ReturnsPolicy_Page.dart';
 import 'Shipping_Page.dart';
-import 'AboutUs_Page.dart';
 
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
 
 
-class ReturnsPolicy extends StatefulWidget {
+
+class AboutUs extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
-class _InputPageState extends State<ReturnsPolicy> {
+class _InputPageState extends State<AboutUs> {
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -37,12 +38,12 @@ class _InputPageState extends State<ReturnsPolicy> {
         controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
-            itemExtent: 1750,
+            itemExtent: 1650,
             delegate: SliverChildListDelegate([
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: startScroll),
+                  SizedBox(height: startScroll,),
                   Container(
                     child: Center(
                       child: Text(
@@ -85,35 +86,51 @@ class _InputPageState extends State<ReturnsPolicy> {
                       child: Container(
                         width: 300,
 
-                        child: Text('RETURNS POLICY', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
+                        child: Text('ABOUT US', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
                       ),
                     ),
                   ),
                   SizedBox(height: 5),
-
-
-
-                  SizedBox(
-                    height: 10,
-                  ),
                   Container(
-                    height: 600,
+                    height: 210,
                     width: 300,
+                    child: Image(image: AssetImage('images/Verossa-Cameraman.jpg')),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
+                    child: Opacity(
+                      opacity: 0.9,
+                      child: Container(
+                        width: 300,
 
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris gravida euismod felis, vel ornare purus ultricies eu. Duis vel sagittis ligula. Sed odio est, commodo vel felis eu, sodales bibendum felis. Duis sit amet arcu sed tortor volutpat porta nec non elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi tempor, diam quis ultrices vehicula, turpis orci eleifend orci, ut aliquet neque ipsum vel erat. Curabitur vulputate diam sed quam tempus lacinia. Nulla facilisi. Quisque consequat euismod eros quis ultrices. Integer aliquet neque a nunc rutrum ullamcorper. Pellentesque in imperdiet justo. Praesent diam tellus, molestie et enim a, pharetra malesuada quam. Maecenas tincidunt, ipsum in pulvinar venenatis, ex elit faucibus ligula, lobortis vulputate ipsum lacus ut nisl.'
-                      'Nam elit mi, cursus nec elit in, laoreet aliquet erat. Sed ipsum leo, mattis ut risus et, pharetra eleifend.'
-                      , textAlign: TextAlign.left,
-                      style: TextStyle(
-                        height: 2,
-                        color: Colors.black87,
+                        child: Center(child: Text('VEROSSA VALEY', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), )),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 10,
+                  ),
+                  Container(
+                    height: 200,
+                    width: 300,
+
+                    child: Text(
+                    'Verossa Valey is a fictional company, made up to serve as a app development portfolio model. '
+                        'The \"prints\" or items in this app are not for sale, the photographs come from copyright free websites and titles were made up on the spot'
+                        , textAlign: TextAlign.center,
+                    style: TextStyle(
+                      height: 2,
+                      color: Colors.black87,
+                    ),
+                  ),
                   ),
 
+                  SizedBox(
+                    height: 35,
+                  ),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -395,7 +412,7 @@ class _InputPageState extends State<ReturnsPolicy> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  NewsLetterFormForReturn(),
+                  NewsLetterFormForAbout(),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 15.0,
@@ -466,5 +483,7 @@ class _InputPageState extends State<ReturnsPolicy> {
       drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
+
+
   }
 }

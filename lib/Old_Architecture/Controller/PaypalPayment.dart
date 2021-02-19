@@ -4,7 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'PaypalServices.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
-import 'package:verossa/Controller/PaypalServices.dart';
+import 'package:verossa/Old_Architecture/Controller/PaypalServices.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -12,9 +12,9 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
-import 'package:verossa/Model/Global_Variables.dart';
-import '../Model/Global_Variables.dart';
-import 'package:verossa/Controller/Global_Methods.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 
 
 

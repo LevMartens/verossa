@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:verossa/Model/Items_For_SearchDelegate.dart';
+import 'package:verossa/Old_Architecture/Model/Items_For_SearchDelegate.dart';
 import 'package:badges/badges.dart';
-import 'package:verossa/Model/Global_Variables.dart';
-import 'package:verossa/Controller/Global_Methods.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Controller/Drawer_Provider.dart';
-import 'package:verossa/View/Personal_Page.dart';
+import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
+import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
 
 

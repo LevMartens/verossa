@@ -2,33 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'AppBar+Drawers.dart';
-import 'Customer_Login_Screen.dart';
-import '../Model/Progress_Indicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'Create_Account_Screen.dart';
 import '../Model/Global_Variables.dart';
 import '../Controller/Global_Methods.dart';
-import 'package:verossa/Model/NewsLetterForms.dart';
+import 'Personal_Page.dart';
+import '../Model/Progress_Indicator.dart';
+import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'ContactUs_Page.dart';
 import 'ReturnsPolicy_Page.dart';
 import 'Shipping_Page.dart';
-import 'Personal_Page.dart';
 import 'AboutUs_Page.dart';
 
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
 
 
 
-
-
-class CreateAccount extends StatefulWidget {
+class CustomerLogin extends StatefulWidget {
 
 
   @override
   _InputPageState createState() => _InputPageState();
 }
-class _InputPageState extends State<CreateAccount> {
-
-  final _scrollController = ScrollController(keepScrollOffset: false);
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class _InputPageState extends State<CustomerLogin>
+     {
+final _auth = FirebaseAuth.instance;
+String email;
+String password;
+bool currentlyOnResetPassword = false;
+final _scrollController = ScrollController(keepScrollOffset: false);
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -38,6 +41,339 @@ class _InputPageState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
+
+    Widget getResetPassword(BuildContext context) {
+      if(currentlyOnResetPassword == false) {
+
+
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0, bottom: 0.0),
+              child: Opacity(
+                opacity: 0.9,
+                child: Container(
+                  width: 300,
+
+                  child: Text('CUSTOMER LOGIN', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 50.0),
+              child: Container(
+                  width: 300,
+                  child: Text('Email', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Container(
+                height: 40,
+                width: 300,
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: const InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 57.0),
+                child: Row(
+                  children: [
+                    Container(
+
+                        child: Text('Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 75.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          currentlyOnResetPassword = true;
+
+                          setState(() {
+
+                          });
+                        },
+                        child: Text('Forgot your password?', style: TextStyle(fontStyle: FontStyle.italic),),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Container(
+                height: 40,
+                width: 300,
+                child: TextFormField(
+                  obscureText: true,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: const InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Opacity(
+                opacity: 0.75,
+                child: Container(
+                  height: 40,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4.0),
+                    ),
+                  ),
+                  child: FlatButton(
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProgressIndi()),);
+
+                      try {
+                        final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                        if (user != null) {
+                          await getUserDetails();
+
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => PersonalPage()),);
+
+
+                        } } catch (e){
+                        Navigator.pop(context);
+                        _scaffoldKey.currentState
+                            .showSnackBar(SnackBar(content: Text('$e', textAlign: TextAlign.center,)));
+                        print(e);}
+
+
+                    },
+                    child: Text(
+                      'SIGN IN',
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 120.0, top: 20, bottom: 40),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreateAccount()),
+                  );
+                },
+                child: Text('New Customer? Sign up →'),
+              ),
+            ),
+
+
+          ],
+        );
+      } else {
+        final _formKey1 = GlobalKey<FormState>();
+        final textControllerEmail = TextEditingController();
+
+        return Form(
+          key: _formKey1,
+          child: Column(
+
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0, bottom: 0.0),
+                child: Opacity(
+                  opacity: 0.9,
+                  child: Container(
+                    width: 300,
+
+                    child: Text('CUSTOMER LOGIN', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 0.0),
+                child: Opacity(
+                  opacity: 0.9,
+                  child: Container(
+                    width: 300,
+
+                    child: Text('RESET PASSWORD', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black87), ),
+                  ),
+                ),
+              ),
+              Divider(
+                indent: 58 ,
+                endIndent: 58,
+                color: Colors.black,
+                thickness: 0.75,
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 3.0),
+                child: Container(
+                  height: 30,
+                  width: 300,
+
+                  child: Text(
+                    'Email'
+
+                    ,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      height: 2,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12),
+              Container(
+                height: 40,
+                width: 300,
+                child: TextFormField(
+                  controller: textControllerEmail,
+                  decoration: const InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black12,
+                      ),
+                    ),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+                      color: Colors.black38,
+                      fontSize: 14,
+                    ),
+                  ),
+
+                  validator: (value) {
+
+                    if (value.isEmpty) {
+
+                      return 'Please enter your email';
+
+                    }
+                    if (value.contains('@') == false) {
+
+                      return 'Email not valid';
+
+                    }
+                    if (value.contains('.') == false) {
+
+                      return 'Email not valid';
+
+                    }
+
+
+                    return null;
+                  },
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                height: 40,
+                width: 300,
+                child: Text(
+                'We will send you an email to reset your password.',
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black87,
+                ),
+              ),),
+              SizedBox(height: 15),
+              Container(
+                height: 40,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(4.0),
+                  ),
+                ),
+                child: FlatButton(
+                  onPressed: () async {
+                    // final User user = await auth.currentUser;
+                    // final uid = user.uid;
+                    if (_formKey1.currentState.validate()) {
+                      
+                      auth.sendPasswordResetEmail(email: textControllerEmail.text);
+
+
+
+
+
+
+
+                      currentlyOnResetPassword = false;
+
+
+                      setState(() {
+
+
+                      });
+
+
+
+
+                      _scaffoldKey.currentState
+                          .showSnackBar(SnackBar(content: Text('Password reset email sent, please check your inbox', textAlign: TextAlign.center,)));
+                      _formKey1.currentState.reset();
+
+                    }
+                  },
+                  child: Text(
+                    'SUBMIT',
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                height: 30,
+                width: 300,
+                child: GestureDetector(
+                  onTap: () {
+                    currentlyOnResetPassword = false;
+
+                    setState(() {
+
+                    });
+                  },
+                  child: Text('or Cancel', style: TextStyle(),),
+                ),
+              ),
+            ],
+          ),
+        );
+
+      }
+    }
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     return  Scaffold(
       extendBodyBehindAppBar: true,
@@ -47,7 +383,7 @@ class _InputPageState extends State<CreateAccount> {
         controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
-            itemExtent: 1700,
+            itemExtent: 1550,
             delegate: SliverChildListDelegate([
               Container(
                 color: Colors.white70,
@@ -87,224 +423,7 @@ class _InputPageState extends State<CreateAccount> {
                     ],
                   ),
                   SizedBox(height: 10),
-
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40.0, bottom: 0.0),
-                        child: Opacity(
-                          opacity: 0.9,
-                          child: Container(
-                            width: 300,
-
-                            child: Text('CREATE ACCOUNT', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 50.0),
-                        child: Container(
-                            width: 300,
-                            child: Text('First Name', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            onChanged: (value) {
-                              firstName = value;
-                            },
-                            autofillHints: [AutofillHints.givenName],
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20.0),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 57.0),
-                          child: Row(
-                            children: [
-                              Container(
-
-                                  child: Text('Last Name', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)),
-
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              lastName = value;
-                            },
-                            autofillHints: [AutofillHints.familyName],
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20.0),
-                        child: Container(
-                            width: 300,
-                            child: Text('Email', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            onChanged: (value) {
-                              email = value;
-                            },
-                            autofillHints: [AutofillHints.email],
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20.0),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 57.0),
-                          child: Row(
-                            children: [
-                              Container(
-
-                                  child: Text('Password', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)),
-
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                            obscureText: true,
-                            onChanged: (value) {
-                              password = value;
-                            },
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: Opacity(
-                          opacity: 0.75,
-                          child: Container(
-                            height: 40,
-                            width: 300,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(4.0),
-                              ),
-                            ),
-                            child: FlatButton(
-                              onPressed: () async {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ProgressIndi()),);
-
-
-
-                                try {
-                                  final newUser = await auth
-                                      .createUserWithEmailAndPassword(
-                                      email: email, password: password);
-                                  if (newUser != null) {
-
-
-
-                                    await addNewUserDetailsToFireStore();
-
-                                    await getUserDetails();
-                                    Navigator.pop(context);
-
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => PersonalPage()),);
-
-
-                                  }
-                                } catch (e) {
-                                  Navigator.pop(context);
-                                  _scaffoldKey.currentState
-                                      .showSnackBar(SnackBar(content: Text('$e', textAlign: TextAlign.center,)));
-                                  print(e);}
-                              },
-                              child: Text(
-                                'SIGN UP',
-                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 120.0, top: 20, bottom: 40),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CustomerLogin()),
-                            );
-                          },
-                          child: Text('Returning Customer? Sign In →'),
-                        ),
-                      ),
-
-
-                    ],
-                  ),
-
-
-
-
-
-
-
-
-
-
-
-
+                  getResetPassword(context),
                   SizedBox(
                     height: 35,
                   ),
@@ -589,7 +708,7 @@ class _InputPageState extends State<CreateAccount> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  NewsLetterFormForCreate(),
+                  NewsLetterFormForLogIn(),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 15.0,
@@ -663,5 +782,4 @@ class _InputPageState extends State<CreateAccount> {
   }
 
 
- 
 }

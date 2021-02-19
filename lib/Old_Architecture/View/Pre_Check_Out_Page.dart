@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:verossa/Controller/Global_Methods.dart';
+import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import '../Model/Global_Variables.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:verossa/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:verossa/Controller/PaypalPayment.dart';
+import 'package:verossa/Old_Architecture/Controller/PaypalPayment.dart';
 import 'Thank_You_For_Order_Page.dart';
 
 

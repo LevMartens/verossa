@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:verossa/Model/Contact_Us_From.dart';
-import 'package:verossa/Model/NewsLetterForms.dart';
-import 'AppBar+Drawers.dart';
 import '../Model/Global_Variables.dart';
-import '../Controller/Global_Methods.dart';
-import 'ReturnsPolicy_Page.dart';
-import 'Shipping_Page.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'AboutUs_Page.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
+import 'AppBar+Drawers.dart';
+import '../Controller/Global_Methods.dart';
+import 'ContactUs_Page.dart';
+import 'ReturnsPolicy_Page.dart';
 
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
 
-class ContactUs extends StatefulWidget {
+class Shipping extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
-class _InputPageState extends State<ContactUs> {
+class _InputPageState extends State<Shipping> {
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
@@ -36,12 +36,12 @@ class _InputPageState extends State<ContactUs> {
         controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
-            itemExtent: 1800,
+            itemExtent: 1750,
             delegate: SliverChildListDelegate([
               Container(
                 color: Colors.white70,
                 child: Column(children: <Widget>[
-                  SizedBox(height: startScroll,),
+                  SizedBox(height: startScroll),
                   Container(
                     child: Center(
                       child: Text(
@@ -84,47 +84,36 @@ class _InputPageState extends State<ContactUs> {
                       child: Container(
                         width: 300,
 
-                        child: Text('CONTACT US', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
+                        child: Text('SHIPPING', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Container(
-                    height: 55,
-                    width: 300,
+                  SizedBox(height: 5),
 
-                    child: Text(
-                      'Got any questions, comments or feedback?'
 
-                      , textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        height: 2,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 120,
-                    width: 300,
 
-                    child: Text(
-                      'Send us a pigeon at 148 Canning St, Melbourne and we\'ll generally reply within 2 yottaseconds!'
-
-                      , textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        height: 2,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  ContactUsForm(),
                   SizedBox(
-                    height: 80,
+                    height: 10,
                   ),
+                  Container(
+                    height: 600,
+                    width: 300,
+
+                    child: Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris gravida euismod felis, vel ornare purus ultricies eu. Duis vel sagittis ligula. Sed odio est, commodo vel felis eu, sodales bibendum felis. Duis sit amet arcu sed tortor volutpat porta nec non elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi tempor, diam quis ultrices vehicula, turpis orci eleifend orci, ut aliquet neque ipsum vel erat. Curabitur vulputate diam sed quam tempus lacinia. Nulla facilisi. Quisque consequat euismod eros quis ultrices. Integer aliquet neque a nunc rutrum ullamcorper. Pellentesque in imperdiet justo. Praesent diam tellus, molestie et enim a, pharetra malesuada quam. Maecenas tincidunt, ipsum in pulvinar venenatis, ex elit faucibus ligula, lobortis vulputate ipsum lacus ut nisl.'
+                          'Nam elit mi, cursus nec elit in, laoreet aliquet erat. Sed ipsum leo, mattis ut risus et, pharetra eleifend nisl. Nam semper semper vehicula. In efficitur varius dui, id accumsan elit tempor ac. Integer luctus lacinia erat et pretium. Integer sed metus a enim iaculis pretium. Mauris ornare fermentum convallis. In hendrerit blandit tincidunt. Vestibulum tincidunt purus at scelerisque dictum. Morbi finibus congue nibh quis mollis.'
+                          'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut eget nunc vestibulum, malesuada arcu et, posuere metus. Aenean eget turpis quis purus euismod ultricies at a velit. Nullam egestas lectus neque, et suscipit est ultricies sit amet. Nunc ac nibh pharetra, gravida dui eget, scelerisque metus. In mollis nisi sit amet tellus convallis dapibus. Fusce non egestas magna. Suspendisse iaculis suscipit velit. Duis ornare orci ex, vitae pulvinar diam viverra et. Donec rhoncus posuere lorem in semper. Nam est turpis, tempus non dapibus vitae, sodales ac leo.'
+                      , textAlign: TextAlign.left,
+                      style: TextStyle(
+                        height: 2,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -406,7 +395,7 @@ class _InputPageState extends State<ContactUs> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  NewsLetterFormForContact(),
+                  NewsLetterFormForShip(),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 15.0,
@@ -477,7 +466,5 @@ class _InputPageState extends State<ContactUs> {
       drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
       endDrawer: MyEndDrawer(),
     );
-
-
   }
 }

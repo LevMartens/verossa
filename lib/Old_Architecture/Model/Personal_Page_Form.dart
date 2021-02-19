@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:verossa/Controller/Global_Methods.dart';
+import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'Global_Variables.dart';
-import 'package:verossa/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 
 
 

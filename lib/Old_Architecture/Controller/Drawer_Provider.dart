@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 
 class DrawerProvider extends ChangeNotifier {
 

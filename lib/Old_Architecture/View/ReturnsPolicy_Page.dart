@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../Model/Global_Variables.dart';
-import 'package:verossa/Model/Global_Variables.dart';
-import 'AboutUs_Page.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:verossa/Model/NewsLetterForms.dart';
+import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'AppBar+Drawers.dart';
 import '../Controller/Global_Methods.dart';
 import 'ContactUs_Page.dart';
-import 'ReturnsPolicy_Page.dart';
+import 'Shipping_Page.dart';
+import 'AboutUs_Page.dart';
 
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
 
-class Shipping extends StatefulWidget {
+
+class ReturnsPolicy extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
-class _InputPageState extends State<Shipping> {
+class _InputPageState extends State<ReturnsPolicy> {
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
@@ -84,7 +85,7 @@ class _InputPageState extends State<Shipping> {
                       child: Container(
                         width: 300,
 
-                        child: Text('SHIPPING', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
+                        child: Text('RETURNS POLICY', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87), ),
                       ),
                     ),
                   ),
@@ -101,8 +102,7 @@ class _InputPageState extends State<Shipping> {
 
                     child: Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris gravida euismod felis, vel ornare purus ultricies eu. Duis vel sagittis ligula. Sed odio est, commodo vel felis eu, sodales bibendum felis. Duis sit amet arcu sed tortor volutpat porta nec non elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi tempor, diam quis ultrices vehicula, turpis orci eleifend orci, ut aliquet neque ipsum vel erat. Curabitur vulputate diam sed quam tempus lacinia. Nulla facilisi. Quisque consequat euismod eros quis ultrices. Integer aliquet neque a nunc rutrum ullamcorper. Pellentesque in imperdiet justo. Praesent diam tellus, molestie et enim a, pharetra malesuada quam. Maecenas tincidunt, ipsum in pulvinar venenatis, ex elit faucibus ligula, lobortis vulputate ipsum lacus ut nisl.'
-                          'Nam elit mi, cursus nec elit in, laoreet aliquet erat. Sed ipsum leo, mattis ut risus et, pharetra eleifend nisl. Nam semper semper vehicula. In efficitur varius dui, id accumsan elit tempor ac. Integer luctus lacinia erat et pretium. Integer sed metus a enim iaculis pretium. Mauris ornare fermentum convallis. In hendrerit blandit tincidunt. Vestibulum tincidunt purus at scelerisque dictum. Morbi finibus congue nibh quis mollis.'
-                          'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut eget nunc vestibulum, malesuada arcu et, posuere metus. Aenean eget turpis quis purus euismod ultricies at a velit. Nullam egestas lectus neque, et suscipit est ultricies sit amet. Nunc ac nibh pharetra, gravida dui eget, scelerisque metus. In mollis nisi sit amet tellus convallis dapibus. Fusce non egestas magna. Suspendisse iaculis suscipit velit. Duis ornare orci ex, vitae pulvinar diam viverra et. Donec rhoncus posuere lorem in semper. Nam est turpis, tempus non dapibus vitae, sodales ac leo.'
+                      'Nam elit mi, cursus nec elit in, laoreet aliquet erat. Sed ipsum leo, mattis ut risus et, pharetra eleifend.'
                       , textAlign: TextAlign.left,
                       style: TextStyle(
                         height: 2,
@@ -395,7 +395,7 @@ class _InputPageState extends State<Shipping> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  NewsLetterFormForShip(),
+                  NewsLetterFormForReturn(),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 15.0,

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:verossa/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 
 
 
