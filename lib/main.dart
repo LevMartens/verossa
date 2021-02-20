@@ -15,6 +15,8 @@ import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
 import 'package:verossa/Old_Architecture/View/Thank_You_For_Order_Page.dart';
 import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
+import 'package:verossa/Injection_Container.dart' as di;
+import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
 
 // reimplement scaffoldKey and appbar like homePage.dart and itemScreen2. DONE
 // add _scrollController.jumpTo(0) to every navigation. DONE
@@ -52,6 +54,7 @@ import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   await Firebase.initializeApp();
   runApp(Webshop());
 }
@@ -66,7 +69,8 @@ class Webshop extends StatelessWidget {
 
     return MultiProvider(
         providers: [
-
+          ChangeNotifierProvider<AppBarProvider>(
+              create: (context) => di.sl<AppBarProvider>()),
           ChangeNotifierProvider<DrawerProvider>(
               create: (context) => DrawerProvider()),
 

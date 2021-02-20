@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
 import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
 import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
-
+import 'package:verossa/Injection_Container.dart' as di;
 
 
 class VerossaAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -50,10 +50,10 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
     }
 
 
-    return ChangeNotifierProvider<DrawerProvider>(
-        create: (context) => DrawerProvider(),
-        child: Consumer<DrawerProvider>(
-            builder: (context, provider, child) => AppBar(
+    return ChangeNotifierProvider<AppBarProvider>(
+      create: (context) => di.sl<AppBarProvider>(),
+      child: Consumer<AppBarProvider>(
+          builder: (context, provider, child) => AppBar(
 
               leading: IconButton(
                 icon: Icon(
@@ -127,3 +127,6 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
             )));
   }
 }
+
+
+
