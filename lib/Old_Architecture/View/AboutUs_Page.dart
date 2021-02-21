@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'AppBar+Drawers.dart';
 import '../Model/Global_Variables.dart';
@@ -9,7 +10,7 @@ import 'ContactUs_Page.dart';
 import 'ReturnsPolicy_Page.dart';
 import 'Shipping_Page.dart';
 
-import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
+
 
 
 

@@ -8,7 +8,7 @@ import '../Controller/Global_Methods.dart';
 import 'package:provider/provider.dart';
 import '../Controller/Drawer_Provider.dart';
 import 'Personal_Page.dart';
-import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
 
 
@@ -169,10 +169,10 @@ class MyEndDrawerState extends State<MyEndDrawer> {
   void dispose() {
     super.dispose();
 
-    Future.delayed(const Duration(milliseconds: 200), () {
-      Provider.of<AppBarProvider>(contextForBadgeProv, listen: false)
-          .cartToCart();
-    });
+    // Future.delayed(const Duration(milliseconds: 200), () {
+    //   Provider.of<AppBarProvider>(contextForBadgeProv, listen: false)
+    //       .cartToCart();
+    // });
 
 
     if (cartItems.isNotEmpty == true) {

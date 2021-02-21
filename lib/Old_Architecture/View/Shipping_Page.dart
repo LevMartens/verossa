@@ -10,7 +10,7 @@ import '../Controller/Global_Methods.dart';
 import 'ContactUs_Page.dart';
 import 'ReturnsPolicy_Page.dart';
 
-import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
+import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 
 class Shipping extends StatefulWidget {
   @override

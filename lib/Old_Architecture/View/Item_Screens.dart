@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'Item_Detail_Screens.dart';
 import 'AppBar+Drawers.dart';
 import '../Model/Global_Variables.dart';
@@ -12,7 +14,7 @@ import 'AboutUs_Page.dart';
 import 'ReturnsPolicy_Page.dart';
 import 'Shipping_Page.dart';
 
-import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Widget.dart';
+import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 
 
 /// Screen 1 ----------------------------------------
@@ -103,6 +105,8 @@ class _InputPageState extends State<Item1Screen> {
   @override
   Widget build(BuildContext context) {
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
+
+
 
     String priceItem1 = currency['item1Small'];
     String priceItem2 = currency['item2Small'];

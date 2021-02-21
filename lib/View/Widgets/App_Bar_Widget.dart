@@ -8,8 +8,11 @@ import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
 import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
-import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Widget.dart';
+
 import 'package:verossa/Injection_Container.dart' as di;
+
+import '../../Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
 
 class VerossaAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -38,22 +41,19 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
   @override
   Widget build(BuildContext context) {
 
-    int cartBadgeCount =
-        Provider.of<AppBarProvider>(context, listen: true).cartBadgeCount;
+    // int cartBadgeCount =
+    //     Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
 
 
-    bool _showBadge() {
-      if (cartBadgeCountNoProv > 0) {
-        return true;
-      }
-      return false;
-    }
+    // bool _showBadge() {
+    //   if (cartBadgeCount > 0) {
+    //     return true;
+    //   }
+    //   return false;
+    // }
 
 
-    return ChangeNotifierProvider<AppBarProvider>(
-      create: (context) => di.sl<AppBarProvider>(),
-      child: Consumer<AppBarProvider>(
-          builder: (context, provider, child) => AppBar(
+    return  AppBar(
 
               leading: IconButton(
                 icon: Icon(
@@ -83,26 +83,7 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: 160.0),
-                            child: Badge(
-                              animationType: BadgeAnimationType.scale,
-                              animationDuration:
-                              Duration(milliseconds: 300),
-                              borderRadius: BorderRadius.circular(5),
-                              badgeColor: Colors.white70,
-                              shape: BadgeShape.square,
-                              position:
-                              BadgePosition.topEnd(top: -2, end: 3),
-                              showBadge: _showBadge(),
-                              badgeContent: Text(cartBadgeCount
-                                  .toString()),
-
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.shopping_cart,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
+                            child: CartBadgeWidget(),
                           ),
                           Padding(
                             padding:
@@ -124,9 +105,15 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
               titleSpacing: 0.0,
               backgroundColor: Color.fromRGBO(255, 255, 255, 0.9),
 
-            )));
+            );
   }
 }
 
 
 
+// ChangeNotifierProvider<CartBadgeProvider>(
+// create: (context) => di.sl<CartBadgeProvider>(),
+// child: Consumer<CartBadgeProvider>(
+// builder: (context, provider, child) =>
+
+//));

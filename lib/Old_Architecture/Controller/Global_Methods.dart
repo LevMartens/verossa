@@ -4,17 +4,19 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'dart:async';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
+import '../../main.dart';
 import 'Drawer_Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:verossa/Old_Architecture/Model/User_Details.dart';
 import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
 
-import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
+
 
 
 
@@ -412,6 +414,9 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
   print('addCartItem() called');
   final prefs = await SharedPreferences.getInstance();
 
+
+  var newCount = cartBadge +1;
+
   var g = prefs.getInt(itemID);
   if (g == null) {
     g = 0;
@@ -460,7 +465,7 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
       cartBadgeIncrease();
       ///duration was 200 and crashed by rapid tapping
       Future.delayed(const Duration(milliseconds: 0), () {
-        Provider.of<AppBarProvider>(context, listen: false).cartToCart();
+        Provider.of<CartBadgeProvider>(context, listen: false).updateCartBadgeCountWith(newCount);
       });
 
 
@@ -476,8 +481,9 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
       setCurrencyForSubtotalTile();
       cartBadgeIncrease();
       ///duration was 200 and crashed by rapid tapping
+      
       Future.delayed(const Duration(milliseconds: 0), () {
-        Provider.of<AppBarProvider>(context, listen: false).cartToCart();
+        Provider.of<CartBadgeProvider>(context, listen: false).updateCartBadgeCountWith(newCount);
       });
 
 
@@ -551,7 +557,7 @@ Future<void> setUpAfterStartup(BuildContext context, ) async {
   }
   await cartBadgeAfterStartup();
 
-  Provider.of<AppBarProvider>(contextForBadgeProv, listen: false).cartToCart();
+  Provider.of<CartBadgeProvider>(contextForBadgeProv, listen: false).getLastCardBadgeCount();
   if (await auth.currentUser != null) {
     userLoggedIn = true;
     getUserDetails();

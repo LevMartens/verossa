@@ -7,7 +7,7 @@ import 'package:verossa/Old_Architecture/View/Item_Screens.dart';
 import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
-import 'Pages/Home/UI/HomePage.dart';
+import 'package:verossa/View/Pages/Home/UI/HomePage.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
 import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
@@ -16,7 +16,7 @@ import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
 import 'package:verossa/Old_Architecture/View/Thank_You_For_Order_Page.dart';
 import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
 import 'package:verossa/Injection_Container.dart' as di;
-import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
 // reimplement scaffoldKey and appbar like homePage.dart and itemScreen2. DONE
 // add _scrollController.jumpTo(0) to every navigation. DONE
@@ -51,6 +51,7 @@ import 'package:verossa/Features/App_Bar/Presentation/App_Bar_Provider.dart';
 // TODO: when you perform last code check, look at some flutter code examples on github and firebase etc and see if it compares
 // TODO: share button needs to share portfolio website.
 
+var cartBadge = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,8 +70,8 @@ class Webshop extends StatelessWidget {
 
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider<AppBarProvider>(
-              create: (context) => di.sl<AppBarProvider>()),
+          ChangeNotifierProvider<CartBadgeProvider>(
+              create: (context) => di.sl<CartBadgeProvider>()),
           ChangeNotifierProvider<DrawerProvider>(
               create: (context) => DrawerProvider()),
 
@@ -78,6 +79,9 @@ class Webshop extends StatelessWidget {
         child: Consumer<DrawerProvider>(
           builder: (context, providerMyDC, child) {
 
+            int cartBadgeCount =
+                Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
+            cartBadge = cartBadgeCount;
 
             return MaterialApp(
               debugShowCheckedModeBanner: false,

@@ -1,4 +1,4 @@
-import 'package:verossa/Features/App_Bar/Domain/Entities/Cart_Badge.dart';
+import 'package:verossa/Features/Cart_Badge/Domain/Entities/Cart_Badge.dart';
 import 'package:meta/meta.dart';
 
 class CartBadgeModel extends CartBadge {
