@@ -63,7 +63,7 @@ class _CartBadgeWidgetState extends State<CartBadgeWidget> {
               child: IconButton(
                 icon: Icon(
                   Icons.shopping_cart,
-                  color: Colors.black,
+                  color: Theme.of(context).accentColor,
                 ),
               ),
             )));

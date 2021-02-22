@@ -223,6 +223,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_statusbarcolor:
+    dependency: transitive
+    description:
+      name: flutter_statusbarcolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.3"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -422,6 +429,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.25.0"
   share:
     dependency: "direct main"
     description:
@@ -490,6 +504,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0-nullsafety.6"
+  stacked_themes:
+    dependency: "direct main"
+    description:
+      name: stacked_themes
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2+2"
   stream_channel:
     dependency: transitive
     description:

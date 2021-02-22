@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:stacked_themes/stacked_themes.dart';
 import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
@@ -11,10 +12,14 @@ import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
 import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
 import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
+import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
 
+// TextStyle(
+// color: Colors.white60,
+// fontWeight: FontWeight.bold)
 
-
-
+//getThemeManager(context)
+//                                       .toggleDarkLightTheme();
 
 class HomePage extends StatefulWidget {
   @override
@@ -79,19 +84,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white70,
                               child: Column(children: <Widget>[
                                 SizedBox(height: startScroll,),
-                                Container(
-                                  child: Center(
-                                    child: Text(
-                                      'FREE SHIPPING ON ORDERS OVER \$150',
-                                      style: TextStyle(
-                                          color: Colors.white60,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  color: Colors.black,
-                                  height: 25,
-                                  width: 900,
-                                ),
+                                FreeShippingBanner(),
                                 SizedBox(height: 20,),
                                 Column(
                                   children: [

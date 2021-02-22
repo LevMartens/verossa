@@ -41,25 +41,13 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
   @override
   Widget build(BuildContext context) {
 
-    // int cartBadgeCount =
-    //     Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
-
-
-    // bool _showBadge() {
-    //   if (cartBadgeCount > 0) {
-    //     return true;
-    //   }
-    //   return false;
-    // }
-
-
-    return  AppBar(
+    return AppBar(
 
               leading: IconButton(
                 icon: Icon(
                   Icons.menu,
                   size: 35,
-                  color: Colors.black,
+                  color: Theme.of(context).accentColor,
                 ),
                 onPressed: () => aScaffoldKey.currentState.openDrawer(),
               ),
@@ -68,8 +56,10 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                   Text(
                     'MENU',
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
+                        color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
                   ),
+                  Spacer(),
+
                 ],
               ),
               actions: <Widget>[
@@ -81,8 +71,9 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                       },
                       child: Row(
                         children: [
+
                           Padding(
-                            padding: EdgeInsets.only(left: 160.0),
+                            padding: EdgeInsets.only(left: 0.0),
                             child: CartBadgeWidget(),
                           ),
                           Padding(
@@ -91,7 +82,7 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                             child: Text(
                               'CART',
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: Theme.of(context).accentColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20),
                             ),
@@ -103,7 +94,7 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                 )
               ],
               titleSpacing: 0.0,
-              backgroundColor: Color.fromRGBO(255, 255, 255, 0.9),
+              backgroundColor: Theme.of(context).secondaryHeaderColor,
 
             );
   }

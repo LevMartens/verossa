@@ -2,6 +2,7 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stacked_themes/stacked_themes.dart';
 import 'package:verossa/Core/Network/Network_Info.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart';
 
@@ -14,30 +15,31 @@ import 'package:verossa/Features/Cart_Badge/Domain/Repositories/Cart_Badge_Repos
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
 //import 'features/number_trivia/domain/usecases/get_random_number_trivia.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
+
+import 'Features/Items/Presentation/Item_Factory.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - Number Trivia
+//register item models for each item / populate with content
 
-// Bloc
-  sl.registerFactory(
-        () {
-          print('Here');
-          return CartBadgeProvider(
+  sl.registerSingleton(ThemeService.getInstance());
+
+  sl.registerFactory(() => CartBadgeProvider(
       count: sl<GetCartBadgeNumber>(),
-      number: sl<SetCartBadgeNumber>(),//sl(),
+      number: sl<SetCartBadgeNumber>(),
       inputConverter: sl(),
 
-    );
-        },
+    ),
   );
 
+  sl.registerFactory(() => ItemProvider(factory: sl<ItemFactory>()));
+
+  sl.registerLazySingleton(() => ItemFactory());
+
   // Use cases
-  sl.registerLazySingleton(() {
-    print('or here');
-    return GetCartBadgeNumber(sl<CartBadgeRepository>());
-  });
+  sl.registerLazySingleton(() => GetCartBadgeNumber(sl<CartBadgeRepository>()));
   sl.registerLazySingleton(() => SetCartBadgeNumber(sl<CartBadgeRepository>()));
 
 
