@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 
 import 'package:verossa/Core/Error/Failures.dart';
-import 'package:verossa/Core/Error/Exeptions.dart';
+import 'package:verossa/Core/Error/Exceptions.dart';
 import 'package:verossa/Core/Network/Network_Info.dart';
 
 import 'package:verossa/Features/Cart_Badge/Data/Data_Sources/Cart_Badge_Local_Data_Source.dart';

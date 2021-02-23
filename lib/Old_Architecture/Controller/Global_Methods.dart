@@ -89,6 +89,8 @@ Future<void> getCurrencyData(int i) async {
   var eur = jsonDecode(data)['rates']['EUR'];
   var jpy = jsonDecode(data)['rates']['JPY'];
 
+  print(usd);
+
 
   cur.add(1);
   cur.add(usd);
@@ -97,6 +99,7 @@ Future<void> getCurrencyData(int i) async {
   cur.add(gbp);
   cur.add(eur);
   cur.add(jpy);
+  print(cur);
 
 
     

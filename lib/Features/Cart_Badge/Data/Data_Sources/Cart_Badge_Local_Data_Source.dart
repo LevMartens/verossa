@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:verossa/Core/Error/Exeptions.dart';
+import 'package:verossa/Core/Error/Exceptions.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Entities/Cart_Badge.dart';

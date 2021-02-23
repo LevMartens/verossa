@@ -17,6 +17,11 @@ import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 
+import 'Features/Currency_Converter/Data/Data_Sources/Currency_Remote_Data_Source.dart';
+import 'Features/Currency_Converter/Data/Repositories/Currency_Repository_Impl.dart';
+import 'Features/Currency_Converter/Domain/Use_Cases/Get_Exchange_Rates.dart';
+import 'package:verossa/Features/Currency_Converter/Domain/Repositories/Exchange_Rate_Repository.dart';
+import 'Features/Currency_Converter/Presentation/Currency_Converter_Provider.dart';
 import 'Features/Items/Presentation/Item_Factory.dart';
 
 final sl = GetIt.instance;
@@ -33,6 +38,12 @@ Future<void> init() async {
 
     ),
   );
+  sl.registerFactory(() => ExchangeRatesProvider(
+    rates: sl<GetExchangeRates>(),
+    inputConverter: sl(),
+
+  ),
+  );
 
   sl.registerFactory(() => ItemProvider(factory: sl<ItemFactory>()));
 
@@ -41,7 +52,7 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => GetCartBadgeNumber(sl<CartBadgeRepository>()));
   sl.registerLazySingleton(() => SetCartBadgeNumber(sl<CartBadgeRepository>()));
-
+  sl.registerLazySingleton(() => GetExchangeRates(sl<ExchangeRatesRepository>()));
 
 
 
@@ -53,10 +64,17 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<ExchangeRatesRepository>(
+        () => ExchangeRatesRepositoryImpl(
+      remoteDataSource: sl<ExchangeRatesRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
   // Data sources
-  // sl.registerLazySingleton<NumberTriviaRemoteDataSource>(
-  //       () => NumberTriviaRemoteDataSourceImpl(client: sl()),
-  // );
+  sl.registerLazySingleton<ExchangeRatesRemoteDataSource>(
+        () => ExchangeRatesRemoteDataSourceImpl(client: sl()),
+  );
 
   sl.registerLazySingleton<CartBadgeLocalDataSource>(
         () => CartBadgeLocalDataSourceImpl(sharedPreferences: sl()),
