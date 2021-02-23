@@ -9,6 +9,7 @@ abstract class IItemBaseModel {
   int itemIDForBW;
   int itemIDForCF;
   String title;
+  String titleAllCaps;
   String description;
   AssetImage itemImage;
   AssetImage itemImageCF;
@@ -23,6 +24,7 @@ class ItemModel extends IItemBaseModel {
   int itemIDForNormal;
   int itemIDForBW;
   int itemIDForCF;
+  String titleAllCaps;
   String title;
   String description;
   AssetImage itemImage;
@@ -35,6 +37,7 @@ class ItemModel extends IItemBaseModel {
     @required this.itemIDForBW,
     @required this.itemIDForCF,
     @required this.title,
+    @required this.titleAllCaps,
     @required this.description,
     @required this.itemImage,
     @required this.itemImageBW,

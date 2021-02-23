@@ -3,6 +3,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
+import 'package:verossa/Features/Items/Presentation/Widgets/Item_Page_Widget.dart';
+import 'package:verossa/Model/Items.dart';
 import 'package:verossa/Old_Architecture/View/Item_Detail_Screens.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture//Model/Global_Variables.dart';
@@ -13,16 +16,18 @@ import 'package:verossa/Old_Architecture/View/ContactUs_Page.dart';
 import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
 import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
 import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
-
+import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
 import 'package:verossa/View/Widgets/Verossa_Logo.dart';
 
 class ItemPage extends StatefulWidget {
+ItemModel itemModel;
 
+ItemPage({this.itemModel});
 
   @override
-  _InputPageState createState() => _InputPageState();
+  _InputPageState createState() => _InputPageState(itemModel: itemModel);
 }
 
 class _InputPageState extends State<ItemPage> {
@@ -32,6 +37,10 @@ class _InputPageState extends State<ItemPage> {
 
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  ItemModel itemModel;
+
+  _InputPageState({this.itemModel});
+
 
 
 
@@ -53,8 +62,12 @@ class _InputPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
+
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
 
+
+
+    print('itempage build');
 
 
     String priceItem1 = currency['item1Small'];
@@ -85,7 +98,7 @@ class _InputPageState extends State<ItemPage> {
                   VerossaLogo(),
                   SizedBox(height: 10),
 
-
+                  ItemPageWidget(itemModel: itemModel),
 
                   SizedBox(
                     height: 80,

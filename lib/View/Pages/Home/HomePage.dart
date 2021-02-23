@@ -13,6 +13,7 @@ import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
 import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
+import 'package:verossa/View/Widgets/Verossa_Logo.dart';
 
 // TextStyle(
 // color: Colors.white60,
@@ -86,26 +87,7 @@ class _HomePageState extends State<HomePage> {
                                 SizedBox(height: startScroll,),
                                 FreeShippingBanner(),
                                 SizedBox(height: 20,),
-                                Column(
-                                  children: [
-                                    Container(
-                                      child: Center(
-                                        child: Text('VERØSSA', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Center(
-                                        child: Text('VALLEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
-                                      ),
-                                    ),
-                                    Container(
-
-                                      child: Center(
-                                        child: Text('PHOTOGRAPHY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 20),),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                VerossaLogo(),
                                 SizedBox(height: 10),
                                 Container(
                                   child: SizedBox(
@@ -179,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                                           print("Container 1 clicked");
 
                                           Navigator.of(context)
-                                              .pushReplacementNamed('item1FromHome');
+                                              .pushReplacementNamed('ItemPage1');
 
                                           _scrollController.jumpTo(0);
                                         },
@@ -243,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                                         onTap: () {
                                           print("Container 2 clicked");
                                           Navigator.of(context)
-                                              .pushReplacementNamed('item2FromHome');
+                                              .pushReplacementNamed('ItemPage2');
                                           _scrollController.jumpTo(0);
 
 
@@ -323,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                                           print("Container 3 clicked");
 
                                           Navigator.of(context)
-                                              .pushReplacementNamed('item3FromHome');
+                                              .pushReplacementNamed('ItemPage3');
                                           _scrollController.jumpTo(0);
                                         },
                                         child: Container(
@@ -390,7 +372,7 @@ class _HomePageState extends State<HomePage> {
                                         onTap: () {
                                           print("Container 4 clicked");
                                           Navigator.of(context)
-                                              .pushReplacementNamed('item4FromHome');
+                                              .pushReplacementNamed('ItemPage4');
                                           _scrollController.jumpTo(0);
                                         },
                                         child: Container(
@@ -469,7 +451,7 @@ class _HomePageState extends State<HomePage> {
                                           print("Container 5 clicked");
 
                                           Navigator.of(context)
-                                              .pushReplacementNamed('item5FromHome');
+                                              .pushReplacementNamed('ItemPage5');
                                           _scrollController.jumpTo(0);
                                         },
                                         child: Container(
@@ -536,7 +518,7 @@ class _HomePageState extends State<HomePage> {
                                         onTap: () {
                                           print("Container 6 clicked");
                                           Navigator.of(context)
-                                              .pushReplacementNamed('item6FromHome');
+                                              .pushReplacementNamed('ItemPage6');
                                           _scrollController.jumpTo(0);
                                         },
                                         child: Container(

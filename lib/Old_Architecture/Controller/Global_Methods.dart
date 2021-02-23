@@ -10,7 +10,7 @@ import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-import '../../main.dart';
+import 'package:verossa/main.dart';
 import 'Drawer_Provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:verossa/Old_Architecture/Model/User_Details.dart';

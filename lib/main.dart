@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_themes/stacked_themes.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
 import 'package:verossa/Old_Architecture/View/ContactUs_Page.dart';
 import 'package:verossa/Old_Architecture/View/Customer_Login_Screen.dart';
 import 'package:verossa/Old_Architecture/View/Item_Screens.dart';
 import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
-import 'package:verossa/View/Pages/Home/UI/HomePage.dart';
+import 'package:verossa/View/Pages/Home/HomePage.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
 import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
@@ -20,6 +21,7 @@ import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
 import 'Features/Items/Presentation/Item_Provider.dart';
+import 'View/Pages/Item/Item_Page.dart';
 import 'View/Themes/Dark_Theme.dart';
 import 'View/Themes/Light_Theme.dart';
 
@@ -108,6 +110,13 @@ class Webshop extends StatelessWidget {
                     'personalPage': (_) => PersonalPage(),
                     'preCheckout': (_) => PreCheckOut(),
                     'orderConfirmationPage': (_) => OrderConfirmation(),
+
+                    'ItemPage1': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item1),
+                    'ItemPage2': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item2),
+                    'ItemPage3': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item3),
+                    'ItemPage4': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item4),
+                    'ItemPage5': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item5),
+                    'ItemPage6': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item6),
                   },
                 ),
             );
