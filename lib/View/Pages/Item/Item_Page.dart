@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Widgets/Item_Page_Widget.dart';
-import 'package:verossa/Model/Items.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/Old_Architecture/View/Item_Detail_Screens.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture//Model/Global_Variables.dart';

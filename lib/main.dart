@@ -26,7 +26,7 @@ import 'View/Themes/Dark_Theme.dart';
 import 'View/Themes/Light_Theme.dart';
 
 
-
+///item stock regulation
 
 ///*no priority* TODO: on personal page where it says no order yet should be an actual overview of past orders.
 ///*no priority* TODO: put each individual item in paypalPayment.

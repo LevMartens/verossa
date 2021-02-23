@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart';
-import 'package:verossa/Model/Items.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 
 import 'dart:async';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:verossa/Model/Items.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 
 class ItemDetail extends StatefulWidget {
   final ItemModel itemModel;

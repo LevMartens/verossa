@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Model/Items.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/View/Pages/Item/Item_Detail_Page.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 
