@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:verossa/Features/Items/Presentation/Util/Animated_Cross_Fade_Image_Widget.dart';
 import 'package:verossa/Features/Items/Presentation/Util/Directory_Path_Widget.dart';
 import 'package:verossa/Features/Items/Presentation/Util/Hero_Container_Widget.dart';
+import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -42,7 +43,7 @@ class ItemPageWidget extends StatefulWidget  {
 
 class _ItemPageWidgetState extends State<ItemPageWidget> {
 
-  String currentlySelected = 'item1Small';
+  int itemCurrentlySelected;
 
   // HeroContainer a;
   // HeroContainer b;
@@ -51,6 +52,10 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
   ItemModel itemModel;
 
   _ItemPageWidgetState({this.itemModel});
+
+  int itemIDNormal;
+  int itemIDBW;
+  int itemIDCF;
 
 
 
@@ -62,6 +67,12 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
     // a = HeroContainer(assetImage: itemModel.itemImage);
     // b = HeroContainer(assetImage: itemModel.itemImageBW);
     // c = HeroContainer(assetImage: itemModel.itemImageCF);
+
+    itemIDNormal = itemModel.itemIDForNormal;
+    itemIDBW = itemModel.itemIDForBW;
+    itemIDCF = itemModel.itemIDForCF;
+
+    itemCurrentlySelected = itemIDNormal;
   }
 
   @override
@@ -69,12 +80,12 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
 
 
 
-    String priceItem1 = currency['item1Small'];
-    String priceItem2 = currency['item2Small'];
-    String priceItem3 = currency['item3Small'];
-    String priceItem4 = currency['item4Small'];
-    String priceItem5 = currency['item5Small'];
-    String priceItem6 = currency['item6Small'];
+    String priceItem1 = Provider.of<PricesProvider>(context, listen: true).priceItem1;
+    String priceItem2 = Provider.of<PricesProvider>(context, listen: true).priceItem2;
+    String priceItem3 = Provider.of<PricesProvider>(context, listen: true).priceItem3;
+    String priceItem4 = Provider.of<PricesProvider>(context, listen: true).priceItem4;
+    String priceItem5 = Provider.of<PricesProvider>(context, listen: true).priceItem5;
+    String priceItem6 = Provider.of<PricesProvider>(context, listen: true).priceItem6;
 
     return ChangeNotifierProvider<ItemProvider>(
         create: (context) => di.sl<ItemProvider>(),
@@ -97,7 +108,6 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
               SizedBox(
                 height: 20,
               ),
-
               Container(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -110,7 +120,6 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                           fontSize: 21)),
                 ),
               ),
-
               SizedBox(
                 height: 50,
               ),
@@ -137,17 +146,17 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                     onSelectedItemChanged: (selectedIndex) {
                       if (selectedIndex == 0) {
                         setState(() {
-                          currentlySelected = 'item1Small';
+                          itemCurrentlySelected = itemIDNormal;
                         });
                       }
                       if (selectedIndex == 1) {
                         setState(() {
-                          currentlySelected = 'item1Medium';
+                          itemCurrentlySelected = itemIDBW;
                         });
                       }
                       if (selectedIndex == 2) {
                         setState(() {
-                          currentlySelected = 'item1Large';
+                          itemCurrentlySelected = itemIDCF;
                         });
                       }
                     },
@@ -173,18 +182,18 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                 ),
                 child: FlatButton(
                   onPressed: () {
-                    print("ADD $currentlySelected Tapped");
+                    //print("ADD $itemCurrentlySelected Tapped");
 
-                    if (stockInCart[currentlySelected] >=
-                        stockLimit[currentlySelected]) {
-                      // _scaffoldKey.currentState.showSnackBar(SnackBar(
-                      //     content: Text(
-                      //       'Item sold out',
-                      //       textAlign: TextAlign.center,
-                      //     )));
-                    } else {
-                      addCartItem(currentlySelected, false, context);
-                    }
+                    // if (cartContents[itemCurrentlySelected] >=
+                    //     stockLimit[itemCurrentlySelected]) {
+                    //   // _scaffoldKey.currentState.showSnackBar(SnackBar(
+                    //   //     content: Text(
+                    //   //       'Item sold out',
+                    //   //       textAlign: TextAlign.center,
+                    //   //     )));
+                    // } else {
+                    //   //addCartItem(currentlySelected, false, context);
+                    // }
                   },
                   child: Text(
                     'ADD TO CART',
@@ -195,6 +204,8 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                   ),
                 ),
               ),
+              
+              
               SizedBox(
                 height: 20,
               ),

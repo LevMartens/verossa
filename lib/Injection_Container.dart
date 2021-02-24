@@ -6,6 +6,18 @@ import 'package:stacked_themes/stacked_themes.dart';
 import 'package:verossa/Core/Network/Network_Info.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart';
 
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
+import 'package:verossa/Old_Architecture/View/Item_Tiles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
+import 'package:badges/badges.dart';
+import 'dart:math';
+
 //import 'core/network/network_info.dart';
 import 'package:verossa/Core/Util/Input_Converter.dart';
 import 'package:verossa/Features/Cart_Badge/Data/Data_Sources/Cart_Badge_Local_Data_Source.dart';
@@ -17,13 +29,24 @@ import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 
-import 'Features/Currency_Converter/Data/Data_Sources/Currency_Remote_Data_Source.dart';
-import 'Features/Currency_Converter/Data/Repositories/Currency_Repository_Impl.dart';
-import 'Features/Currency_Converter/Domain/Use_Cases/Get_Exchange_Rates.dart';
-import 'package:verossa/Features/Currency_Converter/Domain/Repositories/Exchange_Rate_Repository.dart';
-import 'Features/Currency_Converter/Presentation/Currency_Converter_Provider.dart';
+import 'Features/Items/Data/Data_Sources/Cart_Local_Data_Source.dart';
+import 'Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
+import 'Features/Items/Domain/Repositories/Cart_Repository.dart';
+import 'Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
+import 'Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
+import 'Features/Prices/Data/Data_Sources/Currency_Remote_Data_Source.dart';
+import 'Features/Prices/Data/Repositories/Currency_Repository_Impl.dart';
+import 'Features/Prices/Domain/Use_Cases/Get_Exchange_Rates.dart';
+import 'package:verossa/Features/Prices/Domain/Repositories/Exchange_Rate_Repository.dart';
+import 'Features/Prices/Presentation/Prices_Provider.dart';
 import 'Features/Items/Presentation/Item_Factory.dart';
-
+import 'package:verossa/Features/Items/Domain/Repositories/Cart_Repository.dart';
+import 'package:verossa/Features/Items/Data/Data_Sources/Cart_Local_Data_Source.dart';
+import 'package:verossa/Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
+import 'package:verossa/Features/Items/Data/Models/Cart_Model.dart';
+import 'package:verossa/Features/Items/Domain/Entities/Cart.dart';
+import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
+import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
@@ -38,20 +61,28 @@ Future<void> init() async {
 
     ),
   );
-  sl.registerFactory(() => ExchangeRatesProvider(
+  sl.registerFactory(() => PricesProvider(
     rates: sl<GetExchangeRates>(),
     inputConverter: sl(),
-
+    itemFactory: sl<ItemFactory>()
   ),
   );
 
-  sl.registerFactory(() => ItemProvider(factory: sl<ItemFactory>()));
+  sl.registerFactory(() => ItemProvider(
+      factory: sl<ItemFactory>(),
+      inputConverter: sl<InputConverter>(),
+      setItemsToCart: sl<SetItemsToCart>(),
+      getItemsFromCart: sl<GetItemsFromCart>(),
+  )
+  );
 
   sl.registerLazySingleton(() => ItemFactory());
 
   // Use cases
   sl.registerLazySingleton(() => GetCartBadgeNumber(sl<CartBadgeRepository>()));
   sl.registerLazySingleton(() => SetCartBadgeNumber(sl<CartBadgeRepository>()));
+  sl.registerLazySingleton(() => GetItemsFromCart(sl<CartRepository>()));
+  sl.registerLazySingleton(() => SetItemsToCart(sl<CartRepository>()));
   sl.registerLazySingleton(() => GetExchangeRates(sl<ExchangeRatesRepository>()));
 
 
@@ -60,6 +91,13 @@ Future<void> init() async {
   sl.registerLazySingleton<CartBadgeRepository>(
         () => CartBadgeRepositoryImpl(
       localDataSource: sl<CartBadgeLocalDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
+  sl.registerLazySingleton<CartRepository>(
+        () => CartRepositoryImpl(
+      localDataSource: sl<CartLocalDataSource>(),
       networkInfo: sl<NetworkInfo>(),
     ),
   );
@@ -76,6 +114,10 @@ Future<void> init() async {
         () => ExchangeRatesRemoteDataSourceImpl(client: sl()),
   );
 
+  sl.registerLazySingleton<CartLocalDataSource>(
+        () => CartLocalDataSourceImpl(sharedPreferences: sl()),
+  );
+
   sl.registerLazySingleton<CartBadgeLocalDataSource>(
         () => CartBadgeLocalDataSourceImpl(sharedPreferences: sl()),
   );
@@ -87,6 +129,10 @@ Future<void> init() async {
 
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
+  final fireBaseFireStore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
+  sl.registerLazySingleton(() => fireBaseFireStore);
+  sl.registerLazySingleton(() => auth);
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => DataConnectionChecker());

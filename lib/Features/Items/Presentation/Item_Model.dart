@@ -24,6 +24,7 @@ class ItemModel extends IItemBaseModel {
   int itemIDForNormal;
   int itemIDForBW;
   int itemIDForCF;
+  double priceAUD;
   String titleAllCaps;
   String title;
   String description;
@@ -43,6 +44,7 @@ class ItemModel extends IItemBaseModel {
     @required this.itemImageBW,
     @required this.itemImageCF,
     @required this.streamController,
+    @required this.priceAUD,
   });
 }
 

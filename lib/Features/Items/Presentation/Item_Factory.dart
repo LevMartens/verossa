@@ -8,9 +8,10 @@ import 'Item_Model.dart';
 class ItemFactory {
 
   ItemModel item1 = ItemModel(
-      itemIDForNormal: 001,
-      itemIDForBW: 002,
-      itemIDForCF:  003,
+      itemIDForNormal: 1,
+      itemIDForBW: 2,
+      itemIDForCF:  3,
+      priceAUD: 14.95,
       titleAllCaps: 'MONTANA FALL',
       title: 'Montana Fall',
       description: 'Montana Fall is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
@@ -21,9 +22,10 @@ class ItemFactory {
   );
 
   ItemModel item2 = ItemModel(
-      itemIDForNormal: 004,
-      itemIDForBW: 005,
-      itemIDForCF:  006,
+      itemIDForNormal: 4,
+      itemIDForBW: 5,
+      itemIDForCF:  6,
+      priceAUD: 24.95,
       titleAllCaps: 'RED AFRICA',
       title: 'Red Africa',
       description: 'Red Africa is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
@@ -34,9 +36,10 @@ class ItemFactory {
   );
 
   ItemModel item3 = ItemModel(
-      itemIDForNormal: 007,
-      itemIDForBW: 008,
-      itemIDForCF:  009,
+      itemIDForNormal: 7,
+      itemIDForBW: 8,
+      itemIDForCF:  9,
+      priceAUD: 19.95,
       titleAllCaps: 'BETWEEN THE ALPS',
       title: 'Between The Alps',
       description: 'Between The Alps is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
@@ -47,9 +50,10 @@ class ItemFactory {
   );
 
   ItemModel item4 = ItemModel(
-      itemIDForNormal: 010,
-      itemIDForBW: 011,
-      itemIDForCF:  012,
+      itemIDForNormal: 10,
+      itemIDForBW: 11,
+      itemIDForCF:  12,
+      priceAUD: 14.95,
       titleAllCaps: 'SPRING ESTONIA',
       title: 'Spring Estonia',
       description: 'Spring Estonia is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
@@ -60,9 +64,10 @@ class ItemFactory {
   );
 
   ItemModel item5 = ItemModel(
-      itemIDForNormal: 013,
-      itemIDForBW: 014,
-      itemIDForCF:  015,
+      itemIDForNormal: 13,
+      itemIDForBW: 14,
+      itemIDForCF:  15,
+      priceAUD: 19.95,
       titleAllCaps: 'MICHIGAN THUNDER',
       title: 'Michigan Thunder',
       description: 'Michigan Thunder is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
@@ -73,9 +78,10 @@ class ItemFactory {
   );
 
   ItemModel item6 = ItemModel(
-      itemIDForNormal: 016,
-      itemIDForBW: 017,
-      itemIDForCF:  018,
+      itemIDForNormal: 16,
+      itemIDForBW: 17,
+      itemIDForCF:  18,
+      priceAUD: 14.95,
       titleAllCaps: 'SCOTLAND HIGH',
       title: 'Scotland High',
       description: 'Scotland High is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',

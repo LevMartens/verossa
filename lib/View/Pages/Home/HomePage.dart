@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked_themes/stacked_themes.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
+import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
@@ -14,6 +18,8 @@ import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
 import 'package:verossa/View/Widgets/Verossa_Logo.dart';
+
+import '../../../main.dart';
 
 // TextStyle(
 // color: Colors.white60,
@@ -36,7 +42,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    asyncSetupApp();
     contextForBadgeProv = context;
+
     Future.delayed(const Duration(milliseconds: 1000), () {
       if (cartHasBeenAdjusted == true) {
         _scaffoldKey.currentState
@@ -47,6 +55,11 @@ class _HomePageState extends State<HomePage> {
     });
 
 
+  }
+
+  void asyncSetupApp() async {
+    await Provider.of<ItemProvider>(context, listen: false).setupCart();
+    await Provider.of<PricesProvider>(context, listen: false).setCurrencyTo(context,'AUD');
   }
 
 

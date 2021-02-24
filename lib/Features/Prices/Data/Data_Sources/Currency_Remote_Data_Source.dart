@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:verossa/Features/Currency_Converter/Data/Models/Currency_Model.dart';
+import 'package:verossa/Features/Prices/Data/Models/Currency_Model.dart';
 
 
 import 'package:verossa/Core/Error/Exceptions.dart';

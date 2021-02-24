@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_themes/stacked_themes.dart';
-import 'package:verossa/Features/Currency_Converter/Domain/Entities/Exchange_Rates.dart';
+import 'package:verossa/Features/Prices/Domain/Entities/Exchange_Rates.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
 import 'package:verossa/Old_Architecture/View/ContactUs_Page.dart';
 import 'package:verossa/Old_Architecture/View/Customer_Login_Screen.dart';
@@ -21,7 +21,7 @@ import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
-import 'Features/Currency_Converter/Presentation/Currency_Converter_Provider.dart';
+import 'Features/Prices/Presentation/Prices_Provider.dart';
 import 'Features/Items/Presentation/Item_Provider.dart';
 import 'View/Pages/Item/Item_Page.dart';
 import 'View/Themes/Dark_Theme.dart';
@@ -54,10 +54,16 @@ void main() async {
 
 class Webshop extends StatelessWidget {
 
+
+
+
   @override
   Widget build(BuildContext context) {
 
+
+
      setUpAfterStartup(context);
+
 
 
     return MultiProvider(
@@ -66,8 +72,9 @@ class Webshop extends StatelessWidget {
               create: (context) => di.sl<ItemProvider>()),
           ChangeNotifierProvider<CartBadgeProvider>(
               create: (context) => di.sl<CartBadgeProvider>()),
-          ChangeNotifierProvider<ExchangeRatesProvider>(
-              create: (context) => di.sl<ExchangeRatesProvider>()),
+          ChangeNotifierProvider<PricesProvider>(
+              create: (context) => di.sl<PricesProvider>()),
+
 
 
 
@@ -75,15 +82,19 @@ class Webshop extends StatelessWidget {
               create: (context) => DrawerProvider()),
 
         ],
-        child: Consumer2<DrawerProvider, ExchangeRatesProvider>(
+        child: Consumer2<DrawerProvider, PricesProvider>(
           builder: (context,exchangeRateProvider, providerMyDC, child) {
             print('Main build');
 
-            Provider.of<ExchangeRatesProvider>(context, listen: false).getExchangeRatesNow();
+
 
             int cartBadgeCount =
                 Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
+
+
             cartBadge = cartBadgeCount;
+
+
 
             return ThemeBuilder(
               defaultThemeMode: ThemeMode.light,
