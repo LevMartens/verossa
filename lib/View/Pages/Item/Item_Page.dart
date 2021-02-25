@@ -3,9 +3,11 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Widgets/Item_Page_Widget.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
+import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Old_Architecture/View/Item_Detail_Screens.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture//Model/Global_Variables.dart';
@@ -19,10 +21,11 @@ import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
+import 'package:verossa/View/Widgets/More_Info.dart';
 import 'package:verossa/View/Widgets/Verossa_Logo.dart';
 
 class ItemPage extends StatefulWidget {
-ItemModel itemModel;
+final ItemModel itemModel;
 
 ItemPage({this.itemModel});
 
@@ -32,30 +35,24 @@ ItemPage({this.itemModel});
 
 class _InputPageState extends State<ItemPage> {
 
-
-
-
   final _scrollController = ScrollController(keepScrollOffset: false);
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   ItemModel itemModel;
 
   _InputPageState({this.itemModel});
 
 
-
-
-
   @override
   void initState() {
     super.initState();
-    contextForBadgeProv = context;
-
 
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
     super.dispose();
 
   }
@@ -65,17 +62,12 @@ class _InputPageState extends State<ItemPage> {
 
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
 
-
-
-    print('itempage build');
-
-
-    String priceItem1 = currency['item1Small'];
-    String priceItem2 = currency['item2Small'];
-    String priceItem3 = currency['item3Small'];
-    String priceItem4 = currency['item4Small'];
-    String priceItem5 = currency['item5Small'];
-    String priceItem6 = currency['item6Small'];
+    String priceItem1 = Provider.of<PricesProvider>(context, listen: true).priceItem1;
+    String priceItem2 = Provider.of<PricesProvider>(context, listen: true).priceItem2;
+    String priceItem3 = Provider.of<PricesProvider>(context, listen: true).priceItem3;
+    String priceItem4 = Provider.of<PricesProvider>(context, listen: true).priceItem4;
+    String priceItem5 = Provider.of<PricesProvider>(context, listen: true).priceItem5;
+    String priceItem6 = Provider.of<PricesProvider>(context, listen: true).priceItem6;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -97,9 +89,7 @@ class _InputPageState extends State<ItemPage> {
                   ),
                   VerossaLogo(),
                   SizedBox(height: 10),
-
                   ItemPageWidget(itemModel: itemModel),
-
                   SizedBox(
                     height: 80,
                   ),
@@ -138,9 +128,8 @@ class _InputPageState extends State<ItemPage> {
                         child: GestureDetector(
                           onTap: () {
 
-
                             Navigator.of(context)
-                                .pushReplacementNamed('item3FromHome');
+                                .pushReplacementNamed('ItemPage3');
 
                             _scrollController.jumpTo(0);
                           },
@@ -155,7 +144,7 @@ class _InputPageState extends State<ItemPage> {
                                     child: Image(
                                       fit: BoxFit.fill,
                                       image:
-                                      AssetImage('images/Verossa-Heli.jpg'),
+                                      di.sl<ItemFactory>().item3.itemImage,
                                     ),
                                   ),
                                 ),
@@ -167,7 +156,7 @@ class _InputPageState extends State<ItemPage> {
                                       height: 30,
                                       width: 120,
                                       child: Text(
-                                        'Rugged Swiss',
+                                        di.sl<ItemFactory>().item3.title,
                                         style: TextStyle(height: 1.6),
                                       ),
                                     ),
@@ -199,9 +188,9 @@ class _InputPageState extends State<ItemPage> {
                             top: 18, left: 10.0, bottom: 13, right: 0),
                         child: GestureDetector(
                           onTap: () {
-                            print("Container 4 clicked");
+
                             Navigator.of(context)
-                                .pushReplacementNamed('item4FromHome');
+                                .pushReplacementNamed('itemPage4');
                           },
                           child: Container(
                             height: 170,
@@ -216,8 +205,7 @@ class _InputPageState extends State<ItemPage> {
                                     width: 163,
                                     child: Image(
                                       fit: BoxFit.fill,
-                                      image: AssetImage(
-                                          'images/Verossa-Field.jpg'),
+                                      image: di.sl<ItemFactory>().item4.itemImage,
                                     ),
                                   ),
                                 ),
@@ -229,7 +217,7 @@ class _InputPageState extends State<ItemPage> {
                                       height: 30,
                                       width: 120,
                                       child: Text(
-                                        'Estonia Spring',
+                                        di.sl<ItemFactory>().item4.title,
                                         style: TextStyle(height: 1.6),
                                       ),
                                     ),
@@ -268,7 +256,7 @@ class _InputPageState extends State<ItemPage> {
                           onTap: () {
 
                             Navigator.of(context)
-                                .pushReplacementNamed('item5FromHome');
+                                .pushReplacementNamed('itemPage5');
                             _scrollController.jumpTo(0);
                           },
                           child: Container(
@@ -281,8 +269,7 @@ class _InputPageState extends State<ItemPage> {
                                   child: Container(
                                     child: Image(
                                       fit: BoxFit.fill,
-                                      image: AssetImage(
-                                          'images/Verossa-Thunder.jpg'),
+                                      image: di.sl<ItemFactory>().item5.itemImage,
                                     ),
                                   ),
                                 ),
@@ -294,7 +281,7 @@ class _InputPageState extends State<ItemPage> {
                                       height: 30,
                                       width: 120,
                                       child: Text(
-                                        'Michigan Thunder',
+                                        di.sl<ItemFactory>().item5.title,
                                         style: TextStyle(height: 1.6),
                                       ),
                                     ),
@@ -328,7 +315,7 @@ class _InputPageState extends State<ItemPage> {
                           onTap: () {
                             print("Container 6 clicked");
                             Navigator.of(context)
-                                .pushReplacementNamed('item6FromHome');
+                                .pushReplacementNamed('itemPage6');
                           },
                           child: Container(
                             height: 200,
@@ -338,13 +325,11 @@ class _InputPageState extends State<ItemPage> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
                                     height: 80,
                                     width: 163,
                                     child: Image(
                                       fit: BoxFit.fill,
-                                      image: AssetImage(
-                                          'images/Verossa-Scotland.jpg'),
+                                      image: di.sl<ItemFactory>().item6.itemImage,
                                     ),
                                   ),
                                 ),
@@ -356,7 +341,7 @@ class _InputPageState extends State<ItemPage> {
                                       height: 30,
                                       width: 120,
                                       child: Text(
-                                        'Scotland High',
+                                        di.sl<ItemFactory>().item6.title,
                                         style: TextStyle(height: 1.6),
                                       ),
                                     ),
@@ -414,122 +399,9 @@ class _InputPageState extends State<ItemPage> {
                   SizedBox(
                     height: 8,
                   ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                      transitionDuration:
-                                      Duration(milliseconds: 200),
-                                      pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                          ContactUs()));
-                              _scrollController.jumpTo(0);
-                            },
-                            child: Container(
-                              child: Text(
-                                'Contact Us',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              height: 25,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                      transitionDuration:
-                                      Duration(milliseconds: 200),
-                                      pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                          AboutUs()));
-                              _scrollController.jumpTo(0);
-                            },
-                            child: Container(
-                              child: Text(
-                                'About Us',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              height: 25,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                      transitionDuration:
-                                      Duration(milliseconds: 200),
-                                      pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                          ReturnsPolicy()));
-                              _scrollController.jumpTo(0);
-                            },
-                            child: Container(
-                              child: Text(
-                                'Returns Policy',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              height: 25,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                      transitionDuration:
-                                      Duration(milliseconds: 200),
-                                      pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                          Shipping()));
-                              _scrollController.jumpTo(0);
-                            },
-                            child: Container(
-                              child: Text(
-                                'Shipping',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              height: 25,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+
+                  MoreInfo(scrollController: _scrollController),
+
                   SizedBox(
                     height: 20,
                   ),
