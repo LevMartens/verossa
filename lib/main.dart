@@ -21,6 +21,7 @@ import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
+import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Presentation/Prices_Provider.dart';
 import 'Features/Items/Presentation/Item_Provider.dart';
 import 'View/Pages/Item/Item_Page.dart';
@@ -74,6 +75,8 @@ class Webshop extends StatelessWidget {
               create: (context) => di.sl<CartBadgeProvider>()),
           ChangeNotifierProvider<PricesProvider>(
               create: (context) => di.sl<PricesProvider>()),
+          ChangeNotifierProvider<NewsLetterProvider>(
+              create: (context) => di.sl<NewsLetterProvider>()),
 
 
 

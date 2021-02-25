@@ -34,8 +34,6 @@ class NewsLetterFormStateHome extends State<NewsLetterFormForHome> {
   void initState() {
     super.initState();
 
-
-
   }
 
 

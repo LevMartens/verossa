@@ -20,6 +20,7 @@ import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
 import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
+import 'package:verossa/View/Widgets/Follow_Us.dart';
 import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
 import 'package:verossa/View/Widgets/More_Info.dart';
 import 'package:verossa/View/Widgets/Verossa_Logo.dart';
@@ -373,161 +374,11 @@ class _InputPageState extends State<ItemPage> {
                   SizedBox(
                     height: 35,
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 58.0),
-                      child: Text(
-                        'MORE INFO',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Divider(
-                    indent: 58,
-                    endIndent: 58,
-                    color: Colors.black,
-                    thickness: 0.75,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-
                   MoreInfo(scrollController: _scrollController),
-
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 58.0),
-                      child: Text(
-                        'FOLLOW US',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Divider(
-                    indent: 58,
-                    endIndent: 58,
-                    color: Colors.black,
-                    thickness: 0.75,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              launchURL(
-                                  'https://www.instagram.com/levmartens/');
-                            },
-                            child: Container(
-                              child: Text(
-                                'Instagram',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              height: 25,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              launchURL(
-                                  'https://www.linkedin.com/in/levmartens/?locale=en_US');
-                            },
-                            child: Container(
-                              child: Text(
-                                'Linkedin',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              height: 25,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              launchURL('https://www.facebook.com/lcmartens');
-                            },
-                            child: Container(
-                              child: Text(
-                                'Facebook',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              height: 25,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 14.0, left: 45.0),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                launchURL('https://www.facebook.com/lcmartens');
-                              },
-                              child: Container(
-                                child: Icon(MdiIcons.facebook),
-                                height: 25,
-                                width: 50,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                launchURL(
-                                    'https://www.instagram.com/levmartens/');
-                              },
-                              child: Container(
-                                child: Icon(MdiIcons.instagram),
-                                height: 25,
-                                width: 50,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  FollowUs(),
                   SizedBox(
                     height: 5,
                   ),
@@ -544,6 +395,7 @@ class _InputPageState extends State<ItemPage> {
                   SizedBox(
                     height: 10,
                   ),
+
                   NewsLetterFormForItem(),
                   Padding(
                     padding: const EdgeInsets.only(
