@@ -36,7 +36,8 @@ class StockLimitRemoteDataSourceImpl implements StockLimitRemoteDataSource {
     if (stockList != null) {
 
       for (var i in stockList.docs) {
-        fsStockLimit = Map<int, int>.from(i.data());
+        var a = Map<String, int>.from(i.data());
+        fsStockLimit = a.map((a, b) => MapEntry(int.parse(a), b ));
 
       }
 
@@ -47,15 +48,10 @@ class StockLimitRemoteDataSourceImpl implements StockLimitRemoteDataSource {
   }
 
   @override
-  Future<void> saveStock(Map<int, int> map) {
+  Future<void> saveStock(Map<int, int> map) async {
 
     Map<String,dynamic> linkedHashMap = map.map((a, b) => MapEntry(a.toString(), b as dynamic));
-    firestore.collection("CurrentStock").doc('Items').update(linkedHashMap);
+    firestore.collection("CurrentStock").doc('Items').set(linkedHashMap);
 
-    String encoded = jsonEncode(linkedHashMap);
-    return sharedPreferences.setString(
-      CART_MAP,
-      encoded,
-    );
   }
 }

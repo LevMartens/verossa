@@ -46,8 +46,8 @@ var cartBadge = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
   await Firebase.initializeApp();
+  await di.init();
   await ThemeManager.initialise();
   runApp(Webshop());
 }

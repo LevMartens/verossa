@@ -29,11 +29,10 @@ import 'package:verossa/View/Widgets/Verossa_Logo.dart';
 
 import '../Item_Provider.dart';
 
-/// implement new detail page
 
 class ItemPageWidget extends StatefulWidget  {
 
-  ItemModel itemModel;
+  final ItemModel itemModel;
 
   ItemPageWidget({this.itemModel});
 
@@ -44,10 +43,6 @@ class ItemPageWidget extends StatefulWidget  {
 class _ItemPageWidgetState extends State<ItemPageWidget> {
 
   int itemCurrentlySelected;
-
-  // HeroContainer a;
-  // HeroContainer b;
-  // HeroContainer c;
 
   ItemModel itemModel;
 
@@ -62,11 +57,6 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
   @override
   void initState() {
     super.initState();
-    //contextForBadgeProv = context;
-
-    // a = HeroContainer(assetImage: itemModel.itemImage);
-    // b = HeroContainer(assetImage: itemModel.itemImageBW);
-    // c = HeroContainer(assetImage: itemModel.itemImageCF);
 
     itemIDNormal = itemModel.itemIDForNormal;
     itemIDBW = itemModel.itemIDForBW;
@@ -81,11 +71,7 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
 
 
     String priceItem1 = Provider.of<PricesProvider>(context, listen: true).priceItem1;
-    String priceItem2 = Provider.of<PricesProvider>(context, listen: true).priceItem2;
-    String priceItem3 = Provider.of<PricesProvider>(context, listen: true).priceItem3;
-    String priceItem4 = Provider.of<PricesProvider>(context, listen: true).priceItem4;
-    String priceItem5 = Provider.of<PricesProvider>(context, listen: true).priceItem5;
-    String priceItem6 = Provider.of<PricesProvider>(context, listen: true).priceItem6;
+
 
     return ChangeNotifierProvider<ItemProvider>(
         create: (context) => di.sl<ItemProvider>(),
@@ -180,20 +166,21 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                     Radius.circular(4.0),
                   ),
                 ),
-                child: FlatButton(
-                  onPressed: () {
-                    //print("ADD $itemCurrentlySelected Tapped");
+                child: TextButton(
+                  onPressed: () async {
 
-                    // if (cartContents[itemCurrentlySelected] >=
-                    //     stockLimit[itemCurrentlySelected]) {
-                    //   // _scaffoldKey.currentState.showSnackBar(SnackBar(
-                    //   //     content: Text(
-                    //   //       'Item sold out',
-                    //   //       textAlign: TextAlign.center,
-                    //   //     )));
-                    // } else {
-                    //   //addCartItem(currentlySelected, false, context);
-                    // }
+                    final failureOrSuccessfullyAdded = await Provider.of<ItemProvider>(context, listen: false).addItemToCart(itemCurrentlySelected, 1, context);
+
+                    if (failureOrSuccessfullyAdded == 'Sold Out') {
+                      final scaffold = ScaffoldMessenger.of(context);
+                      scaffold.showSnackBar(
+                        SnackBar(
+                          content: const Text('Item sold out',
+                                  textAlign: TextAlign.center,),
+                        ),
+                      );
+                    }
+
                   },
                   child: Text(
                     'ADD TO CART',
@@ -204,8 +191,6 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                   ),
                 ),
               ),
-              
-              
               SizedBox(
                 height: 20,
               ),
@@ -215,7 +200,7 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 0.0),
                   child: Text(
-                      'Montana Fall is a photo taken by Valiphoto. This photo was created on November 6, 2011 and published on December 3, 2015.',
+                      itemModel.description,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.grey[800],
@@ -252,11 +237,11 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                     Radius.circular(4.0),
                   ),
                 ),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     print("SHARE Tapped");
                     final RenderBox box = context.findRenderObject();
-                    Share.share('Lev\'s demo App',
+                    Share.share('Check out my portfolio https://levsportfolio.web.app',
                         subject: 'Verossa Valey',
                         sharePositionOrigin:
                         box.localToGlobal(Offset.zero) & box.size);

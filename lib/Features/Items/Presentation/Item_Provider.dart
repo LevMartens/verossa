@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +14,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
+import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Stock_Limit.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
+import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 
 import 'dart:async';
@@ -67,7 +71,7 @@ class ItemProvider extends ChangeNotifier {
 
   Map<int,int> stockLimits;
   Map<int,int> cartContentMap;
-  Map<int, int> setupMap = {
+  Map<int,int> setupMap = {
     1: 0,
     2: 0,
     3: 0,
@@ -88,7 +92,8 @@ class ItemProvider extends ChangeNotifier {
     18: 0,
   };
 
-
+  final GetStockLimit getStockLimit;
+  final SetStockLimit setStockLimit;
   final GetItemsFromCart getItemsFromCart;
   final SetItemsToCart setItemsToCart;
   final InputConverter inputConverter;
@@ -97,13 +102,19 @@ class ItemProvider extends ChangeNotifier {
     @required ItemFactory factory,
     @required GetItemsFromCart getItemsFromCart,
     @required SetItemsToCart setItemsToCart,
+    @required GetStockLimit getStockLimit,
+    @required SetStockLimit setStockLimit,
     @required this.inputConverter,
   })
       : assert(factory != null),
         assert(getItemsFromCart != null),
         assert(setItemsToCart != null),
+        assert(getStockLimit != null),
+        assert(setStockLimit != null),
         assert(inputConverter != null),
         factory = factory,
+        getStockLimit = getStockLimit,
+        setStockLimit = setStockLimit,
         getItemsFromCart = getItemsFromCart,
         setItemsToCart = setItemsToCart;
 
@@ -183,7 +194,7 @@ class ItemProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> setupCart() async {
+  Future<void> getCartContents() async {
     final failureOrCartContent = await getItemsFromCart(NoParams());
     final newCartContent = failureOrCartContent.fold((failure) => 'No Map', (
         cart) => cart.map);
@@ -196,33 +207,77 @@ class ItemProvider extends ChangeNotifier {
     } else {
       cartContentMap = newCartContent;
     }
+    print("cartcontent: $cartContentMap");
   }
 
-  Future<Map<int,int>> getCartContent() async {
+  Future<void> setCartContents(Map<int,int> map) async {
+    setItemsToCart(Params(map: map));
+  }
+
+  Future<Map<int,int>> returnCartContent() async {
     final failureOrCartContent = await getItemsFromCart(NoParams());
     final newCartContent = failureOrCartContent.fold((failure) => {}, (cart) => cart.map);
 
-    if (newCartContent == {}) {
-      setupCart();
-    }
+
     return newCartContent;
   }
 
-  String addItemToCart(int itemID) {
+  Future<String> addItemToCart(int itemID, int count ,BuildContext context) async {
+     await getCartContents();
+     await getStockLimitFromFS();
 
-    if (cartContentMap[itemID] >=
-        stockLimit[itemID]) {
-      // _scaffoldKey.currentState.showSnackBar(SnackBar(
-      //     content: Text(
-      //       'Item sold out',
-      //       textAlign: TextAlign.center,
-      //     )));
+    Map<String,int> stringKeyCartContent = cartContentMap.map((a, b) => MapEntry(a.toString(), b ));
+    Map<String,int> stringKeyStockLimits = stockLimits.map((a, b) => MapEntry(a.toString(), b ));
+
+
+    if (stringKeyCartContent['$itemID'] >=
+        stringKeyStockLimits['$itemID']) {
 
       return 'Sold Out';
+
     } else {
-      //addCartItem(currentlySelected, false, context);
+
+      if (stringKeyCartContent['$itemID'] + count >= stringKeyStockLimits['$itemID']) {
+
+        count = stringKeyStockLimits['$itemID'];
+      }
+
+      /// Add item to Cart
+      var a = stringKeyCartContent['$itemID'] + count;
+      stringKeyCartContent['$itemID'] = a;
+      var cartContent = stringKeyCartContent.map((a, b) => MapEntry(int.parse(a), b ));
+      setCartContents(cartContent);
+
+      /// Subtract item from stock limit
+      var b = stringKeyStockLimits['$itemID'] - count;
+      stringKeyStockLimits['$itemID'] = b;
+      var stockLim = stringKeyStockLimits.map((a, b) => MapEntry(int.parse(a), b ));
+      setStockLimitToFS(stockLim);
+
+      /// Update Cart Badge
+      Provider.of<CartBadgeProvider>(context, listen: false).updateCartBadgeCountWith(count);
+
     }
+
     return 'Sold Out';
+  }
+
+  Future<void> getStockLimitFromFS() async{
+    final failureOrCartContent = await getStockLimit(NoParams());
+    final newStockLimit = failureOrCartContent.fold((failure) => {}, (stockLimit) => stockLimit.map);
+
+    if (newStockLimit == {}) {
+      print('Error: Fetching Stock data from FS');
+    } else {
+
+      stockLimits = newStockLimit;
+    }
+    print('getStockLimitFromFS: stocklimits: $stockLimits');
+  }
+
+  Future<void> setStockLimitToFS(Map<int,int> map) async {
+
+    setStockLimit(Params(map: map));
   }
 
 

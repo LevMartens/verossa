@@ -40,16 +40,10 @@ class _AnimatedCrossFadeImageState extends State<AnimatedCrossFadeImage> {
     var call = Provider.of<ItemProvider>(context, listen: false);
     var get = Provider.of<ItemProvider>(context, listen: true);
 
-
-
     HeroContainer imageFirst = get.imageFirst;
     HeroContainer imageSecond = get.imageSecond;
 
-
-
     bool startImageOne = get.startImageOne;
-
-
 
     double opacityOne = get.opacityOne;
     double opacityTwo = get.opacityTwo;

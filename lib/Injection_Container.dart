@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:verossa/Old_Architecture/View/Item_Tiles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,9 +31,13 @@ import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dar
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 
 import 'Features/Items/Data/Data_Sources/Cart_Local_Data_Source.dart';
+import 'Features/Items/Data/Data_Sources/Stock_Limit_Remote_Data_Source.dart';
 import 'Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
+import 'Features/Items/Data/Repositories/Stock_Limit_Repository_Impl.dart';
 import 'Features/Items/Domain/Repositories/Cart_Repository.dart';
+import 'Features/Items/Domain/Repositories/Stock_Limit_Repository.dart';
 import 'Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
+import 'Features/Items/Domain/Use_Cases/Get_Stock_Limit.dart';
 import 'Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 import 'Features/Prices/Data/Data_Sources/Currency_Remote_Data_Source.dart';
 import 'Features/Prices/Data/Repositories/Currency_Repository_Impl.dart';
@@ -73,12 +78,16 @@ Future<void> init() async {
       inputConverter: sl<InputConverter>(),
       setItemsToCart: sl<SetItemsToCart>(),
       getItemsFromCart: sl<GetItemsFromCart>(),
+      setStockLimit: sl<SetStockLimit>(),
+      getStockLimit: sl<GetStockLimit>(),
   )
   );
 
   sl.registerLazySingleton(() => ItemFactory());
 
   // Use cases
+  sl.registerLazySingleton(() => GetStockLimit(sl<StockLimitRepository>()));
+  sl.registerLazySingleton(() => SetStockLimit(sl<StockLimitRepository>()));
   sl.registerLazySingleton(() => GetCartBadgeNumber(sl<CartBadgeRepository>()));
   sl.registerLazySingleton(() => SetCartBadgeNumber(sl<CartBadgeRepository>()));
   sl.registerLazySingleton(() => GetItemsFromCart(sl<CartRepository>()));
@@ -109,6 +118,13 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<StockLimitRepository>(
+        () => StockLimitRepositoryImpl(
+      remoteDataSource: sl<StockLimitRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
   // Data sources
   sl.registerLazySingleton<ExchangeRatesRemoteDataSource>(
         () => ExchangeRatesRemoteDataSourceImpl(client: sl()),
@@ -116,6 +132,10 @@ Future<void> init() async {
 
   sl.registerLazySingleton<CartLocalDataSource>(
         () => CartLocalDataSourceImpl(sharedPreferences: sl()),
+  );
+
+  sl.registerLazySingleton<StockLimitRemoteDataSource>(
+        () => StockLimitRemoteDataSourceImpl(firestore: sl()),
   );
 
   sl.registerLazySingleton<CartBadgeLocalDataSource>(

@@ -203,7 +203,7 @@ class PricesProvider extends ChangeNotifier {
 
   Future<void> setCurrencyForTotalTo(BuildContext context, String currencyCode, String currencySymbol) async {
     const TOTAL_AMOUNT_OF_ITEMS = 18;
-    Map<int,int> cartContent = await Provider.of<ItemProvider>(context, listen: false).getCartContent();
+    Map<int,int> cartContent = await Provider.of<ItemProvider>(context, listen: false).returnCartContent();
 
     print('setCurrencyForTotalTo: cartContent $cartContent');
     var totalAmount = 0.00;
