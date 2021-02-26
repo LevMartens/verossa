@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:verossa/Core/Error/Exceptions.dart';
@@ -25,9 +26,13 @@ class NewsLetterRemoteDataSourceImpl implements NewsLetterRemoteDataSource {
 
   @override
   Future<void> saveEmail(String email) async {
+    Random random = new Random();
+    int randomNumber = random.nextInt(100);
 
+    firestore.collection("NewsLetterSubscribers").doc('Email').update({
+         '$randomNumber': email
 
-    //firestore.collection("CurrentStock").doc('Items').set(linkedHashMap);
+       });
 
   }
 }

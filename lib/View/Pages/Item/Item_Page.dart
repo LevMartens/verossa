@@ -7,6 +7,7 @@ import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Widgets/Item_Page_Widget.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
+import 'package:verossa/Features/News_Letter_Form/Presentation/News_Letter_Form.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Old_Architecture/View/Item_Detail_Screens.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
@@ -396,7 +397,8 @@ class _InputPageState extends State<ItemPage> {
                     height: 10,
                   ),
 
-                  NewsLetterFormForItem(),
+                  NewsLetterForm(),
+
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 15.0,

@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
+import 'package:verossa/Features/News_Letter_Form/Domain/Use_Cases/Set_Email_To_Mailing_List.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:verossa/Old_Architecture/View/Item_Tiles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +40,10 @@ import 'Features/Items/Domain/Repositories/Stock_Limit_Repository.dart';
 import 'Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
 import 'Features/Items/Domain/Use_Cases/Get_Stock_Limit.dart';
 import 'Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
+import 'Features/News_Letter_Form/Data/Data_Sources/News_Letter_Remote_Data_Source.dart';
+import 'Features/News_Letter_Form/Data/Repositories/News_Letter_Repository_Impl.dart';
+import 'Features/News_Letter_Form/Domain/Repositories/News_Letter_Repository.dart';
+import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Data/Data_Sources/Currency_Remote_Data_Source.dart';
 import 'Features/Prices/Data/Repositories/Currency_Repository_Impl.dart';
 import 'Features/Prices/Domain/Use_Cases/Get_Exchange_Rates.dart';
@@ -59,6 +64,7 @@ Future<void> init() async {
 
   sl.registerSingleton(ThemeService.getInstance());
 
+  //Providers
   sl.registerFactory(() => CartBadgeProvider(
       count: sl<GetCartBadgeNumber>(),
       number: sl<SetCartBadgeNumber>(),
@@ -83,6 +89,14 @@ Future<void> init() async {
   )
   );
 
+  sl.registerFactory(() => NewsLetterProvider(
+
+    inputConverter: sl<InputConverter>(),
+    setEmailToMailingList: sl<SetEmailToMailingList>(),
+
+  )
+  );
+
   sl.registerLazySingleton(() => ItemFactory());
 
   // Use cases
@@ -93,6 +107,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetItemsFromCart(sl<CartRepository>()));
   sl.registerLazySingleton(() => SetItemsToCart(sl<CartRepository>()));
   sl.registerLazySingleton(() => GetExchangeRates(sl<ExchangeRatesRepository>()));
+  sl.registerLazySingleton(() => SetEmailToMailingList(sl<NewsLetterRepository>()));
 
 
 
@@ -125,9 +140,20 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<NewsLetterRepository>(
+        () => NewsLetterRepositoryImpl(
+      remoteDataSource: sl<NewsLetterRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
   // Data sources
   sl.registerLazySingleton<ExchangeRatesRemoteDataSource>(
         () => ExchangeRatesRemoteDataSourceImpl(client: sl()),
+  );
+
+  sl.registerLazySingleton<NewsLetterRemoteDataSource>(
+        () => NewsLetterRemoteDataSourceImpl(firestore: sl()),
   );
 
   sl.registerLazySingleton<CartLocalDataSource>(
