@@ -21,13 +21,13 @@ import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
+import 'Core/Util/Stateful_Wrapper.dart';
 import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Presentation/Prices_Provider.dart';
 import 'Features/Items/Presentation/Item_Provider.dart';
 import 'View/Pages/Item/Item_Page.dart';
 import 'View/Themes/Dark_Theme.dart';
 import 'View/Themes/Light_Theme.dart';
-
 
 ///item stock regulation
 
@@ -38,8 +38,6 @@ import 'View/Themes/Light_Theme.dart';
 ///*no priority* TODO: for names used in the app use ItemTitles[itemID] instead of writing out name.
 ///*no priority* TODO: when a user creates an account and fills in the name and adds a space after the name, this should be prevented as it fucks with other things.
 ///*no priority* TODO: some of the navigations are a bit flicky this might be because the contact page, about us etc on the bottom have a navigation duration
-
-
 
 // TODO: share button needs to share portfolio website.
 
@@ -54,18 +52,11 @@ void main() async {
 }
 
 class Webshop extends StatelessWidget {
-
-
-
-
   @override
   Widget build(BuildContext context) {
 
 
-
-     setUpAfterStartup(context);
-
-
+    setUpAfterStartup(context);
 
     return MultiProvider(
         providers: [
@@ -77,75 +68,96 @@ class Webshop extends StatelessWidget {
               create: (context) => di.sl<PricesProvider>()),
           ChangeNotifierProvider<NewsLetterProvider>(
               create: (context) => di.sl<NewsLetterProvider>()),
-
-
-
-
           ChangeNotifierProvider<DrawerProvider>(
               create: (context) => DrawerProvider()),
-
         ],
         child: Consumer2<DrawerProvider, PricesProvider>(
-          builder: (context,exchangeRateProvider, providerMyDC, child) {
-            print('Main build');
+            builder: (context, exchangeRateProvider, providerMyDC, child) =>
+                ThemeBuilder(
+                  defaultThemeMode: ThemeMode.light,
+                  darkTheme: ThemeData(),
+                  lightTheme: ThemeData(),
+                  builder: (context, lightTheme, darkTheme, themeMode) {
 
+                    Future<void> _startUp() async {
 
+                      int cartBadgeCount =
+                          Provider.of<CartBadgeProvider>(context, listen: true)
+                              .cartBadgeCount;
+                      cartBadge = cartBadgeCount;
+                      await Provider.of<ItemProvider>(context, listen: false)
+                          .getCartContents();
+                      await Provider.of<PricesProvider>(context, listen: false)
+                          .setCurrencyTo(context, 0);
+                      await Provider.of<ItemProvider>(context, listen: false)
+                          .getStockLimitFromFS();
+                    }
 
-            int cartBadgeCount =
-                Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
-
-
-            cartBadge = cartBadgeCount;
-
-
-
-            return ThemeBuilder(
-              defaultThemeMode: ThemeMode.light,
-              darkTheme: ThemeData(),
-              lightTheme: ThemeData(),
-              builder: (context, lightTheme, darkTheme, themeMode) => MaterialApp(
-                  title: 'Verossa Valey',
-                  theme: getLightTheme(),
-                  darkTheme: getDarkTheme(),
-                  themeMode: themeMode,
-                  debugShowCheckedModeBanner: false,
-                  home: HomePage(),
-                  initialRoute: 'homePage',
-                  routes: {
-                    'homePage': (_) => HomePage(),
-                    'customerLogin': (_) => CustomerLogin(),
-                    'createAccount': (_) => CreateAccount(),
-                    'item1FromSearch': (_) => Item1Screen(directory: 'All Prints'),
-                    'item1FromHome': (_) => Item1Screen(directory: 'NEW PRINTS'),
-                    'item2FromSearch': (_) => Item2Screen(directory: 'All Prints'),
-                    'item2FromHome': (_) => Item2Screen(directory: 'NEW PRINTS'),
-                    'item3FromSearch': (_) => Item3Screen(directory: 'All Prints'),
-                    'item3FromHome': (_) => Item3Screen(directory: 'NEW PRINTS'),
-                    'item4FromSearch': (_) => Item4Screen(directory: 'All Prints'),
-                    'item4FromHome': (_) => Item4Screen(directory: 'NEW PRINTS'),
-                    'item5FromSearch': (_) => Item5Screen(directory: 'All Prints'),
-                    'item5FromHome': (_) => Item5Screen(directory: 'NEW PRINTS'),
-                    'item6FromSearch': (_) => Item6Screen(directory: 'All Prints'),
-                    'item6FromHome': (_) => Item6Screen(directory: 'NEW PRINTS'),
-                    'ContactUs': (_) => ContactUs(),
-                    'AboutUs': (_) => AboutUs(),
-                    'ReturnsPolicy': (_) => ReturnsPolicy(),
-                    'Shipping': (_) => Shipping(),
-                    'personalPage': (_) => PersonalPage(),
-                    'preCheckout': (_) => PreCheckOut(),
-                    'orderConfirmationPage': (_) => OrderConfirmation(),
-
-                    'ItemPage1': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item1),
-                    'ItemPage2': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item2),
-                    'ItemPage3': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item3),
-                    'ItemPage4': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item4),
-                    'ItemPage5': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item5),
-                    'ItemPage6': (_) => ItemPage(itemModel: di.sl<ItemFactory>().item6),
+                    return StatefulWrapper(
+                      onInit: () async {
+                        _startUp();
+                      },
+                      child: MaterialApp(
+                        title: 'Verossa Valey',
+                        theme: getLightTheme(),
+                        darkTheme: getDarkTheme(),
+                        themeMode: themeMode,
+                        debugShowCheckedModeBanner: false,
+                        home: HomePage(),
+                        initialRoute: 'homePage',
+                        routes: {
+                          'homePage': (_) => HomePage(),
+                          'customerLogin': (_) => CustomerLogin(),
+                          'createAccount': (_) => CreateAccount(),
+                          'item1FromSearch': (_) =>
+                              Item1Screen(directory: 'All Prints'),
+                          'item1FromHome': (_) =>
+                              Item1Screen(directory: 'NEW PRINTS'),
+                          'item2FromSearch': (_) =>
+                              Item2Screen(directory: 'All Prints'),
+                          'item2FromHome': (_) =>
+                              Item2Screen(directory: 'NEW PRINTS'),
+                          'item3FromSearch': (_) =>
+                              Item3Screen(directory: 'All Prints'),
+                          'item3FromHome': (_) =>
+                              Item3Screen(directory: 'NEW PRINTS'),
+                          'item4FromSearch': (_) =>
+                              Item4Screen(directory: 'All Prints'),
+                          'item4FromHome': (_) =>
+                              Item4Screen(directory: 'NEW PRINTS'),
+                          'item5FromSearch': (_) =>
+                              Item5Screen(directory: 'All Prints'),
+                          'item5FromHome': (_) =>
+                              Item5Screen(directory: 'NEW PRINTS'),
+                          'item6FromSearch': (_) =>
+                              Item6Screen(directory: 'All Prints'),
+                          'item6FromHome': (_) =>
+                              Item6Screen(directory: 'NEW PRINTS'),
+                          'ContactUs': (_) => ContactUs(),
+                          'AboutUs': (_) => AboutUs(),
+                          'ReturnsPolicy': (_) => ReturnsPolicy(),
+                          'Shipping': (_) => Shipping(),
+                          'personalPage': (_) => PersonalPage(),
+                          'preCheckout': (_) => PreCheckOut(),
+                          'orderConfirmationPage': (_) => OrderConfirmation(),
+                          'ItemPage1': (_) =>
+                              ItemPage(itemModel: di.sl<ItemFactory>().item1),
+                          'ItemPage2': (_) =>
+                              ItemPage(itemModel: di.sl<ItemFactory>().item2),
+                          'ItemPage3': (_) =>
+                              ItemPage(itemModel: di.sl<ItemFactory>().item3),
+                          'ItemPage4': (_) =>
+                              ItemPage(itemModel: di.sl<ItemFactory>().item4),
+                          'ItemPage5': (_) =>
+                              ItemPage(itemModel: di.sl<ItemFactory>().item5),
+                          'ItemPage6': (_) =>
+                              ItemPage(itemModel: di.sl<ItemFactory>().item6),
+                        },
+                      ),
+                    );
                   },
-                ),
-            );
-
-          },
-        ));
+                )
+        )
+    );
   }
 }

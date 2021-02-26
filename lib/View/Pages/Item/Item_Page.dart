@@ -8,6 +8,7 @@ import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Widgets/Item_Page_Widget.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/Features/News_Letter_Form/Presentation/News_Letter_Form.dart';
+import 'package:verossa/Features/Prices/Presentation/Currency_Converter_Widget.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Old_Architecture/View/Item_Detail_Screens.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
@@ -71,7 +72,7 @@ class _InputPageState extends State<ItemPage> {
     String priceItem5 = Provider.of<PricesProvider>(context, listen: true).priceItem5;
     String priceItem6 = Provider.of<PricesProvider>(context, listen: true).priceItem6;
 
-    return Scaffold(
+    return  Scaffold(
       extendBodyBehindAppBar: true,
       key: _scaffoldKey,
       appBar: VerossaAppBar(aScaffoldKey: _scaffoldKey,),
@@ -397,51 +398,7 @@ class _InputPageState extends State<ItemPage> {
                     height: 10,
                   ),
                   NewsLetterForm(),
-
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 15.0,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding:
-                          const EdgeInsets.only(left: 57.0, bottom: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              child: Text(
-                                'Pick a currency',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: Container(
-                            width: 300,
-                            child: CupertinoPicker(
-                              itemExtent: 32,
-                              onSelectedItemChanged: (selectedIndex) async {
-                                await getCurrencyData(selectedIndex);
-
-                                setState(() {});
-                              },
-                              children: [
-                                Text('AUD'),
-                                Text('USD'),
-                                Text('CAD'),
-                                Text('INR'),
-                                Text('GBP'),
-                                Text('EUR'),
-                                Text('JPY'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  CurrencyConverter(),
                   Padding(
                     padding: const EdgeInsets.only(top: 40.0),
                     child: Container(

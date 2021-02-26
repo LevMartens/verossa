@@ -98,7 +98,24 @@ class ItemProvider extends ChangeNotifier {
   final SetItemsToCart setItemsToCart;
   final InputConverter inputConverter;
 
+  Future<void> getCartContents() async {
+    final failureOrCartContent = await getItemsFromCart(NoParams());
+    final newCartContent = failureOrCartContent.fold((failure) => 'No Map', (
+        cart) => cart.map);
+
+    if (newCartContent == 'No Map') {
+
+      setItemsToCart(Params(map: setupMap));
+      cartContentMap = setupMap;
+
+    } else {
+      cartContentMap = newCartContent;
+    }
+
+  }
+
   ItemProvider({
+
     @required ItemFactory factory,
     @required GetItemsFromCart getItemsFromCart,
     @required SetItemsToCart setItemsToCart,
@@ -122,7 +139,7 @@ class ItemProvider extends ChangeNotifier {
   void setupProviderForItem(ItemModel itemModel) {
     imageFirst = HeroContainer(assetImage: itemModel.itemImage);
     imageSecond = HeroContainer(assetImage: itemModel.itemImageBW);
-    print('first image $imageFirst');
+
   }
 
   void displayFirstImage(HeroContainer a, HeroContainer b, HeroContainer c) {
@@ -134,7 +151,7 @@ class ItemProvider extends ChangeNotifier {
       opacityOne = 1.0;
       opacityTwo = 0.7;
       opacityThree = 0.7;
-      //opacityFour = 0.7;
+
 
       if (startImageOne == false) {
         imageSecond = a;
@@ -157,7 +174,7 @@ class ItemProvider extends ChangeNotifier {
       opacityOne = 0.7;
       opacityTwo = 1.0;
       opacityThree = 0.7;
-      //opacityFour = 0.7;
+
       if (startImageOne == false) {
         //load up second image
         imageSecond = b;
@@ -180,13 +197,13 @@ class ItemProvider extends ChangeNotifier {
       opacityOne = 0.7;
       opacityTwo = 0.7;
       opacityThree = 1.0;
-      //opacityFour = 0.7;
+
       if (startImageOne == false) {
         imageSecond = c;
         startImageOne = true;
         notifyListeners();
       } else {
-        print('B');
+
         imageFirst = c;
         startImageOne = false;
         notifyListeners();
@@ -194,21 +211,7 @@ class ItemProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getCartContents() async {
-    final failureOrCartContent = await getItemsFromCart(NoParams());
-    final newCartContent = failureOrCartContent.fold((failure) => 'No Map', (
-        cart) => cart.map);
 
-    if (newCartContent == 'No Map') {
-
-      setItemsToCart(Params(map: setupMap));
-      cartContentMap = setupMap;
-
-    } else {
-      cartContentMap = newCartContent;
-    }
-    print("cartcontent: $cartContentMap");
-  }
 
   Future<void> setCartContents(Map<int,int> map) async {
     setItemsToCart(Params(map: map));
@@ -272,7 +275,7 @@ class ItemProvider extends ChangeNotifier {
 
       stockLimits = newStockLimit;
     }
-    print('getStockLimitFromFS: stocklimits: $stockLimits');
+
   }
 
   Future<void> setStockLimitToFS(Map<int,int> map) async {

@@ -58,9 +58,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void asyncSetupApp() async {
-    await Provider.of<ItemProvider>(context, listen: false).getCartContents();
-    await Provider.of<PricesProvider>(context, listen: false).setCurrencyTo(context,'AUD');
-    await Provider.of<ItemProvider>(context, listen: false).getStockLimitFromFS();
+    print('HOMEPAGE INIT');
+
 
   }
 

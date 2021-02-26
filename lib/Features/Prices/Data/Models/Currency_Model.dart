@@ -16,9 +16,9 @@ class ExchangeRatesModel extends ExchangeRates {
 
   factory ExchangeRatesModel.fromJson(dynamic json) {
 
-    print('TEST RATE .${json['rates']['USD']}.');
+
     double l = json['rates']['USD'];
-    print('this is l: $l');
+
     return ExchangeRatesModel(
       rateUSD: json['rates']['USD'],
       rateCAN: json['rates']['CAN'],

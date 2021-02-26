@@ -29,11 +29,12 @@ import 'package:verossa/Core/Util/Input_Converter.dart';
 
 
 class PricesProvider extends ChangeNotifier {
-  // final SetCartBadgeNumber setCartBadgeNumber;
-  final GetExchangeRates getExchangeRates;
-  final InputConverter inputConverter;
-  final ItemFactory itemFactory;
-  // int cartBadgeCount = 0;
+
+   final GetExchangeRates getExchangeRates;
+   final InputConverter inputConverter;
+   final ItemFactory itemFactory;
+
+   ItemModel currentItemModel;
 
    String itemPriceForThisWidget;
 
@@ -49,26 +50,21 @@ class PricesProvider extends ChangeNotifier {
    Map<int, double> toCalculate;
 
   PricesProvider({
-     @required GetExchangeRates rates,
-    // @required SetCartBadgeNumber number,
+    @required GetExchangeRates rates,
     @required this.itemFactory,
     @required this.inputConverter,
    })  : assert(itemFactory != null),
          assert(rates != null),
-        assert(inputConverter != null),
-         //setCartBadgeNumber = number,
+         assert(inputConverter != null),
          getExchangeRates = rates;
 
 
-
-
-
-  Future<void> setCurrencyTo(BuildContext context, String currencyCode) async {
+  Future<void> setCurrencyTo(BuildContext context, int currencyIndex) async {
 
     var currencySymbol;
+    var currencyCode;
 
     final failureOrExchangeRates = await getExchangeRates(NoParams());
-
 
     final item1AUD = itemFactory.item1.priceAUD;
     final item2AUD = itemFactory.item2.priceAUD;
@@ -76,7 +72,6 @@ class PricesProvider extends ChangeNotifier {
     final item4AUD = itemFactory.item4.priceAUD;
     final item5AUD = itemFactory.item5.priceAUD;
     final item6AUD = itemFactory.item6.priceAUD;
-
 
     final rateAUD = 1;
     final rateUSD = failureOrExchangeRates.fold((failure) => 0, (rates) => rates.rateUSD);
@@ -86,11 +81,10 @@ class PricesProvider extends ChangeNotifier {
     final rateEUR = failureOrExchangeRates.fold((failure) => 0, (rates) => rates.rateEUR);
     final rateJPY = failureOrExchangeRates.fold((failure) => 0, (rates) => rates.rateJPY);
 
+    switch (currencyIndex) {
 
-
-    switch (currencyCode) {
-
-      case 'AUD':
+      case 0 :
+        currencyCode = 'AUD';
         currencySymbol = '\$';
         priceItem1 = '\$${(item1AUD * rateAUD).toStringAsFixed(2)} AUD';
         priceItem2 = '\$${(item2AUD * rateAUD).toStringAsFixed(2)} AUD';
@@ -101,7 +95,8 @@ class PricesProvider extends ChangeNotifier {
 
         break;
 
-      case 'USD':
+      case 1:
+        currencyCode = 'USD';
         currencySymbol = '\$';
         priceItem1 = '\$${(item1AUD * rateUSD).toStringAsFixed(2)} USD';
         priceItem2 = '\$${(item2AUD * rateUSD).toStringAsFixed(2)} USD';
@@ -112,17 +107,19 @@ class PricesProvider extends ChangeNotifier {
 
         break;
 
-      case 'CAN':
+      case 2:
+        currencyCode = 'CAD';
         currencySymbol = '\$';
-        priceItem1 = '\$${(item1AUD * rateCAN).toStringAsFixed(2)} CAN';
-        priceItem2 = '\$${(item2AUD * rateCAN).toStringAsFixed(2)} CAN';
-        priceItem3 = '\$${(item3AUD * rateCAN).toStringAsFixed(2)} CAN';
-        priceItem4 = '\$${(item4AUD * rateCAN).toStringAsFixed(2)} CAN';
-        priceItem5 = '\$${(item5AUD * rateCAN).toStringAsFixed(2)} CAN';
-        priceItem6 = '\$${(item6AUD * rateCAN).toStringAsFixed(2)} CAN';
+        priceItem1 = '\$${(item1AUD * rateCAN).toStringAsFixed(2)} CAD';
+        priceItem2 = '\$${(item2AUD * rateCAN).toStringAsFixed(2)} CAD';
+        priceItem3 = '\$${(item3AUD * rateCAN).toStringAsFixed(2)} CAD';
+        priceItem4 = '\$${(item4AUD * rateCAN).toStringAsFixed(2)} CAD';
+        priceItem5 = '\$${(item5AUD * rateCAN).toStringAsFixed(2)} CAD';
+        priceItem6 = '\$${(item6AUD * rateCAN).toStringAsFixed(2)} CAD';
         break;
 
-      case 'INR':
+      case 3:
+        currencyCode = 'INR';
         currencySymbol = '\₹';
         priceItem1 = '\₹${(item1AUD * rateINR).toStringAsFixed(2)} INR';
         priceItem2 = '\₹${(item2AUD * rateINR).toStringAsFixed(2)} INR';
@@ -132,7 +129,8 @@ class PricesProvider extends ChangeNotifier {
         priceItem6 = '\₹${(item6AUD * rateINR).toStringAsFixed(2)} INR';
         break;
 
-      case 'GBP':
+      case 4:
+        currencyCode = 'GBP';
         currencySymbol = '\£';
         priceItem1 = '\£${(item1AUD * rateGBP).toStringAsFixed(2)} GBP';
         priceItem2 = '\£${(item2AUD * rateGBP).toStringAsFixed(2)} GBP';
@@ -142,7 +140,8 @@ class PricesProvider extends ChangeNotifier {
         priceItem6 = '\£${(item6AUD * rateGBP).toStringAsFixed(2)} GBP';
         break;
 
-      case 'EUR':
+      case 4:
+        currencyCode = 'EUR';
         currencySymbol = '\€';
         priceItem1 = '\€${(item1AUD * rateEUR).toStringAsFixed(2)} EUR';
         priceItem2 = '\€${(item2AUD * rateEUR).toStringAsFixed(2)} EUR';
@@ -152,7 +151,8 @@ class PricesProvider extends ChangeNotifier {
         priceItem6 = '\€${(item6AUD * rateEUR).toStringAsFixed(2)} EUR';
         break;
 
-      case 'JPY':
+      case 5:
+        currencyCode = 'JPY';
         currencySymbol = '\¥';
         priceItem1 = '\¥${(item1AUD * rateJPY).toStringAsFixed(2)} JPY';
         priceItem2 = '\¥${(item2AUD * rateJPY).toStringAsFixed(2)} JPY';
@@ -162,14 +162,14 @@ class PricesProvider extends ChangeNotifier {
         priceItem6 = '\¥${(item6AUD * rateJPY).toStringAsFixed(2)} JPY';
         break;
 
-      
-
-        
     }
     
     await mapPricesForTotalCalculation();
     await setCurrencyForTotalTo(context, currencyCode, currencySymbol);
-    print('priceItem1: $priceItem1');
+    if (currentItemModel != null) {
+      await setThisPriceForCurrentWidget(currentItemModel);
+    }
+
 
     notifyListeners();
   }
@@ -208,27 +208,27 @@ class PricesProvider extends ChangeNotifier {
     const TOTAL_AMOUNT_OF_ITEMS = 18;
     Map<int,int> cartContent = await Provider.of<ItemProvider>(context, listen: false).returnCartContent();
 
-    print('setCurrencyForTotalTo: cartContent $cartContent');
     var totalAmount = 0.00;
 
     for (var i = 1; i < TOTAL_AMOUNT_OF_ITEMS; i++) {
 
       var a = cartContent[i];
       var b = toCalculate[i];
-      print('setCurrencyForTotalTo: a and b: $a * $b');
       var c = a.toDouble() * b;
       totalAmount = totalAmount + c;
     }
-    print('setCurrencyForTotalTo: totalAmount $totalAmount');
+
 
     totalPrice = '$currencySymbol$totalAmount $currencyCode';
 
-    print('setCurrencyForTotalTo: totalPrice: $totalPrice');
+
 
 
   }
 
   Future<void> setThisPriceForCurrentWidget(ItemModel itemModel) async {
+
+    currentItemModel = itemModel;
 
     String itemTitle = itemModel.title;
 
@@ -258,10 +258,6 @@ class PricesProvider extends ChangeNotifier {
       case 'Scotland High':
         itemPriceForThisWidget = priceItem6;
         break;
-
-
-
-
 
     }
 

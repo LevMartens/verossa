@@ -56,10 +56,10 @@ class CartBadgeProvider extends ChangeNotifier {
   }
 
   void getLastCardBadgeCount() async {
-    print('A');
+
     final failureOrCartBadgeNumber = await getCartBadgeNumber(NoParams());
     final lastCartBadgeCount = failureOrCartBadgeNumber.fold((failure) => 0, (cartBadgeNumber) => cartBadgeNumber.number);
-    print('A: $lastCartBadgeCount');
+
     cartBadgeCount = lastCartBadgeCount;
 
     notifyListeners();
