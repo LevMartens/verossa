@@ -22,10 +22,13 @@ import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
 import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
-import 'package:verossa/View/Widgets/Follow_Us.dart';
-import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
-import 'package:verossa/View/Widgets/More_Info.dart';
-import 'package:verossa/View/Widgets/Verossa_Logo.dart';
+import 'package:verossa/View/Widgets/Bottom_Section.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Bottom_Image.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Follow_Us.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/More_Info.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/News_And_Updates_Image.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 
 class ItemPage extends StatefulWidget {
 final ItemModel itemModel;
@@ -50,14 +53,11 @@ class _InputPageState extends State<ItemPage> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   void dispose() {
-
     super.dispose();
-
   }
 
   @override
@@ -203,7 +203,6 @@ class _InputPageState extends State<ItemPage> {
                                 Container(
                                   height: 100,
                                   child: Container(
-                                    color: Colors.green,
                                     height: 80,
                                     width: 163,
                                     child: Image(
@@ -376,39 +375,7 @@ class _InputPageState extends State<ItemPage> {
                   SizedBox(
                     height: 35,
                   ),
-                  MoreInfo(scrollController: _scrollController),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FollowUs(),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: Container(
-                      child: Center(
-                        child: Image(
-                          image: AssetImage('images/IMG_1368.jpg'),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  NewsLetterForm(),
-                  CurrencyConverter(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40.0),
-                    child: Container(
-                      child: Center(
-                        child: Image(
-                          image: AssetImage('images/IMG_1394.jpg'),
-                        ),
-                      ),
-                    ),
-                  ),
+                  BottomSection(scrollController: _scrollController),
                 ]),
               ),
             ]),

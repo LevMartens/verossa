@@ -24,8 +24,8 @@ import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/View/Pages/Item/Item_Detail_Page.dart';
 
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
-import 'package:verossa/View/Widgets/Free_Shipping_Banner_Widget.dart';
-import 'package:verossa/View/Widgets/Verossa_Logo.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 
 import '../Item_Provider.dart';
 
