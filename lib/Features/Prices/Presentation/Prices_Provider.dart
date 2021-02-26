@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Prices/Domain/Use_Cases/Get_Exchange_Rates.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
@@ -29,10 +30,12 @@ import 'package:verossa/Core/Util/Input_Converter.dart';
 
 class PricesProvider extends ChangeNotifier {
   // final SetCartBadgeNumber setCartBadgeNumber;
-   final GetExchangeRates getExchangeRates;
+  final GetExchangeRates getExchangeRates;
   final InputConverter inputConverter;
   final ItemFactory itemFactory;
   // int cartBadgeCount = 0;
+
+   String itemPriceForThisWidget;
 
    String priceItem1;
    String priceItem2;
@@ -225,5 +228,42 @@ class PricesProvider extends ChangeNotifier {
 
   }
 
+  Future<void> setThisPriceForCurrentWidget(ItemModel itemModel) async {
 
+    String itemTitle = itemModel.title;
+
+    switch (itemTitle) {
+
+      case 'Montana Fall':
+        itemPriceForThisWidget = priceItem1;
+        break;
+
+      case 'Red Africa':
+        itemPriceForThisWidget = priceItem2;
+
+        break;
+
+      case 'Between The Alps':
+        itemPriceForThisWidget = priceItem3;
+        break;
+
+      case 'Spring Estonia':
+        itemPriceForThisWidget = priceItem4;
+        break;
+
+      case 'Michigan Thunder':
+        itemPriceForThisWidget = priceItem5;
+        break;
+
+      case 'Scotland High':
+        itemPriceForThisWidget = priceItem6;
+        break;
+
+
+
+
+
+    }
+
+  }
 }

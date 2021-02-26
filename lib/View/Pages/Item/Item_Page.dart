@@ -396,7 +396,6 @@ class _InputPageState extends State<ItemPage> {
                   SizedBox(
                     height: 10,
                   ),
-
                   NewsLetterForm(),
 
                   Padding(

@@ -58,6 +58,8 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
   void initState() {
     super.initState();
 
+    Provider.of<PricesProvider>(context, listen: false).setThisPriceForCurrentWidget(itemModel);
+
     itemIDNormal = itemModel.itemIDForNormal;
     itemIDBW = itemModel.itemIDForBW;
     itemIDCF = itemModel.itemIDForCF;
@@ -70,7 +72,7 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
 
 
 
-    String priceItem1 = Provider.of<PricesProvider>(context, listen: true).priceItem1;
+    String priceItem = Provider.of<PricesProvider>(context, listen: true).itemPriceForThisWidget;
 
 
     return ChangeNotifierProvider<ItemProvider>(
@@ -98,7 +100,7 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0),
-                  child: Text(priceItem1,
+                  child: Text(priceItem,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.grey[800],
