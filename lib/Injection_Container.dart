@@ -1,36 +1,24 @@
+import 'package:async/async.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_themes/stacked_themes.dart';
+import 'package:verossa/Core/Util/Cart_Update.dart';
 import 'package:verossa/Core/Network/Network_Info.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart';
-
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Features/News_Letter_Form/Domain/Use_Cases/Set_Email_To_Mailing_List.dart';
-import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
-import 'package:verossa/Old_Architecture/View/Item_Tiles.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
-import 'package:badges/badges.dart';
-import 'dart:math';
-
-//import 'core/network/network_info.dart';
 import 'package:verossa/Core/Util/Input_Converter.dart';
 import 'package:verossa/Features/Cart_Badge/Data/Data_Sources/Cart_Badge_Local_Data_Source.dart';
-//import 'features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:verossa/Features/Cart_Badge/Data/Repositories/Cart_Badge_Repository_Impl.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Repositories/Cart_Badge_Repository.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
-//import 'features/number_trivia/domain/usecases/get_random_number_trivia.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
-
 import 'Features/Items/Data/Data_Sources/Cart_Local_Data_Source.dart';
 import 'Features/Items/Data/Data_Sources/Stock_Limit_Remote_Data_Source.dart';
 import 'Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
@@ -53,14 +41,19 @@ import 'Features/Items/Presentation/Item_Factory.dart';
 import 'package:verossa/Features/Items/Domain/Repositories/Cart_Repository.dart';
 import 'package:verossa/Features/Items/Data/Data_Sources/Cart_Local_Data_Source.dart';
 import 'package:verossa/Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
-import 'package:verossa/Features/Items/Data/Models/Cart_Model.dart';
-import 'package:verossa/Features/Items/Domain/Entities/Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
+
 final sl = GetIt.instance;
 
 Future<void> init() async {
 //register item models for each item / populate with content
+
+  sl.registerLazySingleton<AsyncMemoizer>(
+        () => AsyncMemoizer()
+  );
+
+  sl.registerSingleton(CartUpdate());
 
   sl.registerSingleton(ThemeService.getInstance());
 

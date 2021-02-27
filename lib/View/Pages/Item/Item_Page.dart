@@ -1,33 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
-import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Widgets/Item_Page_Widget.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
-import 'package:verossa/Features/News_Letter_Form/Presentation/News_Letter_Form.dart';
-import 'package:verossa/Features/Prices/Presentation/Currency_Converter_Widget.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
-import 'package:verossa/Old_Architecture/View/Item_Detail_Screens.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
-import 'package:verossa/Old_Architecture//Model/Global_Variables.dart';
-import 'package:verossa/Old_Architecture//Controller/Global_Methods.dart';
-import 'package:share/share.dart';
-import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
-import 'package:verossa/Old_Architecture/View/ContactUs_Page.dart';
-import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
-import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
-import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Bottom_Section.dart';
-import 'package:verossa/View/Widgets/Small_Widgets/Bottom_Image.dart';
-import 'package:verossa/View/Widgets/Small_Widgets/Follow_Us.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
-import 'package:verossa/View/Widgets/Small_Widgets/More_Info.dart';
-import 'package:verossa/View/Widgets/Small_Widgets/News_And_Updates_Image.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 
 class ItemPage extends StatefulWidget {

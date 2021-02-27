@@ -4,6 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_themes/stacked_themes.dart';
+import 'package:verossa/Core/Util/Cart_Update.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
@@ -18,6 +19,7 @@ import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
+import 'package:verossa/Injection_Container.dart' as di;
 
 import '../../../main.dart';
 
@@ -29,11 +31,15 @@ import '../../../main.dart';
 //                                       .toggleDarkLightTheme();
 
 class HomePage extends StatefulWidget {
+
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
+
 
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -45,14 +51,10 @@ class _HomePageState extends State<HomePage> {
     asyncSetupApp();
     contextForBadgeProv = context;
 
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      if (cartHasBeenAdjusted == true) {
-        _scaffoldKey.currentState
-            .showSnackBar(SnackBar(
-            content: Text('Stock has been updated, your cart has been adjusted', textAlign: TextAlign.center,)));
-        cartHasBeenAdjusted = false;
-      }
-    });
+
+
+
+
 
 
   }
@@ -68,6 +70,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      var cartHasBeenUpdated = di.sl<CartUpdate>().cartUpdated;
+      print('cc: $cartHasBeenUpdated');
+      if (cartHasBeenUpdated == true) {
+        print('carthasbeenupdated: $cartHasBeenUpdated');
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+            content: Text('Stock has been updated, your cart has been adjusted', textAlign: TextAlign.center,)));
+        di.sl<CartUpdate>().cartUpdated = false;
+      }
+    });
 
     theWidth = MediaQuery.of(context).size.width;
     String priceItem1 =

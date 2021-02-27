@@ -1,53 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:verossa/Core/Util/Cart_Update.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Stock_Limit.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-
-import 'dart:async';
-
-
-import 'package:verossa/Core/Error/Failures.dart';
+import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Core/Use_Cases/Use_Case.dart';
-
-import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-
-
 import 'package:verossa/Core/Util/Input_Converter.dart';
-import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
-import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
-import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
-import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-
-import 'dart:async';
-
-import 'package:verossa/Core/Error/Failures.dart';
-import 'package:verossa/Core/Use_Cases/Use_Case.dart';
-
-import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
-
-import 'package:verossa/Core/Util/Input_Converter.dart';
-import 'package:verossa/Core/Use_Cases/Use_Case.dart';
-
 import 'Item_Factory.dart';
 import 'Util/Hero_Container_Widget.dart';
 
@@ -68,6 +33,8 @@ class ItemProvider extends ChangeNotifier {
 
   HeroContainer imageFirst;
   HeroContainer imageSecond;
+
+
 
   Map<int,int> stockLimits;
   Map<int,int> cartContentMap;
@@ -211,8 +178,6 @@ class ItemProvider extends ChangeNotifier {
     }
   }
 
-
-
   Future<void> setCartContents(Map<int,int> map) async {
     setItemsToCart(Params(map: map));
   }
@@ -282,6 +247,29 @@ class ItemProvider extends ChangeNotifier {
 
     setStockLimit(Params(map: map));
   }
+
+  Future<String> updateCartAfterStartUp() async {
+
+    bool cartHasBeenUpdated;
+    cartContentMap.keys.forEach((k) {
+      if(cartContentMap[k] > stockLimits[k]) {
+        cartContentMap[k] = stockLimits[k];
+
+        cartHasBeenUpdated = true;
+      }
+    });
+
+    if (cartHasBeenUpdated == true) {
+
+      setCartContents(cartContentMap);
+      di.sl<CartUpdate>().cartUpdated = true;
+      return 'Done';
+    } else {
+      di.sl<CartUpdate>().cartUpdated = false;
+      return 'Not Done';}
+
+  }
+
 
 
 

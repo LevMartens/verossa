@@ -13,7 +13,7 @@ class DirectoryPath extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed('homePage');
+                    .pushReplacementNamed('/');
                 //_scrollController.jumpTo(0);
               },
               child: Text('Home'),

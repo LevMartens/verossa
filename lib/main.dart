@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +53,62 @@ void main() async {
 }
 
 class Webshop extends StatelessWidget {
+
+  ///test
+  final Map<int,int> map = {
+    1: 0,
+    2: 3,
+    3: 0,
+    4: 0,
+    5: 4,
+    6: 0,
+    7: 0,
+    8: 2,
+    9: 0,
+    10: 0,
+    11: 0,
+    12: 0,
+    13: 0,
+    14: 0,
+    15: 0,
+    16: 0,
+    17: 0,
+    18: 0,
+  };
+  ///----
+
+
+  Future<dynamic> _startUp(BuildContext context) async {
+
+
+
+    return await di.sl<AsyncMemoizer>().runOnce(() async {
+
+      int cartBadgeCount =
+          Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
+      cartBadge = cartBadgeCount;
+
+
+      ///test
+      await Provider.of<ItemProvider>(context, listen: false)
+          .setCartContents(map);
+      ///----
+      await Provider.of<ItemProvider>(context, listen: false)
+          .getCartContents();
+      await Provider.of<PricesProvider>(context, listen: false)
+          .setCurrencyTo(context, 0);
+      await Provider.of<ItemProvider>(context, listen: false)
+          .getStockLimitFromFS();
+
+      return await Provider.of<ItemProvider>(context, listen: false)
+          .updateCartAfterStartUp() ;
+    });
+
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -71,31 +128,18 @@ class Webshop extends StatelessWidget {
           ChangeNotifierProvider<DrawerProvider>(
               create: (context) => DrawerProvider()),
         ],
-        child: Consumer2<DrawerProvider, PricesProvider>(
-            builder: (context, exchangeRateProvider, providerMyDC, child) =>
+        child: Consumer3<DrawerProvider, PricesProvider, ItemProvider>(
+            builder: (context, exchangeRateProvider, providerMyDC, itemPV, child) =>
                 ThemeBuilder(
                   defaultThemeMode: ThemeMode.light,
                   darkTheme: ThemeData(),
                   lightTheme: ThemeData(),
                   builder: (context, lightTheme, darkTheme, themeMode) {
 
-                    Future<void> _startUp() async {
-
-                      int cartBadgeCount =
-                          Provider.of<CartBadgeProvider>(context, listen: true)
-                              .cartBadgeCount;
-                      cartBadge = cartBadgeCount;
-                      await Provider.of<ItemProvider>(context, listen: false)
-                          .getCartContents();
-                      await Provider.of<PricesProvider>(context, listen: false)
-                          .setCurrencyTo(context, 0);
-                      await Provider.of<ItemProvider>(context, listen: false)
-                          .getStockLimitFromFS();
-                    }
-
                     return StatefulWrapper(
                       onInit: () async {
-                        _startUp();
+                        await _startUp(context);
+                        print('startup done');
                       },
                       child: MaterialApp(
                         title: 'Verossa Valey',
@@ -104,7 +148,7 @@ class Webshop extends StatelessWidget {
                         themeMode: themeMode,
                         debugShowCheckedModeBanner: false,
                         home: HomePage(),
-                        initialRoute: 'homePage',
+                        initialRoute: '/',
                         routes: {
                           'homePage': (_) => HomePage(),
                           'customerLogin': (_) => CustomerLogin(),
