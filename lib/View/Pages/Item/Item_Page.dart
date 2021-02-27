@@ -25,7 +25,7 @@ class _InputPageState extends State<ItemPage> {
 
   final _scrollController = ScrollController(keepScrollOffset: false);
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   ItemModel itemModel;
 
@@ -112,11 +112,10 @@ class _InputPageState extends State<ItemPage> {
                             top: 18, left: 0.0, bottom: 13, right: 10),
                         child: GestureDetector(
                           onTap: () {
-
                             Navigator.of(context)
                                 .pushReplacementNamed('ItemPage3');
 
-                            _scrollController.jumpTo(0);
+                            //_scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 170,
@@ -173,9 +172,8 @@ class _InputPageState extends State<ItemPage> {
                             top: 18, left: 10.0, bottom: 13, right: 0),
                         child: GestureDetector(
                           onTap: () {
-
                             Navigator.of(context)
-                                .pushReplacementNamed('itemPage4');
+                                .pushReplacementNamed('ItemPage4');
                           },
                           child: Container(
                             height: 170,
@@ -238,10 +236,9 @@ class _InputPageState extends State<ItemPage> {
                             top: 0, left: 0.0, bottom: 13, right: 10),
                         child: GestureDetector(
                           onTap: () {
-
                             Navigator.of(context)
-                                .pushReplacementNamed('itemPage5');
-                            _scrollController.jumpTo(0);
+                                .pushReplacementNamed('ItemPage5');
+                            //_scrollController.jumpTo(0);
                           },
                           child: Container(
                             height: 200,
@@ -297,9 +294,8 @@ class _InputPageState extends State<ItemPage> {
                             top: 0, left: 10.0, bottom: 13, right: 0),
                         child: GestureDetector(
                           onTap: () {
-                            print("Container 6 clicked");
                             Navigator.of(context)
-                                .pushReplacementNamed('itemPage6');
+                                .pushReplacementNamed('ItemPage6');
                           },
                           child: Container(
                             height: 200,

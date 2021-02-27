@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:verossa/Features/News_Letter_Form/Presentation/News_Letter_Form.dart';
 import 'package:verossa/Features/Prices/Presentation/Currency_Converter_Widget.dart';
 
@@ -9,16 +10,16 @@ import 'Small_Widgets/News_And_Updates_Image.dart';
 
 class BottomSection extends StatefulWidget {
   final ScrollController scrollController;
-
-  BottomSection({this.scrollController});
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  BottomSection({this.scrollController, this.scaffoldKey});
   @override
-  _BottomSectionState createState() => _BottomSectionState(scrollController: scrollController);
+  _BottomSectionState createState() => _BottomSectionState(scrollController: scrollController, scaffoldKey: scaffoldKey);
 }
 
 class _BottomSectionState extends State<BottomSection> {
   final ScrollController scrollController;
-
-  _BottomSectionState({this.scrollController});
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  _BottomSectionState({this.scrollController, this.scaffoldKey});
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -34,7 +35,7 @@ class _BottomSectionState extends State<BottomSection> {
       SizedBox(
         height: 10,
       ),
-      NewsLetterForm(),
+      NewsLetterForm(scaffoldKey: scaffoldKey,),
       CurrencyConverter(),
       BottomImage()
     ],);

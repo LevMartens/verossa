@@ -2,30 +2,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
+import 'package:form_validator/form_validator.dart';
 
 import 'News_Letter_Provider.dart';
 
 class NewsLetterForm extends StatefulWidget {
+
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  NewsLetterForm({this.scaffoldKey});
   @override
-  _NewsLetterFormState createState() => _NewsLetterFormState();
+  _NewsLetterFormState createState() => _NewsLetterFormState(scaffoldKey: scaffoldKey);
 }
 
 class _NewsLetterFormState extends State<NewsLetterForm> {
 
-  static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
-  ModalRoute _mountRoute;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  _NewsLetterFormState({this.scaffoldKey});
+
+
+  // static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
+  // ModalRoute _mountRoute;
   final textController = TextEditingController();
+  final validate = ValidationBuilder().email('please enter a valid email').build();
 
   @override
   void didChangeDependencies() {
-    _mountRoute ??= ModalRoute.of(context);
+    //_mountRoute ??= ModalRoute.of(context);
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _formKey5.currentState?.dispose();
+    //_formKey5.currentState?.dispose();
     textController.dispose();
   }
 
@@ -40,15 +50,15 @@ class _NewsLetterFormState extends State<NewsLetterForm> {
   @override
   Widget build(BuildContext context) {
 
-    final formKey = _mountRoute == ModalRoute.of(context)
-        ? _formKey5
-        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
+    // final formKey = _mountRoute == ModalRoute.of(context)
+    //     ? _formKey5
+    //     : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
 
     return ChangeNotifierProvider<NewsLetterProvider>(
       create: (context) => di.sl<NewsLetterProvider>(),
       child: Consumer<NewsLetterProvider>(
           builder: (context, provider, child) => Form(
-      key: formKey,
+      key: scaffoldKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -109,21 +119,20 @@ class _NewsLetterFormState extends State<NewsLetterForm> {
             child: TextButton(
               onPressed: () {
 
-                if (formKey.currentState.validate()) {
+
+                print('validation: ${validate(textController.text)}');
+                 if (validate(textController.text) == null) {
+                   print('validation null');
 
                   Provider.of<NewsLetterProvider>(context, listen: false).saveEmailInMailingList(textController.text);
 
-                  // String subscriber = fullName != null ? fullName : randomNumber.nextInt(10000).toString();
-                  // di.sl<fireBaseFireStore>.collection("NewsLetterSubscribers").doc('Email').update({
-                  //   '$subscriber': textController.text
-                  //
-                  // });
-
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
-                  formKey.currentState.reset();
 
-                }
+                  textController.text = '';
+
+
+                 }
               },
               child: Text(
                 'SIGN UP',

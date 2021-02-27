@@ -28,10 +28,13 @@ class _HomePageState extends State<HomePage> {
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
+
   @override
   void initState() {
     super.initState();
     contextForBadgeProv = context;
+
   }
 
   @override
@@ -69,7 +72,13 @@ class _HomePageState extends State<HomePage> {
                     height: 50,
                   ),
                   Quote(),
-                  NewPrints(scrollController: _scrollController),
+                  FutureBuilder<String>(
+                  future: _setupPrices,
+                   builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                    return NewPrints(scrollController: _scrollController); }
+                    else { return CircularProgressIndicator();}
+                  }),
                   SizedBox(
                     height: 35,
                   ),
@@ -86,6 +95,14 @@ class _HomePageState extends State<HomePage> {
       endDrawer: MyEndDrawer(),
     );
   }
+
+  Future<String> _setupPrices = Future<String>.delayed(
+    Duration(seconds: di.sl<CartUpdate>().futureBuilderSec),
+        () {
+          di.sl<CartUpdate>().futureBuilderSec = 0;
+          return 'Data Loaded';
+        },
+  );
 
   void checkCartUpdate() {
     Future.delayed(const Duration(milliseconds: 3000), () {

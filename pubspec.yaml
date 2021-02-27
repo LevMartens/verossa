@@ -22,7 +22,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-
+  form_validator: ^0.1.7
   stacked_themes: ^0.2.2+2
   async: ^2.4.2
   get_it: ^5.0.6

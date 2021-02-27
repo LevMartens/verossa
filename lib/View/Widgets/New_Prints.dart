@@ -54,7 +54,7 @@ class _NewPrintsState extends State<NewPrints> {
                 Navigator.of(context)
                     .pushReplacementNamed('ItemPage1');
 
-                scrollController.jumpTo(0);
+                //scrollController.jumpTo(0);
               },
               child: Container(
                 height: 200,
@@ -110,7 +110,7 @@ class _NewPrintsState extends State<NewPrints> {
 
                 Navigator.of(context)
                     .pushReplacementNamed('ItemPage2');
-                scrollController.jumpTo(0);
+                //scrollController.jumpTo(0);
               },
               child: Container(
                 height: 200,
@@ -173,7 +173,7 @@ class _NewPrintsState extends State<NewPrints> {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed('ItemPage3');
-                scrollController.jumpTo(0);
+                //scrollController.jumpTo(0);
               },
               child: Container(
                 height: 200,
@@ -232,7 +232,7 @@ class _NewPrintsState extends State<NewPrints> {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed('ItemPage4');
-                scrollController.jumpTo(0);
+               // scrollController.jumpTo(0);
               },
               child: Container(
                 height: 200,
@@ -296,7 +296,7 @@ class _NewPrintsState extends State<NewPrints> {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed('ItemPage5');
-                scrollController.jumpTo(0);
+                //scrollController.jumpTo(0);
               },
               child: Container(
                 height: 200,
@@ -354,7 +354,7 @@ class _NewPrintsState extends State<NewPrints> {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed('ItemPage6');
-                scrollController.jumpTo(0);
+                //scrollController.jumpTo(0);
               },
               child: Container(
                 height: 200,
