@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_themes/stacked_themes.dart';
-import 'package:verossa/Core/Util/Cart_Update.dart';
+import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Core/Network/Network_Info.dart';
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart';
 import 'dart:async';
@@ -53,7 +53,7 @@ Future<void> init() async {
         () => AsyncMemoizer()
   );
 
-  sl.registerSingleton(CartUpdate());
+  sl.registerSingleton(DidFinishLaunchingWithOptions());
 
   sl.registerSingleton(ThemeService.getInstance());
 
@@ -165,7 +165,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => InputConverter());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
-
+  
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
   final fireBaseFireStore = FirebaseFirestore.instance;

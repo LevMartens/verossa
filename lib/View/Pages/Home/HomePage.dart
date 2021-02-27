@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:verossa/Core/Util/Cart_Update.dart';
+import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
@@ -97,23 +97,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<String> _setupPrices = Future<String>.delayed(
-    Duration(seconds: di.sl<CartUpdate>().futureBuilderSec),
+    Duration(seconds: di.sl<DidFinishLaunchingWithOptions>().futureBuilderSec),
         () {
-          di.sl<CartUpdate>().futureBuilderSec = 0;
+          di.sl<DidFinishLaunchingWithOptions>().futureBuilderSec = 0;
           return 'Data Loaded';
         },
   );
 
   void checkCartUpdate() {
     Future.delayed(const Duration(milliseconds: 3000), () {
-      var cartHasBeenUpdated = di.sl<CartUpdate>().cartUpdated;
+      var cartHasBeenUpdated = di.sl<DidFinishLaunchingWithOptions>().cartUpdated;
       if (cartHasBeenUpdated == true) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
           'Stock has been updated, your cart has been adjusted',
           textAlign: TextAlign.center,
         )));
-        di.sl<CartUpdate>().cartUpdated = false;
+        di.sl<DidFinishLaunchingWithOptions>().cartUpdated = false;
       }
     });
   }

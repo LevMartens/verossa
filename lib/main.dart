@@ -22,6 +22,7 @@ import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
+import 'Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'Core/Util/Stateful_Wrapper.dart';
 import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Presentation/Prices_Provider.dart';
@@ -42,7 +43,7 @@ import 'View/Themes/Light_Theme.dart';
 
 // TODO: share button needs to share portfolio website.
 
-var cartBadge = 0;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,60 +54,6 @@ void main() async {
 }
 
 class Webshop extends StatelessWidget {
-
-  ///test
-  final Map<int,int> map = {
-    1: 0,
-    2: 3,
-    3: 0,
-    4: 0,
-    5: 4,
-    6: 0,
-    7: 0,
-    8: 2,
-    9: 0,
-    10: 0,
-    11: 0,
-    12: 0,
-    13: 0,
-    14: 0,
-    15: 0,
-    16: 0,
-    17: 0,
-    18: 0,
-  };
-  ///----
-
-
-  Future<dynamic> _startUp(BuildContext context) async {
-
-
-
-    return await di.sl<AsyncMemoizer>().runOnce(() async {
-
-      int cartBadgeCount =
-          Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
-      cartBadge = cartBadgeCount;
-
-
-      ///test
-      await Provider.of<ItemProvider>(context, listen: false)
-          .setCartContents(map);
-      ///----
-      await Provider.of<ItemProvider>(context, listen: false)
-          .getCartContents();
-      await Provider.of<PricesProvider>(context, listen: false)
-          .setCurrencyTo(context, 0);
-      await Provider.of<ItemProvider>(context, listen: false)
-          .getStockLimitFromFS();
-
-      return await Provider.of<ItemProvider>(context, listen: false)
-          .updateCartAfterStartUp() ;
-    });
-
-
-  }
-
 
 
   @override
@@ -138,7 +85,7 @@ class Webshop extends StatelessWidget {
 
                     return StatefulWrapper(
                       onInit: () async {
-                        await _startUp(context);
+                        await di.sl<DidFinishLaunchingWithOptions>().startUp(context);
                         print('startup done');
                       },
                       child: MaterialApp(

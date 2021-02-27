@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Core/Util/Cart_Update.dart';
+import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'dart:async';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
@@ -262,10 +262,10 @@ class ItemProvider extends ChangeNotifier {
     if (cartHasBeenUpdated == true) {
 
       setCartContents(cartContentMap);
-      di.sl<CartUpdate>().cartUpdated = true;
+      di.sl<DidFinishLaunchingWithOptions>().cartUpdated = true;
       return 'Done';
     } else {
-      di.sl<CartUpdate>().cartUpdated = false;
+      di.sl<DidFinishLaunchingWithOptions>().cartUpdated = false;
       return 'Not Done';}
 
   }
