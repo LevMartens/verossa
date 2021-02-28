@@ -9,6 +9,7 @@ import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Bottom_Section_Widget.dart';
+import 'package:verossa/View/Widgets/Left_Drawer_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 
@@ -360,7 +361,7 @@ class _InputPageState extends State<ItemPage> {
           ),
         ],
       ),
-      drawer: MyDrawer(aScaffoldKey: _scaffoldKey,),
+      drawer: LeftDrawer(),
       endDrawer: MyEndDrawer(),
     );
   }

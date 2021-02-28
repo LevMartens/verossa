@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:verossa/Features/User_Auth/Presentation/Name_Or_Login_In_Left_Drawer_Widget.dart';
-import 'package:verossa/View/Widgets/Search_Items_Widget.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Search_Items_Widget.dart';
 import '../Model/Items_For_SearchDelegate.dart';
 import 'package:badges/badges.dart';
 import '../Model/Global_Variables.dart';
