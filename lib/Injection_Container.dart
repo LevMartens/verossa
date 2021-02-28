@@ -19,6 +19,7 @@ import 'package:verossa/Features/Cart_Badge/Domain/Repositories/Cart_Badge_Repos
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
+import 'package:verossa/Features/User_Auth/Domain/Use_Cases/Set_Current_User_Details.dart';
 import 'Features/Items/Data/Data_Sources/Cart_Local_Data_Source.dart';
 import 'Features/Items/Data/Data_Sources/Stock_Limit_Remote_Data_Source.dart';
 import 'Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
@@ -44,10 +45,17 @@ import 'package:verossa/Features/Items/Data/Repositories/Cart_Repository_Impl.da
 import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 
+import 'Features/User_Auth/Data/Data_Sources/Current_User_Remote_Data_Source.dart';
+import 'Features/User_Auth/Data/Repositories/Current_User_Repository_Impl.dart';
+import 'Features/User_Auth/Domain/Repositories/Current_User_Repository.dart';
+import 'Features/User_Auth/Domain/Use_Cases/Get_Current_User_Details.dart';
+import 'Features/User_Auth/Domain/Use_Cases/Get_User.dart';
+import 'Features/User_Auth/Presentation/User_Provider.dart';
+
 final sl = GetIt.instance;
 
 Future<void> init() async {
-//register item models for each item / populate with content
+
 
   sl.registerLazySingleton<AsyncMemoizer>(
         () => AsyncMemoizer()
@@ -58,6 +66,15 @@ Future<void> init() async {
   sl.registerSingleton(ThemeService.getInstance());
 
   //Providers
+  sl.registerFactory(() => UserProvider(
+    getCurrentUserDetails: sl<GetCurrentUserDetails>(),
+    setCurrentUserDetails: sl<SetCurrentUserDetails>(),
+    getUser: sl<GetUser>(),
+    inputConverter: sl(),
+    auth: sl(),
+  ),
+  );
+
   sl.registerFactory(() => CartBadgeProvider(
       count: sl<GetCartBadgeNumber>(),
       number: sl<SetCartBadgeNumber>(),
@@ -101,7 +118,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SetItemsToCart(sl<CartRepository>()));
   sl.registerLazySingleton(() => GetExchangeRates(sl<ExchangeRatesRepository>()));
   sl.registerLazySingleton(() => SetEmailToMailingList(sl<NewsLetterRepository>()));
-
+  sl.registerLazySingleton(() => SetCurrentUserDetails(sl<CurrentUserRepository>()));
+  sl.registerLazySingleton(() => GetCurrentUserDetails(sl<CurrentUserRepository>()));
+  sl.registerLazySingleton(() => GetUser(sl<CurrentUserRepository>()));
 
 
   // Repository
@@ -140,7 +159,18 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<CurrentUserRepository>(
+        () => CurrentUserRepositoryImpl(
+      remoteDataSource: sl<CurrentUserRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
   // Data sources
+  sl.registerLazySingleton<CurrentUserRemoteDataSource>(
+        () => CurrentUserRemoteDataSourceImpl(firestore: sl(), auth: sl()),
+  );
+
   sl.registerLazySingleton<ExchangeRatesRemoteDataSource>(
         () => ExchangeRatesRemoteDataSourceImpl(client: sl()),
   );

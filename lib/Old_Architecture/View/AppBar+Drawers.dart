@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:verossa/Features/User_Auth/Presentation/Name_Or_Login_In_Left_Drawer_Widget.dart';
+import 'package:verossa/View/Widgets/Search_Items_Widget.dart';
 import '../Model/Items_For_SearchDelegate.dart';
 import 'package:badges/badges.dart';
 import '../Model/Global_Variables.dart';
@@ -64,7 +66,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
               onTap: () {
                 Navigator.pop(context);
-                Navigator.of(context).pushReplacementNamed('homePage');
+                Navigator.of(context).pushReplacementNamed('/');
                 currentlyOnPersonalPage = false;
               },
               child: Container(
@@ -113,41 +115,8 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
           ),
           Divider(height: 0, indent: 20, color: Colors.black26,),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 5),
-            child: GestureDetector(
-              onTap: () async {
+          NameOrLogin(),
 
-                if (await auth.currentUser != null) {
-                  Navigator.pop(context);
-
-                  Navigator.of(context).pushReplacementNamed('personalPage');
-
-                } else {
-                  Navigator.pop(context);
-                Navigator.of(context).pushReplacementNamed('customerLogin');
-                }
-              },
-              child: Container(
-                height: 40,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    name,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Divider(height: 0, indent: 20, color: Colors.black26,),
-          Container(
-            child: logOutButton,
-          ),
         ],
       ),
     ),
@@ -263,63 +232,4 @@ class MyEndDrawerState extends State<MyEndDrawer> {
   }
 }
 
-class CustomSearchDelegate extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      ),
-    ];
-  }
 
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        progress: transitionAnimation,
-      ),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return null;
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final list = query.isEmpty
-        ? loadItems()
-        : loadItems()
-            .where((p) => p.subtitle.contains(query.toLowerCase()))
-            .toList();
-
-    // print(list);
-    return list.isEmpty
-        ? Text('No Results Found...')
-        : ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              final Item listItem = list[index];
-              return ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-
-                  Navigator.of(context).pushNamed(listItem.routeFromSearch);
-                  // Navigator.of(context).popAndPushNamed(listItem.routeFromSearch);
-                },
-                title: Text(listItem.title),
-                leading: Container(width: 75 ,child: listItem.image),
-              );
-            });
-  }
-}

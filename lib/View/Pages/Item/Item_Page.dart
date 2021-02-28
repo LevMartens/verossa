@@ -8,7 +8,7 @@ import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
-import 'package:verossa/View/Widgets/Bottom_Section.dart';
+import 'package:verossa/View/Widgets/Bottom_Section_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 

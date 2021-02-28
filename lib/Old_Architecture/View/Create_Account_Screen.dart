@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
 import 'AppBar+Drawers.dart';
 import 'Customer_Login_Screen.dart';
 import '../Model/Progress_Indicator.dart';
@@ -29,6 +31,12 @@ class _InputPageState extends State<CreateAccount> {
 
   final _scrollController = ScrollController(keepScrollOffset: false);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String _firstName;
+  String _lastName;
+  String _email;
+  String _password;
+  bool circularProgressIVisible = false;
 
   @override
   void initState() {
@@ -88,7 +96,7 @@ class _InputPageState extends State<CreateAccount> {
                   ),
                   SizedBox(height: 10),
 
-                  Column(
+                  circularProgressIVisible == false ? Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 40.0, bottom: 0.0),
@@ -115,7 +123,7 @@ class _InputPageState extends State<CreateAccount> {
                           child: TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             onChanged: (value) {
-                              firstName = value;
+                              _firstName = value;
                             },
                             autofillHints: [AutofillHints.givenName],
                             decoration: const InputDecoration(
@@ -149,7 +157,7 @@ class _InputPageState extends State<CreateAccount> {
                           width: 300,
                           child: TextFormField(
                             onChanged: (value) {
-                              lastName = value;
+                              _lastName = value;
                             },
                             autofillHints: [AutofillHints.familyName],
                             decoration: const InputDecoration(
@@ -176,7 +184,7 @@ class _InputPageState extends State<CreateAccount> {
                           child: TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             onChanged: (value) {
-                              email = value;
+                              _email = value;
                             },
                             autofillHints: [AutofillHints.email],
                             decoration: const InputDecoration(
@@ -211,7 +219,7 @@ class _InputPageState extends State<CreateAccount> {
                           child: TextFormField(
                             obscureText: true,
                             onChanged: (value) {
-                              password = value;
+                              _password = value;
                             },
                             decoration: const InputDecoration(
                               enabledBorder: OutlineInputBorder(
@@ -236,38 +244,27 @@ class _InputPageState extends State<CreateAccount> {
                                 Radius.circular(4.0),
                               ),
                             ),
-                            child: FlatButton(
+                            child: TextButton(
                               onPressed: () async {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ProgressIndi()),);
+                                setState(() {
+                                  circularProgressIVisible = true;
+                                });
+                                var response = await Provider.of<UserProvider>(context, listen: false).createNewUser(_email, _password, _firstName, _lastName);
+
+                                if (response == 'Great Success') {
+
+                                  Navigator.of(context)
+                                      .pushReplacementNamed('personalPage');
+                                  
+                                } else {
+
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$response', textAlign: TextAlign.center,)));
+                                }
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) => ProgressIndi()),);
 
 
-
-                                try {
-                                  final newUser = await auth
-                                      .createUserWithEmailAndPassword(
-                                      email: email, password: password);
-                                  if (newUser != null) {
-
-
-
-                                    await addNewUserDetailsToFireStore();
-
-                                    await getUserDetails();
-                                    Navigator.pop(context);
-
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => PersonalPage()),);
-
-
-                                  }
-                                } catch (e) {
-                                  Navigator.pop(context);
-                                  _scaffoldKey.currentState
-                                      .showSnackBar(SnackBar(content: Text('$e', textAlign: TextAlign.center,)));
-                                  print(e);}
                               },
                               child: Text(
                                 'SIGN UP',
@@ -292,7 +289,7 @@ class _InputPageState extends State<CreateAccount> {
 
 
                     ],
-                  ),
+                  ) : CircularProgressIndicator(),
 
 
 

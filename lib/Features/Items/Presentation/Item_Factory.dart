@@ -8,12 +8,14 @@ import 'Item_Model.dart';
 class ItemFactory {
 
   ItemModel item1 = ItemModel(
+      route: 'ItemPage1',
       itemIDForNormal: 1,
       itemIDForBW: 2,
       itemIDForCF:  3,
       priceAUD: 14.95,
       titleAllCaps: 'MONTANA FALL',
       title: 'Montana Fall',
+      subtitle: 'montana fall',
       description: 'Montana Fall is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
       itemImage: AssetImage('images/Verossa-Fall.jpg'),
       itemImageBW: AssetImage('images/Verossa-FallBW.jpg'),
@@ -22,12 +24,14 @@ class ItemFactory {
   );
 
   ItemModel item2 = ItemModel(
+      route: 'ItemPage2',
       itemIDForNormal: 4,
       itemIDForBW: 5,
       itemIDForCF:  6,
       priceAUD: 24.95,
       titleAllCaps: 'RED AFRICA',
       title: 'Red Africa',
+      subtitle: 'red africa',
       description: 'Red Africa is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
       itemImage: AssetImage('images/Verossa-SunTree.jpg'),
       itemImageBW: AssetImage('images/Verossa-SunTreeBW.jpg'),
@@ -36,12 +40,14 @@ class ItemFactory {
   );
 
   ItemModel item3 = ItemModel(
+      route: 'ItemPage3',
       itemIDForNormal: 7,
       itemIDForBW: 8,
       itemIDForCF:  9,
       priceAUD: 19.95,
       titleAllCaps: 'BETWEEN THE ALPS',
       title: 'Between The Alps',
+      subtitle: 'between the alps',
       description: 'Between The Alps is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
       itemImage: AssetImage('images/Verossa-Heli.jpg'),
       itemImageBW: AssetImage('images/Verossa-HeliBW.jpg'),
@@ -50,12 +56,14 @@ class ItemFactory {
   );
 
   ItemModel item4 = ItemModel(
+      route: 'ItemPage4',
       itemIDForNormal: 10,
       itemIDForBW: 11,
       itemIDForCF:  12,
       priceAUD: 14.95,
       titleAllCaps: 'SPRING ESTONIA',
       title: 'Spring Estonia',
+      subtitle: 'spring estonia',
       description: 'Spring Estonia is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
       itemImage: AssetImage('images/Verossa-Field.jpg'),
       itemImageBW: AssetImage('images/Verossa-FieldBW.jpg'),
@@ -64,12 +72,14 @@ class ItemFactory {
   );
 
   ItemModel item5 = ItemModel(
+      route: 'ItemPage5',
       itemIDForNormal: 13,
       itemIDForBW: 14,
       itemIDForCF:  15,
       priceAUD: 19.95,
       titleAllCaps: 'MICHIGAN THUNDER',
       title: 'Michigan Thunder',
+      subtitle: 'michigan thunder',
       description: 'Michigan Thunder is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
       itemImage: AssetImage('images/Verossa-Thunder.jpg'),
       itemImageBW: AssetImage('images/Verossa-ThunderBW.jpg'),
@@ -78,18 +88,22 @@ class ItemFactory {
   );
 
   ItemModel item6 = ItemModel(
+      route: 'ItemPage6',
       itemIDForNormal: 16,
       itemIDForBW: 17,
       itemIDForCF:  18,
       priceAUD: 14.95,
       titleAllCaps: 'SCOTLAND HIGH',
       title: 'Scotland High',
+      subtitle: 'scotland high',
       description: 'Scotland High is a photo taken by Paige Turner. This photo was created on November 6, 2011 and published on December 3, 2015.',
       itemImage: AssetImage('images/Verossa-Scotland.jpg'),
       itemImageBW: AssetImage('images/Verossa-ScotlandBW.jpg'),
       itemImageCF: AssetImage('images/Verossa-ScotlandCL.jpg'),
       streamController: StreamController(),
   );
+
+
 
 
 

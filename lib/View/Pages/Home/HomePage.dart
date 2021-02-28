@@ -4,7 +4,7 @@ import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
-import 'package:verossa/View/Widgets/Bottom_Section.dart';
+import 'package:verossa/View/Widgets/Bottom_Section_Widget.dart';
 import 'package:verossa/View/Widgets/New_Prints.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Carousel.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';

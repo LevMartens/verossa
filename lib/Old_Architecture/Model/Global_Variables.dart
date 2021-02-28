@@ -395,6 +395,7 @@ String postcode;
 String apartment;
 String country;
 String state;
+
 int orderNumber;
 
 ///--------CheckOut---------------------------------------------

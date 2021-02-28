@@ -27,6 +27,7 @@ import 'Core/Util/Stateful_Wrapper.dart';
 import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Presentation/Prices_Provider.dart';
 import 'Features/Items/Presentation/Item_Provider.dart';
+import 'Features/User_Auth/Presentation/User_Provider.dart';
 import 'View/Pages/Item/Item_Page.dart';
 import 'View/Themes/Dark_Theme.dart';
 import 'View/Themes/Light_Theme.dart';
@@ -72,11 +73,15 @@ class Webshop extends StatelessWidget {
               create: (context) => di.sl<PricesProvider>()),
           ChangeNotifierProvider<NewsLetterProvider>(
               create: (context) => di.sl<NewsLetterProvider>()),
+          ChangeNotifierProvider<UserProvider>(
+              create: (context) => di.sl<UserProvider>()),
+
+
           ChangeNotifierProvider<DrawerProvider>(
               create: (context) => DrawerProvider()),
         ],
-        child: Consumer3<DrawerProvider, PricesProvider, ItemProvider>(
-            builder: (context, exchangeRateProvider, providerMyDC, itemPV, child) =>
+        child: Consumer4<DrawerProvider, PricesProvider, ItemProvider, UserProvider>(
+            builder: (context, exchangeRateProvider, providerMyDC, itemPV, userPV, child) =>
                 ThemeBuilder(
                   defaultThemeMode: ThemeMode.light,
                   darkTheme: ThemeData(),

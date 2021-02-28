@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'package:verossa/Old_Architecture/Model/Personal_Page_Form.dart';
 import 'AppBar+Drawers.dart';
@@ -13,6 +14,7 @@ import 'AboutUs_Page.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
 
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 
@@ -40,224 +42,228 @@ class _InputPageState extends State<PersonalPage> {
 
   }
 
-  static final _formKey1 = GlobalKey<FormState>();
-  Widget theForm() {
-
-
-    final textControllerStreet = TextEditingController();
-    final textControllerPlace = TextEditingController();
-    final textControllerPostcode = TextEditingController();
-    return Form(
-      key: _formKey1,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                'Address'
-
-                ,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 6),
-          Container(
-            height: 40,
-            width: 300,
-            child: TextFormField(
-              controller: textControllerStreet,
-              decoration: const InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black12,
-                  ),
-                ),
-
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontSize: 14,
-                ),
-              ),
-
-              validator: (value) {
-
-                if (value.isEmpty) {
-
-                  return 'Please enter your address';
-
-                }
-
-
-                return null;
-              },
-            ),
-          ),
-          SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                'Suburb'
-
-                ,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 12),
-          Container(
-            height: 40,
-            width: 300,
-            child: TextFormField(
-              controller: textControllerPlace,
-              decoration: const InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black12,
-                  ),
-                ),
-
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontSize: 14,
-                ),
-              ),
-
-              validator: (value) {
-
-                if (value.isEmpty) {
-
-                  return 'Please enter your suburb';
-
-                }
-
-
-                return null;
-              },
-            ),
-          ),
-          SizedBox(height: 6),
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Container(
-              height: 30,
-              width: 300,
-
-              child: Text(
-                'Postcode'
-
-                ,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  height: 2,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          Container(
-            height: 40,
-            width: 300,
-            child: TextFormField(
-
-              textAlignVertical: TextAlignVertical.top,
-              maxLines: 1,
-              controller: textControllerPostcode,
-              decoration: const InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black12,
-                  ),
-                ),
-                hintText: 'Postcode',
-                hintStyle: TextStyle(fontSize: 14, height: 0.5, color: Colors.black38),
-
-              ),
-            ),
-
-          ),
-          SizedBox(height: 20),
-          Container(
-            height: 40,
-            width: 300,
-            decoration: BoxDecoration(
-              color: Colors.grey[800],
-              borderRadius: BorderRadius.all(
-                Radius.circular(4.0),
-              ),
-            ),
-            child: FlatButton(
-              onPressed: () async {
-                final User user = await auth.currentUser;
-                final uid = user.uid;
-                if (_formKey1.currentState.validate()) {
-                  street = textControllerStreet.text;
-                  place = textControllerPlace.text;
-                  postcode = textControllerPostcode.text;
-
-
-
-                  firestore.collection("$uid").add({
-                    'Street': street,
-                    'Place': place,
-                    'Postcode': postcode,
-                  });
-
-                  // final prefs = await SharedPreferences.getInstance();
-                  // await prefs.setString('street', street);
-                  // await prefs.setString('place', place);
-                  // await prefs.setString('postcode', postcode);
-
-                  setState(() {
-
-                  });
-
-
-
-
-
-
-                  _scaffoldKey.currentState
-                      .showSnackBar(SnackBar(content: Text('Address saved', textAlign: TextAlign.center,)));
-                  _formKey1.currentState.reset();
-
-                }
-              },
-              child: Text(
-                'SAVE',
-                style: TextStyle(
-                    color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // static final _formKey1 = GlobalKey<FormState>();
+  // Widget theForm() {
+  //
+  //
+  //   final textControllerStreet = TextEditingController();
+  //   final textControllerPlace = TextEditingController();
+  //   final textControllerPostcode = TextEditingController();
+  //   return Form(
+  //     key: _formKey1,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: <Widget>[
+  //         Padding(
+  //           padding: const EdgeInsets.only(left: 3.0),
+  //           child: Container(
+  //             height: 30,
+  //             width: 300,
+  //
+  //             child: Text(
+  //               'Address'
+  //
+  //               ,
+  //               style: TextStyle(
+  //                 fontWeight: FontWeight.w700,
+  //                 height: 2,
+  //                 color: Colors.black87,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: 6),
+  //         Container(
+  //           height: 40,
+  //           width: 300,
+  //           child: TextFormField(
+  //             controller: textControllerStreet,
+  //             decoration: const InputDecoration(
+  //               enabledBorder: OutlineInputBorder(
+  //                 borderSide: BorderSide(
+  //                   color: Colors.black12,
+  //                 ),
+  //               ),
+  //
+  //               labelStyle: TextStyle(
+  //                 color: Colors.black38,
+  //                 fontSize: 14,
+  //               ),
+  //             ),
+  //
+  //             validator: (value) {
+  //
+  //               if (value.isEmpty) {
+  //
+  //                 return 'Please enter your address';
+  //
+  //               }
+  //
+  //
+  //               return null;
+  //             },
+  //           ),
+  //         ),
+  //         SizedBox(height: 12),
+  //         Padding(
+  //           padding: const EdgeInsets.only(left: 3.0),
+  //           child: Container(
+  //             height: 30,
+  //             width: 300,
+  //
+  //             child: Text(
+  //               'Suburb'
+  //
+  //               ,
+  //               style: TextStyle(
+  //                 fontSize: 15,
+  //                 fontWeight: FontWeight.w700,
+  //                 height: 2,
+  //                 color: Colors.black87,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: 12),
+  //         Container(
+  //           height: 40,
+  //           width: 300,
+  //           child: TextFormField(
+  //             controller: textControllerPlace,
+  //             decoration: const InputDecoration(
+  //               enabledBorder: OutlineInputBorder(
+  //                 borderSide: BorderSide(
+  //                   color: Colors.black12,
+  //                 ),
+  //               ),
+  //
+  //               labelStyle: TextStyle(
+  //                 color: Colors.black38,
+  //                 fontSize: 14,
+  //               ),
+  //             ),
+  //
+  //             validator: (value) {
+  //
+  //               if (value.isEmpty) {
+  //
+  //                 return 'Please enter your suburb';
+  //
+  //               }
+  //
+  //
+  //               return null;
+  //             },
+  //           ),
+  //         ),
+  //         SizedBox(height: 6),
+  //         Padding(
+  //           padding: const EdgeInsets.only(left: 3.0),
+  //           child: Container(
+  //             height: 30,
+  //             width: 300,
+  //
+  //             child: Text(
+  //               'Postcode'
+  //
+  //               ,
+  //               style: TextStyle(
+  //                 fontWeight: FontWeight.w700,
+  //                 height: 2,
+  //                 color: Colors.black87,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: 8),
+  //         Container(
+  //           height: 40,
+  //           width: 300,
+  //           child: TextFormField(
+  //
+  //             textAlignVertical: TextAlignVertical.top,
+  //             maxLines: 1,
+  //             controller: textControllerPostcode,
+  //             decoration: const InputDecoration(
+  //               enabledBorder: OutlineInputBorder(
+  //                 borderSide: BorderSide(
+  //                   color: Colors.black12,
+  //                 ),
+  //               ),
+  //               hintText: 'Postcode',
+  //               hintStyle: TextStyle(fontSize: 14, height: 0.5, color: Colors.black38),
+  //
+  //             ),
+  //           ),
+  //
+  //         ),
+  //         SizedBox(height: 20),
+  //         Container(
+  //           height: 40,
+  //           width: 300,
+  //           decoration: BoxDecoration(
+  //             color: Colors.grey[800],
+  //             borderRadius: BorderRadius.all(
+  //               Radius.circular(4.0),
+  //             ),
+  //           ),
+  //           child: FlatButton(
+  //             onPressed: () async {
+  //               final User user = await auth.currentUser;
+  //               final uid = user.uid;
+  //               if (_formKey1.currentState.validate()) {
+  //                 street = textControllerStreet.text;
+  //                 place = textControllerPlace.text;
+  //                 postcode = textControllerPostcode.text;
+  //
+  //
+  //
+  //                 firestore.collection("$uid").add({
+  //                   'Street': street,
+  //                   'Place': place,
+  //                   'Postcode': postcode,
+  //                 });
+  //
+  //                 // final prefs = await SharedPreferences.getInstance();
+  //                 // await prefs.setString('street', street);
+  //                 // await prefs.setString('place', place);
+  //                 // await prefs.setString('postcode', postcode);
+  //
+  //                 setState(() {
+  //
+  //                 });
+  //
+  //
+  //
+  //
+  //
+  //
+  //                 _scaffoldKey.currentState
+  //                     .showSnackBar(SnackBar(content: Text('Address saved', textAlign: TextAlign.center,)));
+  //                 _formKey1.currentState.reset();
+  //
+  //               }
+  //             },
+  //             child: Text(
+  //               'SAVE',
+  //               style: TextStyle(
+  //                   color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
 
+    User currentUser = Provider.of<UserProvider>(context, listen: true).currentUser;
+    Map<String,String> currentUserDetails = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
+    String  _fullName = currentUserDetails['fullName'];
+    String _email = currentUserDetails['email'];
 
 
     return Scaffold(
@@ -330,7 +336,7 @@ class _InputPageState extends State<PersonalPage> {
                       child: Container(
                         width: 300,
 
-                        child: Text(fullName.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black87), ),
+                        child: Text(_fullName.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black87), ),
                       ),
                     ),
                   ),
@@ -346,7 +352,7 @@ class _InputPageState extends State<PersonalPage> {
                     width: 300,
 
                     child: Text(
-                      '$email'
+                      '$_email'
                       , textAlign: TextAlign.left,
                       style: TextStyle(
                         height: 1,
@@ -357,8 +363,7 @@ class _InputPageState extends State<PersonalPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-
-                  PersonalForm(aScaffoldKey: _scaffoldKey,),
+                  //PersonalForm(aScaffoldKey: _scaffoldKey,),
 
                   //getStreet(context),
                   SizedBox(height: 10),

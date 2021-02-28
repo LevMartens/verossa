@@ -270,6 +270,21 @@ class ItemProvider extends ChangeNotifier {
 
   }
 
+  List<ItemModel> getItemsInList()  {
+
+    List<ItemModel> itemList = [
+      factory.item1,
+      factory.item2,
+      factory.item3,
+      factory.item4,
+      factory.item5,
+      factory.item6,
+    ];
+
+    return itemList;
+
+  }
+
 
 
 

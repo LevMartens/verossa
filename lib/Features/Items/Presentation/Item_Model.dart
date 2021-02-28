@@ -32,8 +32,12 @@ class ItemModel extends IItemBaseModel {
   AssetImage itemImageCF;
   AssetImage itemImageBW;
   StreamController streamController;
+  String route;
+  String subtitle;
 
   ItemModel({
+    @required this.subtitle,
+    @required this.route,
     @required this.itemIDForNormal,
     @required this.itemIDForBW,
     @required this.itemIDForCF,

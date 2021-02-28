@@ -2,31 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/Items/Presentation/Util/Animated_Cross_Fade_Image_Widget.dart';
 import 'package:verossa/Features/Items/Presentation/Util/Directory_Path_Widget.dart';
-import 'package:verossa/Features/Items/Presentation/Util/Hero_Container_Widget.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
-import 'package:verossa/Old_Architecture/View/Item_Detail_Screens.dart';
-import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
-import 'package:verossa/Old_Architecture//Model/Global_Variables.dart';
-import 'package:verossa/Old_Architecture//Controller/Global_Methods.dart';
 import 'package:share/share.dart';
-import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
-import 'package:verossa/Old_Architecture/View/ContactUs_Page.dart';
-import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
-import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
-import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
-import 'package:verossa/View/Pages/Item/Item_Detail_Page.dart';
-
-import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
-import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
-import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
-
 import '../Item_Provider.dart';
 
 
