@@ -191,12 +191,12 @@ class PricesProvider extends ChangeNotifier {
 
   Future<void> setCurrencyForTotalTo(BuildContext context) async {
     await mapPricesForTotalCalculation();
-    const TOTAL_AMOUNT_OF_ITEMS = 18;
+
     Map<int,int> cartContent = await Provider.of<ItemProvider>(context, listen: false).returnCartContent();
 
     var totalAmount = 0.00;
 
-    for (var i = 1; i < TOTAL_AMOUNT_OF_ITEMS; i++) {
+    for (var i = 1; i < cartContent.length; i++) {
 
       var a = cartContent[i];
       var b = toCalculate[i];

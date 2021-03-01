@@ -110,7 +110,134 @@ class ItemFactory {
   );
 
 
+  Map<String,dynamic> getItemModelWithID(int itemID) {
 
+      switch (itemID) {
+          case 1:
+              return {
+                  'itemModel': item1,
+                  'itemFilter': 'Normal'
+              };
+              break;
+
+          case 2:
+              return {
+                  'itemModel': item1,
+                  'itemFilter': 'BW'
+              };
+              break;
+
+          case 3:
+              return {
+                  'itemModel': item1,
+                  'itemFilter': 'CF'
+              };
+              break;
+
+          case 4:
+              return {
+                  'itemModel': item2,
+                  'itemFilter': 'Normal'
+              };
+              break;
+
+          case 5:
+              return {
+                  'itemModel': item2,
+                  'itemFilter': 'BW'
+              };
+              break;
+
+          case 6:
+              return {
+                  'itemModel': item2,
+                  'itemFilter': 'CF'
+              };
+              break;
+
+          case 7:
+              return {
+                  'itemModel': item3,
+                  'itemFilter': 'Normal'
+              };
+              break;
+
+          case 8:
+              return {
+                  'itemModel': item3,
+                  'itemFilter': 'BW'
+              };
+              break;
+
+          case 9:
+              return {
+                  'itemModel': item3,
+                  'itemFilter': 'CF'
+              };
+              break;
+          case 10:
+              return {
+                  'itemModel': item4,
+                  'itemFilter': 'Normal'
+              };
+              break;
+
+          case 11:
+              return {
+                  'itemModel': item4,
+                  'itemFilter': 'BW'
+              };
+              break;
+
+          case 12:
+              return {
+                  'itemModel': item4,
+                  'itemFilter': 'CF'
+              };
+              break;
+          case 13:
+              return {
+                  'itemModel': item5,
+                  'itemFilter': 'Normal'
+              };
+              break;
+
+          case 14:
+              return {
+                  'itemModel': item5,
+                  'itemFilter': 'BW'
+              };
+              break;
+
+          case 15:
+              return {
+                  'itemModel': item5,
+                  'itemFilter': 'CF'
+              };
+              break;
+
+          case 16:
+              return {
+                  'itemModel': item6,
+                  'itemFilter': 'Normal'
+              };
+              break;
+
+          case 17:
+              return {
+                  'itemModel': item6,
+                  'itemFilter': 'BW'
+              };
+              break;
+
+          case 18:
+              return {
+                  'itemModel': item6,
+                  'itemFilter': 'CF'
+              };
+              break;
+      }
+  }
 
 
 

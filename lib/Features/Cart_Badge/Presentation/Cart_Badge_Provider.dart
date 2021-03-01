@@ -17,7 +17,7 @@ class CartBadgeProvider extends ChangeNotifier {
   final GetCartBadgeNumber getCartBadgeNumber;
   final InputConverter inputConverter;
   int cartBadgeCount = 0;
-  int TOTAL_AMOUNT_OF_ITEMS = 18;
+
 
   CartBadgeProvider({
     @required GetCartBadgeNumber count,
@@ -34,9 +34,8 @@ class CartBadgeProvider extends ChangeNotifier {
 
 
   void updateCartBadgeCountWith(Map<int,int> cartContents) async {
-    print('lengt ${cartContents.length}');
     var totalItemInCart = 0;
-    for (var i = 1; i < TOTAL_AMOUNT_OF_ITEMS; i++) {
+    for (var i = 1; i < cartContents.length; i++) {
       var b = cartContents[i];
       var c = totalItemInCart + b;
       totalItemInCart = c;

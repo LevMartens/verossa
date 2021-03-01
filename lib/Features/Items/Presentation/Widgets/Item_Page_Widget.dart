@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Features/Items/Presentation/Util/Animated_Cross_Fade_Image_Widget.dart';
-import 'package:verossa/Features/Items/Presentation/Util/Directory_Path_Widget.dart';
+import 'package:verossa/Features/Items/Presentation/Widgets/Small_Widgets/Animated_Cross_Fade_Image_Widget.dart';
+import 'package:verossa/Features/Items/Presentation/Widgets/Small_Widgets/Directory_Path_Widget.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:flutter/material.dart';

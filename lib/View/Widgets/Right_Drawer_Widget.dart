@@ -9,39 +9,20 @@ class RightDrawer extends StatefulWidget {
 }
 
 class _RightDrawerState extends State<RightDrawer> {
-  //Widget theList = Container();
+
   final GlobalKey<AnimatedListState> iListKey = GlobalKey<AnimatedListState>();
   @override
   void dispose() {
     super.dispose();
 
-    // Future.delayed(const Duration(milliseconds: 200), () {
-    //   Provider.of<AppBarProvider>(contextForBadgeProv, listen: false)
-    //       .cartToCart();
-    // });
 
-    // if (cartItems.isNotEmpty == true) {
-    //   cartItems.removeLast();
-    // }
-    // flushAllCurrencyStreamsInTiles();
   }
 
   @override
   void initState() {
     super.initState();
 
-    // sinkCurrenciesForTiles();
-    // Future.delayed(const Duration(milliseconds: 1000), () {
-    //   flushAllCurrencyStreamsInTiles();
-    // });
-    //
-    //
-    // if (cartItems.isEmpty == true) {
-    //   cartItems.add(yourCartIsEmpty());
-    // } else {
-    //   subtotalContainer = subtotal(cartSubtotal, context);
-    //   cartItems.add(subtotalContainer);
-    // }
+
   }
 
   @override

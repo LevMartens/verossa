@@ -4,7 +4,7 @@ import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/View/Pages/Item/Item_Detail_Page.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 
-import '../Item_Provider.dart';
+import '../../Item_Provider.dart';
 import 'Hero_Container_Widget.dart';
 
 class AnimatedCrossFadeImage extends StatefulWidget {

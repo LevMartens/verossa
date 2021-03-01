@@ -16,7 +16,7 @@ import 'package:meta/meta.dart';
 import 'package:verossa/Core/Util/Input_Converter.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'Item_Factory.dart';
-import 'Util/Hero_Container_Widget.dart';
+import 'Widgets/Small_Widgets/Hero_Container_Widget.dart';
 
 class ItemProvider extends ChangeNotifier {
 
@@ -410,9 +410,14 @@ class ItemProvider extends ChangeNotifier {
 
   void addItemTilesToListAfterStartUp() {
 
+    for (var i = 1; i < cartContentMap.length; i++) {
+      var map = factory.getItemModelWithID(i);
+      if (cartContentMap[i] != 0) {
+        itemTilesMap['$i'] = ItemDrawerTile(item: map['itemModel'], itemFilter: map['itemFilter']);
+        currentItemTilesList.add(itemTilesMap['$i']);
+      }
+    }
 
-    itemTilesMap['$itemID'] = ItemDrawerTile(item: itemModel, itemFilter: itemFilter);
-    currentItemTilesList.add(itemTilesMap['$itemID']);
 
   }
 

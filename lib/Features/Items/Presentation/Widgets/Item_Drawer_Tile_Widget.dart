@@ -2,15 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
-
 import '../Item_Model.dart';
 import '../Item_Provider.dart';
 
 class ItemDrawerTile extends StatefulWidget {
-
 
   final ItemModel item;
   final String itemFilter;
@@ -34,7 +30,6 @@ class _ItemDrawerTileState extends State<ItemDrawerTile> {
   @override
   void initState() {
     super.initState();
-    //_textController.text = '2';
     _setItemID();
   }
 
@@ -45,21 +40,7 @@ class _ItemDrawerTileState extends State<ItemDrawerTile> {
 
     _setItemCountInTextField(cartContents);
 
-
-
     String itemPrice = Provider.of<PricesProvider>(context, listen: false).getItemPriceForTile(item.itemNumber);
-
-    // double containerHeight = 110;
-    //
-    // sinkCurrenciesForTiles();
-    //
-    // Future.delayed(const Duration(milliseconds: 200), () {
-    //   flushAllCurrencyStreamsInTiles();
-    // });
-
-
-
-
 
     return AnimatedContainer(
       curve: Curves.ease,
@@ -111,15 +92,8 @@ class _ItemDrawerTileState extends State<ItemDrawerTile> {
                           child: Container(
                             child: GestureDetector(
                               onTap: () {
-
                                 Provider.of<ItemProvider>(context, listen: false)
                                     .subtractItemInCart(itemID, context);
-
-                                // Future.delayed(const Duration(milliseconds: 200), () {
-                                //   setState(() {
-                                //
-                                //   });
-                                // });
                               },
                               child: Icon(
                                 Icons.remove,
@@ -137,34 +111,8 @@ class _ItemDrawerTileState extends State<ItemDrawerTile> {
                             width: 35,
                             child: TextFormField(
                               onFieldSubmitted: (value) async {
-
                                  await Provider.of<ItemProvider>(context, listen: false)
                                     .onChanged(itemID, int.parse(value), context);
-
-
-                                // var a = int.parse(value);
-                                // if (a > stockLimit[itemID]) {
-                                //   Scaffold.of(context)
-                                //       .showSnackBar(SnackBar(
-                                //       content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
-                                //
-                                //   onChangedItemStock(itemID, a, context);
-                                //
-                                //   Future.delayed(const Duration(milliseconds: 200), () {
-                                //     setState(() {
-                                //       ///This is to update the item count in the textField.
-                                //     });
-                                //   });
-                                // } else {
-                                //
-                                //   onChangedItemStock(itemID, a, context);
-                                //
-                                //   Future.delayed(const Duration(milliseconds: 200), () {
-                                //     setState(() {
-                                //       ///This is to update the item count in the textField.
-                                //     });
-                                //   });
-                                // }
                               },
                               keyboardType: TextInputType.numberWithOptions(signed: true, decimal: false),
                               controller: _textController,
@@ -190,23 +138,6 @@ class _ItemDrawerTileState extends State<ItemDrawerTile> {
                             onTap: () async {
                               await Provider.of<ItemProvider>(context, listen: false)
                                   .addItemToCart(itemID, 1, context, item, itemFilter);
-                              // var a = int.parse(_textController.text);
-                              //
-                              // if (a == stockLimit[itemID]) {
-                              //   Scaffold.of(context)
-                              //       .showSnackBar(SnackBar(
-                              //       content: Text('Maximum stock reached, cart adjusted', textAlign: TextAlign.center,)));
-                              //
-                              // } else {
-                              //   addCartItem(itemID, true, context);
-                              //   Future.delayed(
-                              //       const Duration(milliseconds: 200), () {
-                              //     setState(() {
-                              //       print(
-                              //           'stockInCart[itemID] during setstate = ${stockInCart[itemID]}');
-                              //     });
-                              //   });
-                              // }
                             },
                             child: Icon(
                               Icons.add,
@@ -233,12 +164,10 @@ class _ItemDrawerTileState extends State<ItemDrawerTile> {
     var normalID = item.itemIDForNormal;
     var bwID = item.itemIDForBW;
     var cfID = item.itemIDForCF;
-    print('HERE itemfilter $itemFilter');
     switch (itemFilter) {
 
       case 'Normal':
         setState(() {
-          print('HERE');
           _textController.text = cartContents['$normalID'].toString();
         });
 

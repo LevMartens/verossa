@@ -30,9 +30,10 @@ class DidFinishLaunchingWithOptions {
           .setCurrencyTo(context, 0);
       await Provider.of<ItemProvider>(context, listen: false)
           .getStockLimitFromFS();
-
-      return await Provider.of<ItemProvider>(context, listen: false)
-          .updateCartAfterStartUp() ;
+      await Provider.of<ItemProvider>(context, listen: false)
+          .updateCartAfterStartUp();
+      return Provider.of<ItemProvider>(context, listen: false)
+          .addItemTilesToListAfterStartUp();
     });
 
 
