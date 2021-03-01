@@ -32,6 +32,8 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
   int itemIDBW;
   int itemIDCF;
 
+  String currentItemFilter;
+
 
 
   @override
@@ -45,6 +47,7 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
     itemIDCF = itemModel.itemIDForCF;
 
     itemCurrentlySelected = itemIDNormal;
+    currentItemFilter = 'Normal';
   }
 
   @override
@@ -55,10 +58,7 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
     String priceItem = Provider.of<PricesProvider>(context, listen: true).itemPriceForThisWidget;
 
 
-    return ChangeNotifierProvider<ItemProvider>(
-        create: (context) => di.sl<ItemProvider>(),
-        child: Consumer<ItemProvider>(
-            builder: (context, provider, child) => Column(children: [
+    return Column(children: [
               DirectoryPath(),
               AnimatedCrossFadeImage(itemModel: itemModel),
               Container(
@@ -115,16 +115,19 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                       if (selectedIndex == 0) {
                         setState(() {
                           itemCurrentlySelected = itemIDNormal;
+                          currentItemFilter = 'Normal';
                         });
                       }
                       if (selectedIndex == 1) {
                         setState(() {
                           itemCurrentlySelected = itemIDBW;
+                          currentItemFilter = 'BW';
                         });
                       }
                       if (selectedIndex == 2) {
                         setState(() {
                           itemCurrentlySelected = itemIDCF;
+                          currentItemFilter = 'CF';
                         });
                       }
                     },
@@ -151,7 +154,7 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                 child: TextButton(
                   onPressed: () async {
 
-                    final failureOrSuccessfullyAdded = await Provider.of<ItemProvider>(context, listen: false).addItemToCart(itemCurrentlySelected, 1, context);
+                    final failureOrSuccessfullyAdded = await Provider.of<ItemProvider>(context, listen: false).addItemToCart(itemCurrentlySelected, 1, context, itemModel, currentItemFilter);
 
                     if (failureOrSuccessfullyAdded == 'Sold Out') {
                       final scaffold = ScaffoldMessenger.of(context);
@@ -237,6 +240,6 @@ class _ItemPageWidgetState extends State<ItemPageWidget> {
                   ),
                 ),
               ),
-            ],)));
+            ],);
   }
 }

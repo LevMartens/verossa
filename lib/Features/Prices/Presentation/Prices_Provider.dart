@@ -1,29 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
-import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Prices/Domain/Use_Cases/Get_Exchange_Rates.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-
-import 'dart:async';
-
-
-import 'package:verossa/Core/Error/Failures.dart';
 import 'package:verossa/Core/Use_Cases/Use_Case.dart';
-
-import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-
-
 import 'package:verossa/Core/Util/Input_Converter.dart';
 
 
@@ -45,6 +29,8 @@ class PricesProvider extends ChangeNotifier {
    String priceItem5;
    String priceItem6;
 
+   String currencySymbol;
+   String currencyCode;
    String totalPrice;
 
    Map<int, double> toCalculate;
@@ -61,8 +47,7 @@ class PricesProvider extends ChangeNotifier {
 
   Future<void> setCurrencyTo(BuildContext context, int currencyIndex) async {
 
-    var currencySymbol;
-    var currencyCode;
+
 
     final failureOrExchangeRates = await getExchangeRates(NoParams());
 
@@ -165,7 +150,7 @@ class PricesProvider extends ChangeNotifier {
     }
     
     await mapPricesForTotalCalculation();
-    await setCurrencyForTotalTo(context, currencyCode, currencySymbol);
+    await setCurrencyForTotalTo(context);
     if (currentItemModel != null) {
       await setThisPriceForCurrentWidget(currentItemModel);
     }
@@ -204,7 +189,8 @@ class PricesProvider extends ChangeNotifier {
 
   }
 
-  Future<void> setCurrencyForTotalTo(BuildContext context, String currencyCode, String currencySymbol) async {
+  Future<void> setCurrencyForTotalTo(BuildContext context) async {
+    await mapPricesForTotalCalculation();
     const TOTAL_AMOUNT_OF_ITEMS = 18;
     Map<int,int> cartContent = await Provider.of<ItemProvider>(context, listen: false).returnCartContent();
 
@@ -221,7 +207,7 @@ class PricesProvider extends ChangeNotifier {
 
     totalPrice = '$currencySymbol$totalAmount $currencyCode';
 
-
+    notifyListeners();
 
 
   }
@@ -262,4 +248,33 @@ class PricesProvider extends ChangeNotifier {
     }
 
   }
+
+   String getItemPriceForTile(String itemNumber) {
+     switch (itemNumber) {
+       case '1':
+         return priceItem1;
+         break;
+
+       case '2':
+         return priceItem2;
+         break;
+
+       case '3':
+         return priceItem3;
+         break;
+
+       case '4':
+         return priceItem4;
+         break;
+
+       case '5':
+         return priceItem5;
+         break;
+
+       case '6':
+         return priceItem6;
+         break;
+
+     }
+   }
 }

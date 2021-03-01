@@ -468,9 +468,9 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
 
       cartBadgeIncrease();
       ///duration was 200 and crashed by rapid tapping
-      Future.delayed(const Duration(milliseconds: 0), () {
-        Provider.of<CartBadgeProvider>(context, listen: false).updateCartBadgeCountWith(newCount);
-      });
+      // Future.delayed(const Duration(milliseconds: 0), () {
+      //   Provider.of<CartBadgeProvider>(context, listen: false).updateCartBadgeCountWith(newCount);
+      // });
 
 
     }
@@ -486,9 +486,9 @@ Future<void> addCartItem(String itemID, bool calledFromTile, BuildContext contex
       cartBadgeIncrease();
       ///duration was 200 and crashed by rapid tapping
       
-      Future.delayed(const Duration(milliseconds: 0), () {
-        Provider.of<CartBadgeProvider>(context, listen: false).updateCartBadgeCountWith(newCount);
-      });
+      // Future.delayed(const Duration(milliseconds: 0), () {
+      //   Provider.of<CartBadgeProvider>(context, listen: false).updateCartBadgeCountWith(newCount);
+      // });
 
 
     }

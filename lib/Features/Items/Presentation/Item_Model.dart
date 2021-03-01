@@ -34,8 +34,10 @@ class ItemModel extends IItemBaseModel {
   StreamController streamController;
   String route;
   String subtitle;
+  String itemNumber;
 
   ItemModel({
+    @required this.itemNumber,
     @required this.subtitle,
     @required this.route,
     @required this.itemIDForNormal,

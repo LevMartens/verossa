@@ -6,7 +6,8 @@ import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
 import 'package:verossa/View/Widgets/Bottom_Section_Widget.dart';
 import 'package:verossa/View/Widgets/Left_Drawer_Widget.dart';
-import 'package:verossa/View/Widgets/New_Prints.dart';
+import 'package:verossa/View/Widgets/New_Prints_Widget.dart';
+import 'package:verossa/View/Widgets/Right_Drawer_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Carousel.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Quote.dart';
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: LeftDrawer(),
-      endDrawer: MyEndDrawer(),
+      endDrawer: RightDrawer(),
     );
   }
 

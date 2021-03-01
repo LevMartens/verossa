@@ -8,6 +8,7 @@ import 'Item_Model.dart';
 class ItemFactory {
 
   ItemModel item1 = ItemModel(
+      itemNumber: '1',
       route: 'ItemPage1',
       itemIDForNormal: 1,
       itemIDForBW: 2,
@@ -24,6 +25,7 @@ class ItemFactory {
   );
 
   ItemModel item2 = ItemModel(
+      itemNumber: '2',
       route: 'ItemPage2',
       itemIDForNormal: 4,
       itemIDForBW: 5,
@@ -40,6 +42,7 @@ class ItemFactory {
   );
 
   ItemModel item3 = ItemModel(
+      itemNumber: '3',
       route: 'ItemPage3',
       itemIDForNormal: 7,
       itemIDForBW: 8,
@@ -56,6 +59,7 @@ class ItemFactory {
   );
 
   ItemModel item4 = ItemModel(
+      itemNumber: '4',
       route: 'ItemPage4',
       itemIDForNormal: 10,
       itemIDForBW: 11,
@@ -72,6 +76,7 @@ class ItemFactory {
   );
 
   ItemModel item5 = ItemModel(
+      itemNumber: '5',
       route: 'ItemPage5',
       itemIDForNormal: 13,
       itemIDForBW: 14,
@@ -88,6 +93,7 @@ class ItemFactory {
   );
 
   ItemModel item6 = ItemModel(
+      itemNumber: '6',
       route: 'ItemPage6',
       itemIDForNormal: 16,
       itemIDForBW: 17,
