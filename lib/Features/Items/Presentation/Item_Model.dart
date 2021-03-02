@@ -22,6 +22,8 @@ abstract class DrawerObject {
 
 }
 
+abstract class SummaryObject {}
+
 class ItemModel extends IItemBaseModel {
   int itemIDForNormal;
   int itemIDForBW;

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:provider/provider.dart';
 
+import 'Small_Widgets/Your_Cart_Is_Empty_Widget.dart';
+
 
 class RightDrawer extends StatefulWidget {
   @override
@@ -71,8 +73,9 @@ class _RightDrawerState extends State<RightDrawer> {
                     ),
                   ),
                 ),
+                list.isEmpty ? YourCartIsEmpty() : Container(),
                 Container(
-                  height: 743,
+                  height: 700,
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     itemCount: list.length,

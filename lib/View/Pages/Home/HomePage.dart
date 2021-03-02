@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    theWidth = MediaQuery.of(context).size.width;
+    //theWidth = MediaQuery.of(context).size.width;
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     checkCartUpdate();
 

@@ -56,6 +56,7 @@ class ItemProvider extends ChangeNotifier {
   };
   int indexToRemove;
   List<DrawerObject> currentItemTilesList = [];
+  List<Widget> checkoutDDItems = [];
   Map<String, ItemDrawerTile> itemTilesMap = {};
   final GetStockLimit getStockLimit;
   final SetStockLimit setStockLimit;
@@ -83,7 +84,6 @@ class ItemProvider extends ChangeNotifier {
         getItemsFromCart = getItemsFromCart,
         setItemsToCart = setItemsToCart;
 
-
   void setupProviderForItem(ItemModel itemModel) {
     imageFirst = HeroContainer(assetImage: itemModel.itemImage);
     imageSecond = HeroContainer(assetImage: itemModel.itemImageBW);
@@ -93,14 +93,11 @@ class ItemProvider extends ChangeNotifier {
     final failureOrCartContent = await getItemsFromCart(NoParams());
     final newCartContent = failureOrCartContent.fold((failure) => 'No Map', (
         cart) => cart.map);
-
     if (newCartContent == 'No Map') {
       setItemsToCart(Params(map: setupMap));
       cartContentMap = setupMap;
-
     } else {
       cartContentMap = newCartContent;
-
     }
   }
 
@@ -109,12 +106,9 @@ class ItemProvider extends ChangeNotifier {
       onImageA = true;
       onImageB = false;
       onImageC = false;
-
       opacityOne = 1.0;
       opacityTwo = 0.7;
       opacityThree = 0.7;
-
-
       if (startImageOne == false) {
         imageSecond = a;
         startImageOne = true;
@@ -180,13 +174,10 @@ class ItemProvider extends ChangeNotifier {
     final failureOrCartContent = await getItemsFromCart(NoParams());
     final newCartContent = failureOrCartContent.fold((failure) => {}, (
         cart) => cart.map);
-
-
     return newCartContent;
   }
 
   Future<String> addItemToCart(int itemID, int count, BuildContext context, ItemModel itemModel, String itemFilter) async {
-
     var cartContent;
     bool firstAdd = false;
 
@@ -198,8 +189,6 @@ class ItemProvider extends ChangeNotifier {
     if (stringKeyCartContent['$itemID'] == 0) {
       firstAdd = true;
     }
-
-
     if (stringKeyStockLimits['$itemID'] == 0) {
       return 'Sold Out';
     } else {
@@ -233,23 +222,15 @@ class ItemProvider extends ChangeNotifier {
           currentItemTilesList.add(Checkout());
         }
         var indexToInsert = currentItemTilesList.length - 1;
-
         currentItemTilesList.insert(indexToInsert, ItemDrawerTile(item: itemModel, itemFilter: itemFilter, id: itemID, ));
-
-
       }
 
       /// Recalculate total
       await Provider.of<PricesProvider>(context, listen: false)
           .setCurrencyForTotalTo(context);
-
       notifyListeners();
-
       return '${stringKeyCartContent['$itemID']}';
-
     }
-
-
   }
 
   Future<String> subtractItemInCart(int itemID, BuildContext context,) async {
@@ -295,47 +276,19 @@ class ItemProvider extends ChangeNotifier {
           if (itemID == (currentItemTilesList[i] as ItemDrawerTile).id) {
             indexToRemove = i;
             notifyListeners();
-            /// check stays behind vvv this doenst work
-            // if (i == 1) {
-            //   indexToRemove = 0;
-            //   notifyListeners();
-            // }
-            ////currentItemTilesList.removeAt(i);
           }
         }
       }
-
-        //print('subtract: index $index');
-
-        //currentItemTilesList.removeAt(index);
-
-        print('subtract: ${currentItemTilesList.length}');
-
-
-
-        // if(currentItemTilesList.length == 1) {
-        //
-        //   //currentItemTilesList.removeLast();
-        //
-        //
-        // }
       }
-
       /// Recalculate total
       await Provider.of<PricesProvider>(context, listen: false)
           .setCurrencyForTotalTo(context);
-
       notifyListeners();
-
       return 'Subtract Successful';
     }
-
-
-
   }
 
   Future<String> onChanged(int itemID, int count, BuildContext context) async {
-
     var itemCount = count;
 
     Map<String, int> stringKeyCartContent = cartContentMap.map((a, b) =>
@@ -381,25 +334,17 @@ class ItemProvider extends ChangeNotifier {
         currentItemTilesList.removeLast();
       }
     }
-
     /// Recalculate total
     await Provider.of<PricesProvider>(context, listen: false)
         .setCurrencyForTotalTo(context);
-
     notifyListeners();
-
     return '${stringKeyCartContent['$itemID']}';
-
-
-
-
   }
 
   Future<void> getStockLimitFromFS() async {
     final failureOrCartContent = await getStockLimit(NoParams());
     final newStockLimit = failureOrCartContent.fold((failure) => {}, (
         stockLimit) => stockLimit.map);
-
     if (newStockLimit == {}) {
       print('Error: Fetching Stock data from FS');
     } else {
@@ -416,11 +361,9 @@ class ItemProvider extends ChangeNotifier {
     cartContentMap.keys.forEach((k) {
       if (cartContentMap[k] > stockLimits[k]) {
         cartContentMap[k] = stockLimits[k];
-
         cartHasBeenUpdated = true;
       }
     });
-
     if (cartHasBeenUpdated == true) {
       setCartContents(cartContentMap);
       di
@@ -444,7 +387,6 @@ class ItemProvider extends ChangeNotifier {
       factory.item5,
       factory.item6,
     ];
-
     return itemList;
   }
 
@@ -458,13 +400,9 @@ class ItemProvider extends ChangeNotifier {
        addCheckOut = true;
       }
     }
-
     if (addCheckOut == true) {
       currentItemTilesList.add(Checkout());
-
     }
-
-
   }
 
   void indexBackToNull() {
@@ -475,6 +413,8 @@ class ItemProvider extends ChangeNotifier {
     currentItemTilesList = list;
   }
 
+  void buildCheckoutSummary() {
 
+  }
 }
 

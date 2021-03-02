@@ -14,11 +14,13 @@ var cartBadge = 0;
 class DidFinishLaunchingWithOptions {
   int futureBuilderSec = 3;
   bool cartUpdated = true;
+  double screenWidth;
   
 
   Future<dynamic> startUp(BuildContext context) async {
 
     return await di.sl<AsyncMemoizer>().runOnce(() async {
+      screenWidth = MediaQuery.of(context).size.width;
 
       int cartBadgeCount =
           Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;

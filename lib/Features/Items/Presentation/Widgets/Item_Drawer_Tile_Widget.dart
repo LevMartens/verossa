@@ -16,9 +16,6 @@ class ItemDrawerTile extends StatefulWidget implements DrawerObject {
   @override
   _ItemDrawerTileState createState() => _ItemDrawerTileState(item: item, itemFilter: itemFilter, id: id);
 
-
-
-
 }
 
 class _ItemDrawerTileState extends State<ItemDrawerTile> {
