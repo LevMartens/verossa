@@ -6,26 +6,31 @@ import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import '../Item_Model.dart';
 import '../Item_Provider.dart';
 
-class ItemDrawerTile extends StatefulWidget {
+class ItemDrawerTile extends StatefulWidget implements DrawerObject {
 
   final ItemModel item;
   final String itemFilter;
-  ItemDrawerTile({this.item, this.itemFilter});
+  final int id;
+  ItemDrawerTile({this.item, this.itemFilter, this.id});
 
   @override
-  _ItemDrawerTileState createState() => _ItemDrawerTileState(item: item, itemFilter: itemFilter);
+  _ItemDrawerTileState createState() => _ItemDrawerTileState(item: item, itemFilter: itemFilter, id: id);
+
+
+
+
 }
 
 class _ItemDrawerTileState extends State<ItemDrawerTile> {
 
   final ItemModel item;
   final String itemFilter;
+  final id;
   int itemID;
-
 
   TextEditingController _textController = TextEditingController();
 
-  _ItemDrawerTileState({this.item, this.itemFilter});
+  _ItemDrawerTileState({this.item, this.itemFilter, this.id});
 
   @override
   void initState() {

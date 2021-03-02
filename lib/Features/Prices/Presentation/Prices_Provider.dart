@@ -203,9 +203,9 @@ class PricesProvider extends ChangeNotifier {
       var c = a.toDouble() * b;
       totalAmount = totalAmount + c;
     }
+    var totalAmountFixed = totalAmount.toStringAsFixed(2);
 
-
-    totalPrice = '$currencySymbol$totalAmount $currencyCode';
+    totalPrice = '$currencySymbol$totalAmountFixed $currencyCode';
 
     notifyListeners();
 

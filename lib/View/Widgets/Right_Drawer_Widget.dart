@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:provider/provider.dart';
 
+
 class RightDrawer extends StatefulWidget {
   @override
   _RightDrawerState createState() => _RightDrawerState();
@@ -11,10 +12,12 @@ class RightDrawer extends StatefulWidget {
 class _RightDrawerState extends State<RightDrawer> {
 
   final GlobalKey<AnimatedListState> iListKey = GlobalKey<AnimatedListState>();
+  var list = [];
+
+
   @override
   void dispose() {
     super.dispose();
-
 
   }
 
@@ -27,8 +30,11 @@ class _RightDrawerState extends State<RightDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    var list =
-        Provider.of<ItemProvider>(context, listen: false).currentItemTilesList;
+    list =
+        Provider.of<ItemProvider>(context, listen: true).currentItemTilesList;
+    var indexToRemove = Provider.of<ItemProvider>(context, listen: true).indexToRemove;
+    deleteTile(indexToRemove);
+
 
     return Drawer(
             child: Column(
@@ -67,24 +73,51 @@ class _RightDrawerState extends State<RightDrawer> {
                 ),
                 Container(
                   height: 743,
-                  child: AnimatedList(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    key: iListKey,
-                    initialItemCount: list.length,
-                    itemBuilder: (context, index, animation) =>
-                        _buildItem(context, list.isEmpty ? Container() : list[index], animation),
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+
+                      return Container(
+                        key: ObjectKey(list[index]),
+                        child: list[index],
+                      );
+
+                    },
                   ),
                 ),
               ],
             ),
           );
+
+
   }
-  Widget _buildItem(BuildContext context, Widget item, Animation<double> animation) {
-    return SizeTransition(
-        axis: Axis.vertical,
-        sizeFactor: animation,
-        child: item
-    );
-  }
+   void deleteTile(int indexToRemove) {
+
+     if (indexToRemove != null) {
+       list.remove(list[indexToRemove]);
+       Provider.of<ItemProvider>(context, listen: false).indexBackToNull();
+     }
+     if (list.length == 1) {
+       list.remove(list[0]);
+     }
+     Provider.of<ItemProvider>(context, listen: false).updateTileList(list);
+}
+
+  // Widget _buildItem(BuildContext context, Widget item, Animation<double> animation) {
+  //   return SizeTransition(
+  //       axis: Axis.vertical,
+  //       sizeFactor: animation,
+  //       child: item
+  //   );
+  // }
+  //
+  // AnimatedList(
+  // scrollDirection: Axis.vertical,
+  // shrinkWrap: true,
+  // key: iListKey,
+  // initialItemCount: list.length,
+  // itemBuilder: (context, index, animation) =>
+  // _buildItem(context, list.isEmpty ? Container() : list[index], animation),
+  // )
 }

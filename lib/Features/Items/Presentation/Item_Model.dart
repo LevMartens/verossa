@@ -16,7 +16,9 @@ abstract class IItemBaseModel {
   AssetImage itemImageBW;
   StreamController streamController;
 
+}
 
+abstract class DrawerObject {
 
 }
 
@@ -56,9 +58,13 @@ class ItemModel extends IItemBaseModel {
 
 class ItemTileModel {
   IItemBaseModel itemModel;
+  final itemFilter;
+  final indexToInsert;
 
   ItemTileModel({
     @required this.itemModel,
+    @required this.itemFilter,
+    @required this.indexToInsert,
   });
 }
 

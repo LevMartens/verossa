@@ -10,6 +10,7 @@ import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Features/Items/Presentation/Widgets/Item_Drawer_Tile_Widget.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
+import 'package:verossa/Features/Prices/Presentation/Subtotal_&_Checkout_Widget.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Core/Use_Cases/Use_Case.dart';
 import 'package:meta/meta.dart';
@@ -53,7 +54,8 @@ class ItemProvider extends ChangeNotifier {
     17: 0,
     18: 0,
   };
-  List<ItemDrawerTile> currentItemTilesList = [];
+  int indexToRemove;
+  List<DrawerObject> currentItemTilesList = [];
   Map<String, ItemDrawerTile> itemTilesMap = {};
   final GetStockLimit getStockLimit;
   final SetStockLimit setStockLimit;
@@ -227,8 +229,14 @@ class ItemProvider extends ChangeNotifier {
 
       /// Add drawer tile
       if (firstAdd == true) {
-        itemTilesMap['$itemID'] = ItemDrawerTile(item: itemModel, itemFilter: itemFilter);
-        currentItemTilesList.add(itemTilesMap['$itemID']);
+        if(currentItemTilesList.isEmpty) {
+          currentItemTilesList.add(Checkout());
+        }
+        var indexToInsert = currentItemTilesList.length - 1;
+
+        currentItemTilesList.insert(indexToInsert, ItemDrawerTile(item: itemModel, itemFilter: itemFilter, id: itemID, ));
+
+
       }
 
       /// Recalculate total
@@ -244,7 +252,7 @@ class ItemProvider extends ChangeNotifier {
 
   }
 
-  Future<String> subtractItemInCart(int itemID, BuildContext context) async {
+  Future<String> subtractItemInCart(int itemID, BuildContext context,) async {
 
     Map<String, int> stringKeyCartContent = cartContentMap.map((a, b) =>
         MapEntry(a.toString(), b));
@@ -281,7 +289,36 @@ class ItemProvider extends ChangeNotifier {
 
       /// Remove Tile
       if (stringKeyCartContent['$itemID'] == 0) {
-        currentItemTilesList.remove(itemTilesMap['$itemID']);
+        print('subtract: A');
+      if (currentItemTilesList.length != 1) {
+        for (var i = 0; i < currentItemTilesList.length - 1; i++) {
+          if (itemID == (currentItemTilesList[i] as ItemDrawerTile).id) {
+            indexToRemove = i;
+            notifyListeners();
+            /// check stays behind vvv this doenst work
+            // if (i == 1) {
+            //   indexToRemove = 0;
+            //   notifyListeners();
+            // }
+            ////currentItemTilesList.removeAt(i);
+          }
+        }
+      }
+
+        //print('subtract: index $index');
+
+        //currentItemTilesList.removeAt(index);
+
+        print('subtract: ${currentItemTilesList.length}');
+
+
+
+        // if(currentItemTilesList.length == 1) {
+        //
+        //   //currentItemTilesList.removeLast();
+        //
+        //
+        // }
       }
 
       /// Recalculate total
@@ -340,6 +377,9 @@ class ItemProvider extends ChangeNotifier {
     /// Remove Tile
     if (stringKeyCartContent['$itemID'] == 0) {
       currentItemTilesList.remove(itemTilesMap['$itemID']);
+      if(currentItemTilesList.length == 1) {
+        currentItemTilesList.removeLast();
+      }
     }
 
     /// Recalculate total
@@ -409,16 +449,30 @@ class ItemProvider extends ChangeNotifier {
   }
 
   void addItemTilesToListAfterStartUp() {
-
+ var addCheckOut;
     for (var i = 1; i < cartContentMap.length; i++) {
       var map = factory.getItemModelWithID(i);
       if (cartContentMap[i] != 0) {
-        itemTilesMap['$i'] = ItemDrawerTile(item: map['itemModel'], itemFilter: map['itemFilter']);
+        itemTilesMap['$i'] = ItemDrawerTile(item: map['itemModel'], itemFilter: map['itemFilter'], id: i);
         currentItemTilesList.add(itemTilesMap['$i']);
+       addCheckOut = true;
       }
     }
 
+    if (addCheckOut == true) {
+      currentItemTilesList.add(Checkout());
 
+    }
+
+
+  }
+
+  void indexBackToNull() {
+    indexToRemove = null;
+  }
+
+  void updateTileList(List<dynamic> list) {
+    currentItemTilesList = list;
   }
 
 
