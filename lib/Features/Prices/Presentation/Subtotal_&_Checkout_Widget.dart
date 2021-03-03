@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
+import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
+import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
 import 'Prices_Provider.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 
 
 
@@ -10,8 +14,6 @@ class Checkout extends StatefulWidget implements DrawerObject {
   @override
   _CheckoutState createState() => _CheckoutState();
 
-  @override
-   int id;
 }
 
 class _CheckoutState extends State<Checkout> {
@@ -86,27 +88,18 @@ class _CheckoutState extends State<Checkout> {
                 ),
                 child: TextButton(
                   onPressed: () async {
-                    // orderNotes = textControllerCheckOut.text;
-                    // textControllerCheckOut.text = '';
-                    // print('first: $cartSubtotal');
-                    // await getCurrencyData(0);
-                    // print('second: $cartSubtotal');
-                    //
-                    // await fillList();
-                    //
-                    // bool userLoggedIn;
-                    //
-                    // if (auth.currentUser != null ) {
-                    //   print('user signed in');
-                    //   userLoggedIn = true;
-                    // } else {
-                    //   print('user signed out');
-                    //   userLoggedIn = false;
-                    // }
-                    //
-                    // Navigator.pushReplacement(context, new MaterialPageRoute(
-                    //     builder: (context) =>
-                    //         PreCheckOut(dropdownMenuItems: dropdownItems, userIsLoggedIn: userLoggedIn, )));
+                    // Save order notes here
+                    textControllerCheckOut.text = '';
+
+                    var response = await Provider.of<ItemProvider>(context, listen: false).buildCheckoutSummary();
+                    Provider.of<CheckOutProvider>(context, listen: false).setStandardShippingTo(true);
+                    await Provider.of<PricesProvider>(context, listen: false)
+                        .setCurrencyTo(context, 0);
+                    Provider.of<CheckOutProvider>(context, listen: false).setTotalPriceForSummary(context);
+
+                    Navigator.pushReplacement(context, new MaterialPageRoute(
+                        builder: (context) =>
+                            PreCheckOut(summaryDDItems: response)));
 
                   },
                   child: Text(

@@ -231,7 +231,7 @@ Widget subtotal(String totalAmount, BuildContext context) {
 
                   Navigator.pushReplacement(context, new MaterialPageRoute(
                       builder: (context) =>
-                          PreCheckOut(dropdownMenuItems: dropdownItems, userIsLoggedIn: userLoggedIn, )));
+                          PreCheckOut(summaryDDItems: dropdownItems, userIsLoggedIn: userLoggedIn, )));
 
                 },
                 child: Text(
@@ -411,7 +411,7 @@ List<Container> dropdownItems = [];
 List<String> itemListForCheckout = [];
 
 double theWidth;
-bool freeShipping = false;
+//bool freeShipping = false;
 
 Container itemDD(AssetImage image, String title, int numberOfItems, String totalItemPrice, int value) {
   return Container(
@@ -463,16 +463,16 @@ void totalWithShipping() {
   var f = cartSubtotal.substring(1, cartSubtotal.length - 4);
   var r = double.parse(f);
   if (r > 150) {
-    freeShipping = true;
+   // freeShipping = true;
   }
   var g;
-  if (freeShipping == false) {
-   g = r + 9; } else { g = r;}
-  var currentCurSymbol = cartSubtotal[0];
-
-  subtotalForCheckout = '$currentCurSymbol$g $currencyInUse';
-  print(subtotalForCheckout);
-}
+//   if (freeShipping == false) {
+//    g = r + 9; } else { g = r;}
+//   var currentCurSymbol = cartSubtotal[0];
+//
+//   subtotalForCheckout = '$currentCurSymbol$g $currencyInUse';
+//   print(subtotalForCheckout);
+ }
 
 Future<void> fillList() async {
   totalWithShipping();

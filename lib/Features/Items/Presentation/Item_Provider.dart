@@ -9,6 +9,7 @@ import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Stock_Limit.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Features/Items/Presentation/Widgets/Item_Drawer_Tile_Widget.dart';
+import 'package:verossa/Features/Items/Presentation/Widgets/Item_Summary_DD_Tile.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/Features/Prices/Presentation/Subtotal_&_Checkout_Widget.dart';
 import 'package:verossa/Injection_Container.dart' as di;
@@ -177,7 +178,8 @@ class ItemProvider extends ChangeNotifier {
     return newCartContent;
   }
 
-  Future<String> addItemToCart(int itemID, int count, BuildContext context, ItemModel itemModel, String itemFilter) async {
+  Future<String> addItemToCart(int itemID, int count, BuildContext context,
+      ItemModel itemModel, String itemFilter) async {
     var cartContent;
     bool firstAdd = false;
 
@@ -213,16 +215,17 @@ class ItemProvider extends ChangeNotifier {
           MapEntry(int.parse(a), b));
 
       /// Update Cart Badge
-       Provider.of<CartBadgeProvider>(context, listen: false)
+      Provider.of<CartBadgeProvider>(context, listen: false)
           .updateCartBadgeCountWith(cartContent);
 
       /// Add drawer tile
       if (firstAdd == true) {
-        if(currentItemTilesList.isEmpty) {
+        if (currentItemTilesList.isEmpty) {
           currentItemTilesList.add(Checkout());
         }
         var indexToInsert = currentItemTilesList.length - 1;
-        currentItemTilesList.insert(indexToInsert, ItemDrawerTile(item: itemModel, itemFilter: itemFilter, id: itemID, ));
+        currentItemTilesList.insert(indexToInsert, ItemDrawerTile(
+          item: itemModel, itemFilter: itemFilter, id: itemID,));
       }
 
       /// Recalculate total
@@ -234,7 +237,6 @@ class ItemProvider extends ChangeNotifier {
   }
 
   Future<String> subtractItemInCart(int itemID, BuildContext context,) async {
-
     Map<String, int> stringKeyCartContent = cartContentMap.map((a, b) =>
         MapEntry(a.toString(), b));
     Map<String, int> stringKeyStockLimits = stockLimits.map((a, b) =>
@@ -270,16 +272,16 @@ class ItemProvider extends ChangeNotifier {
 
       /// Remove Tile
       if (stringKeyCartContent['$itemID'] == 0) {
-        print('subtract: A');
-      if (currentItemTilesList.length != 1) {
-        for (var i = 0; i < currentItemTilesList.length - 1; i++) {
-          if (itemID == (currentItemTilesList[i] as ItemDrawerTile).id) {
-            indexToRemove = i;
-            notifyListeners();
+        if (currentItemTilesList.length != 1) {
+          for (var i = 0; i < currentItemTilesList.length - 1; i++) {
+            if (itemID == (currentItemTilesList[i] as ItemDrawerTile).id) {
+              indexToRemove = i;
+              notifyListeners();
+            }
           }
         }
       }
-      }
+
       /// Recalculate total
       await Provider.of<PricesProvider>(context, listen: false)
           .setCurrencyForTotalTo(context);
@@ -296,12 +298,13 @@ class ItemProvider extends ChangeNotifier {
     Map<String, int> stringKeyStockLimits = stockLimits.map((a, b) =>
         MapEntry(a.toString(), b));
 
-    stringKeyStockLimits['$itemID'] = stringKeyStockLimits['$itemID'] + stringKeyCartContent['$itemID'];
+    stringKeyStockLimits['$itemID'] =
+        stringKeyStockLimits['$itemID'] + stringKeyCartContent['$itemID'];
     stringKeyCartContent['$itemID'] = 0;
 
     if (count >=
         stringKeyStockLimits['$itemID']) {
-        itemCount = stringKeyStockLimits['$itemID'];
+      itemCount = stringKeyStockLimits['$itemID'];
     }
 
     /// Add item to Cart
@@ -330,10 +333,11 @@ class ItemProvider extends ChangeNotifier {
     /// Remove Tile
     if (stringKeyCartContent['$itemID'] == 0) {
       currentItemTilesList.remove(itemTilesMap['$itemID']);
-      if(currentItemTilesList.length == 1) {
+      if (currentItemTilesList.length == 1) {
         currentItemTilesList.removeLast();
       }
     }
+
     /// Recalculate total
     await Provider.of<PricesProvider>(context, listen: false)
         .setCurrencyForTotalTo(context);
@@ -391,13 +395,14 @@ class ItemProvider extends ChangeNotifier {
   }
 
   void addItemTilesToListAfterStartUp() {
- var addCheckOut;
+    var addCheckOut;
     for (var i = 1; i < cartContentMap.length; i++) {
       var map = factory.getItemModelWithID(i);
       if (cartContentMap[i] != 0) {
-        itemTilesMap['$i'] = ItemDrawerTile(item: map['itemModel'], itemFilter: map['itemFilter'], id: i);
+        itemTilesMap['$i'] = ItemDrawerTile(
+            item: map['itemModel'], itemFilter: map['itemFilter'], id: i);
         currentItemTilesList.add(itemTilesMap['$i']);
-       addCheckOut = true;
+        addCheckOut = true;
       }
     }
     if (addCheckOut == true) {
@@ -413,8 +418,24 @@ class ItemProvider extends ChangeNotifier {
     currentItemTilesList = list;
   }
 
-  void buildCheckoutSummary() {
-
+  Future<List<Widget>> buildCheckoutSummary() async {
+    for (var i = 1; i < cartContentMap.length; i++) {
+      var map = factory.getItemModelWithID(i);
+      if (cartContentMap[i] != 0) {
+        var numberOfItems = cartContentMap[i];
+        var priceSingleItem = map['itemModel'].priceAUD;
+        var priceTotalItems = (numberOfItems * priceSingleItem).toStringAsFixed(
+            2);
+        var totalPriceAsString = '\$$priceTotalItems AUD';
+        var newItemDDTile = ItemDDTile(
+            item: map['itemModel'],
+            numberOfItems: numberOfItems,
+            totalPrice: totalPriceAsString,
+            itemFilter: map['itemFilter']);
+        checkoutDDItems.add(newItemDDTile);
+      }
+    }
+    return checkoutDDItems;
   }
 }
 

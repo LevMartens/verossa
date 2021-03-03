@@ -513,7 +513,7 @@ Future<void> updateStockAndCartAfterOrderConfirmation() async {
   dropdownItems = [];
   cartSubtotal = '';
   cartBadgeOnChanged(0);
-  freeShipping = false;
+  //freeShipping = false;
 
 
 

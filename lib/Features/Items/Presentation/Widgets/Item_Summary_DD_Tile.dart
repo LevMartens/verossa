@@ -5,7 +5,7 @@ import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import '../Item_Model.dart';
 
-class ItemDDTile extends StatelessWidget {
+class ItemDDTile extends StatelessWidget implements SummaryObject {
   final ItemModel item;
   final String itemFilter;
   final int numberOfItems;

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
+import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
@@ -25,6 +26,8 @@ class DidFinishLaunchingWithOptions {
       int cartBadgeCount =
           Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
       cartBadge = cartBadgeCount;
+
+      await Provider.of<UserProvider>(context, listen: false).getUserFromFB();
 
       await Provider.of<ItemProvider>(context, listen: false)
           .getCartContents();

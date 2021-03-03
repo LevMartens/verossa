@@ -1,9 +1,19 @@
 //import 'dart:html';
 import 'dart:io';
+import 'package:provider/provider.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Widgets/Drop_Down_Summary_Widget.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Discount_Applied_Widget.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Discount_Widget.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Subtotal_Widget.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Total_Widget.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 import '../Model/Global_Variables.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -12,7 +22,10 @@ import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:verossa/Old_Architecture/Controller/PaypalPayment.dart';
 import 'Thank_You_For_Order_Page.dart';
-
+import 'package:verossa/Injection_Container.dart' as di;
+import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
+import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 
@@ -48,21 +61,24 @@ Map<String, String> headers = {
 
 
 class PreCheckOut extends StatefulWidget {
-  final List<Container> dropdownMenuItems;
-  bool userIsLoggedIn;
+  final List<Widget> summaryDDItems;
+  final bool userIsLoggedIn;
 
-  PreCheckOut({this.dropdownMenuItems, this.userIsLoggedIn}); //
+  PreCheckOut({this.summaryDDItems, this.userIsLoggedIn}); //
 
   @override
   _InputPageState createState() =>
-      _InputPageState(dropdownMenuItems: dropdownMenuItems, userIsLoggedIn: userIsLoggedIn ); //
+      _InputPageState(summaryDDItems: summaryDDItems, userIsLoggedIn: userIsLoggedIn ); //
 }
 
 class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateMixin {
+  List<Widget> summaryDDItems;
+  bool contactDetailsAreNull;
+
+
   bool userIsLoggedIn;
-  List<Container> dropdownMenuItems;
   double changeHeightWithDiscount = 60;
-  double containerHeightWhenUserLoggedInAndFormShowing = 620;
+  //double containerHeightWhenUserLoggedInAndFormShowing = 620;
   Row showDiscountApplied = Row();
   bool creditCardSelected = false;
   bool applePaySelected = false;
@@ -75,7 +91,9 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
   bool allFormsAreCompleted = false;
 
 
-  _InputPageState({this.dropdownMenuItems, this.userIsLoggedIn }); //
+  _InputPageState({this.summaryDDItems, this.userIsLoggedIn }); //
+
+
 
   ModalRoute _mountRoute;
 
@@ -88,10 +106,15 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
 
   @override
   void initState() {
+    super.initState();
+
+
+
+
     rotationController = AnimationController(duration: const Duration(milliseconds: 100), vsync: this);
     orderSummaryIsClosed = true;
     showOrHideSummary = 'Show order summary';
-    containerHeightForSummary = 234 + totalItemsTilesForCheckout * 86;
+    containerHeightForSummary = 234 + (summaryDDItems.length).toDouble() * 86;
     StripePayment.setOptions(
         StripeOptions(publishableKey: "pk_test_51HaWL0DNMiEsQiX2n4CvTKCETWVV84wnqWRwbEeQ4kM4ai4DAEGaTngq5iwhQhVZXAniX3mTMmFyJ2JouWf2C2T400x7SVZmUw", merchantId: "Test", androidPayMode: 'test'));
   }
@@ -132,8 +155,19 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
 
+    bool discountApplied = Provider.of<CheckOutProvider>(context, listen: true).discountApplied;
+    bool freeShipping = Provider.of<CheckOutProvider>(context, listen: true).freeShipping;
+    bool standardShipping = Provider.of<CheckOutProvider>(context, listen: true).standardShipping;
+    String totalPrice = Provider.of<PricesProvider>(context, listen: true).totalPrice;
+    String totalPriceForSummary = Provider.of<PricesProvider>(context, listen: true).totalPriceForCheckOutSummary;
+    User currentUser = Provider.of<UserProvider>(context, listen: true).currentUser;
+    Map<String,String> currentUserDetailsMap = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
+
+
+
+
     double width = MediaQuery.of(context).size.width;
-    bool discountApplied = false;
+    //bool discountApplied = false;
 
     Container discount() {
       final formKeyDiscount = _mountRoute == ModalRoute.of(context)
@@ -220,9 +254,6 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
         ),
       );
     }
-
-
-
 
     Future<void> processPaymentAsDirectCharge(PaymentMethod paymentMethod) async {
       setState(() {
@@ -530,11 +561,7 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
 
     final formKeyContact = _mountRoute == ModalRoute.of(context)
         ? _emailFormKey
-        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
-
-
-
-
+        : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback')
 
     return Scaffold(
       body: CustomScrollView(
@@ -546,250 +573,17 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
               Container(
                 color: Colors.white70,
                 child: Column(
-
                   children: [
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          child: Center(
-                            child: Text(
-                              'VERØSSA',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  letterSpacing: 4,
-                                  fontFamily: 'Cormorant',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 30),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Center(
-                            child: Text(
-                              'VALLEY',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  letterSpacing: 4,
-                                  fontFamily: 'Cormorant',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 30),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Center(
-                            child: Text(
-                              'PHOTOGRAPHY',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  letterSpacing: 4,
-                                  fontFamily: 'Cormorant',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    SizedBox(height: 50,),
+                    VerossaLogo(),
                     SizedBox(height: 25),
-                    GestureDetector(
-                      onTap: () {
-                        if (orderSummaryIsClosed == true) {
-                        rotationController.forward(from: 0.0);
-                        orderSummaryIsClosed = false;
-                        setState(() {
-                          extentSliver = containerHeightForSummary;
-                          showOrHideSummary = 'Hide order summary';
-                        });
-                        } else {
-                          rotationController.reverse();
-                          orderSummaryIsClosed = true;
-                          setState(() {
-                            extentSliver = 0;
-                            showOrHideSummary = 'Show order summary';
-                          });
-                        }
-
-
-                      },
-                      child: Container(
-                        height: 70,
-                        width: width,
-
-                        decoration: BoxDecoration(
-                          color: Colors.brown[50],
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.brown[100],
-                              width: 1,
-
-                            ),
-                            top: BorderSide(
-                              color: Colors.brown[100],
-                              width: 1,
-
-                            )
-                          )
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 10),
-                            Icon(Icons.shopping_cart_outlined),
-                            SizedBox(width: 10),
-                            Text(showOrHideSummary,
-                              style: TextStyle(fontSize: 17),),
-                            RotationTransition(
-                              turns: Tween(begin: 0.0, end: 0.5).animate(rotationController),
-                                child: Icon(Icons.keyboard_arrow_down)),
-                            Spacer(),
-                            Text(subtotalForCheckout,
-                              style: TextStyle(fontSize: 17),
-                            ),
-                            SizedBox(width: 10),
-                          ],
-                        ),
-                      ),
-                    ),
-                    AnimatedCrossFade(
-                      crossFadeState: orderSummaryIsClosed ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                      duration: const Duration(milliseconds: 500),
-                      firstCurve: Curves.easeOut,
-                      secondCurve: Curves.easeIn,
-                      firstChild: Container(),
-                      secondChild: Container(
-
-                        decoration: BoxDecoration(
-                            color: Colors.brown[50],
-                            border: Border(
-                                bottom: BorderSide(
-                                  color: Colors.brown[100],
-                                  width: 1,
-
-                                ),
-
-                            )
-                        ),
-                        width: width,
-                        height: containerHeightForSummary,
-                        child: Column(
-                          children: [
-                            Column(
-                              children: dropdownMenuItems,
-                            ),
-                            SizedBox(height: 5,),
-                            discount(),
-                            SizedBox(height: 5,),
-                            Divider(
-                              indent: 15 ,
-                              endIndent: 15,
-                              color: Colors.brown[100],
-                              thickness: 1,
-                            ),
-                            Container(
-
-                              height: changeHeightWithDiscount,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15.0, top: 7),
-                                    child: Row(
-                                      children: [
-                                        Text('Subtotal'),
-                                        Spacer(),
-                                        Text(cartSubtotal, style: TextStyle(fontWeight: FontWeight.w600),),
-                                        SizedBox(width: 15,)
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15.0, top: 7),
-                                    child: freeShipping == true ? Row(
-                                      children: [
-                                        Text('Freef shipping'),
-                                        Spacer(),
-                                        Text('\$0.00 AUD', style: TextStyle(fontWeight: FontWeight.w600),),
-                                        SizedBox(width: 15,)
-                                      ],
-                                    ) : standardShipping == true ? Row(
-                                      children: [
-                                        Text('Shipping'),
-                                        Spacer(),
-                                        Text('\$9.00 AUD', style: TextStyle(fontWeight: FontWeight.w600),),
-                                        SizedBox(width: 15,)
-                                      ],
-                                    ) : Row(
-                                      children: [
-                                        Text('Express shipping'),
-                                        Spacer(),
-                                        Text('\$15.00 AUD', style: TextStyle(fontWeight: FontWeight.w600),),
-                                        SizedBox(width: 15,)
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15.0, top: 7),
-                                    child: showDiscountApplied,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              indent: 15 ,
-                              endIndent: 15,
-                              color: Colors.brown[100],
-                              thickness: 1,
-                            ),
-                            SizedBox(),
-                            Container(
-
-                              child: Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left: 15.0, top:7),
-                                          child: Container(
-
-                                              child: Text('Total', style: TextStyle(fontSize: 17), ),
-
-
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 15.0),
-                                        child: Text('Including \$4.54 AUD in GST', style: TextStyle(fontWeight: FontWeight.w300)),
-                                      )
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Text(subtotalForCheckout, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 23),),
-                                  SizedBox(width: 15,)
-
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-
+                    DDSummary(),
+                    SizedBox(height: 20),
 
                     ///CONTACT AND SHIPPING FORM
                     Container(
-
-                      child: userIsLoggedIn == true ? Container(
-                        height: street != null ? 200 : containerHeightWhenUserLoggedInAndFormShowing,
+                      child: currentUser != null ? Container(
+                        height: currentUserDetailsMap['address'] != null ? 200 : containerHeightWhenUserLoggedInAndFormShowing,
                         width: width -30,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
@@ -797,25 +591,20 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
                             right: BorderSide(
                               color: Colors.brown[100],
                               width: 1,
-
                             ),
                             left: BorderSide(
                               color: Colors.brown[100],
                               width: 1,
-
                             ),
                               bottom: BorderSide(
                                 color: Colors.brown[100],
                                 width: 1,
-
                               ),
                               top: BorderSide(
                                 color: Colors.brown[100],
                                 width: 1,
-
                               )
                           )
-
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -828,14 +617,13 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
                                   Spacer(),
                                   GestureDetector(
                                     onTap: () {
-                                      setState(() {
-                                        street = null;
-                                        email = null;
-                                        allFormsAreCompleted = false;
-                                        containerHeightWhenUserLoggedInAndFormShowing = 800;
-                                      });
+                                      currentUserDetailsMap['address'] = null;
+                                      currentUserDetailsMap['email'] = null;
+                                      allFormsAreCompleted = false;
+                                      containerHeightWhenUserLoggedInAndFormShowing = 800;
+                                      Provider.of<UserProvider>(context, listen: false).temporaryChangeInUserDetails(currentUserDetailsMap);
                                     },
-                                    child: email != null ? Text('Change') : Container(),
+                                    child: currentUserDetailsMap['email'] != null ? Text('Change') : Container(),
                                   )
                                 ],
                               ),
@@ -843,7 +631,7 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
                             Padding(
                               padding: const EdgeInsets.only(left: 15.0, top: 6, right: 15),
                               child: GestureDetector(
-                                  child: email != null ? Text('$firstName $lastName / $email') : Form(
+                                  child: currentUserDetailsMap['email'] != null ? Text('${currentUserDetailsMap['firstName']} ${currentUserDetailsMap['lastName']} / ${currentUserDetailsMap['email']}') : Form(
                                     key: formKeyContact,
                                     child: Column(
                                       children: [
@@ -862,13 +650,11 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
                                                 fillColor: Colors.white,
                                                 filled: true,
                                                 enabledBorder: OutlineInputBorder(
-
                                                   borderRadius: BorderRadius.all(Radius.circular(7)),
                                                   borderSide: BorderSide(
                                                     color: Colors.black12,
                                                   ),
                                                 ),
-
                                               ),
                                               validator: (value) {
 
@@ -901,7 +687,6 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
                                                     color: Colors.black12,
                                                   ),
                                                 ),
-
                                               ),
                                               validator: (value) {
 
@@ -962,6 +747,8 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
                                   ),
                               ),
                             ),
+
+
                             Divider(
                               indent: 15 ,
                               endIndent: 15,
@@ -1306,11 +1093,6 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
 
                               ),
                             ),
-
-
-
-
-
 
                           ],
                         ),) : Container(
@@ -1845,21 +1627,14 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
                           ],
                         ),),
                     ),
-
-
-                    SizedBox(
-                      height: 20,
-                    ),
+                    SizedBox(height: 20,),
                     Container(
                       width: width,
-
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20.0),
                           child: Text('Gift card or discount code', style: TextStyle(fontSize: 20),textAlign: TextAlign.left,),
                         )),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     discount(),
                     SizedBox(
                       height: 20,

@@ -56,11 +56,12 @@ class UserProvider extends ChangeNotifier {
     } else {
       currentUserDetailsMap = newUserDetails;
     }
+    notifyListeners();
 
   }
 
   Future<void> setCurrentUserDetailsToFB(Map<String,String> newUserDetailsMap) async  {
-    setCurrentUserDetails(Params(map: newUserDetailsMap, uid: currentUser.uid));
+     setCurrentUserDetails(Params(map: newUserDetailsMap, uid: currentUser.uid));
   }
 
   Future<String> createNewUser(String email, String password, String firstName, String lastName) async {
@@ -97,6 +98,12 @@ class UserProvider extends ChangeNotifier {
       return 'Great Success';
     } else {return 'Something went wrong';}
 
+  }
+
+  void temporaryChangeInUserDetails(Map<String,String> temporaryDetailsMap) {
+
+    currentUserDetailsMap = temporaryDetailsMap;
+    notifyListeners();
   }
 
 

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
 import 'dart:async';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
@@ -32,6 +33,7 @@ class PricesProvider extends ChangeNotifier {
    String currencySymbol;
    String currencyCode;
    String totalPrice;
+   String totalPriceForCheckOutSummary;
 
    Map<int, double> toCalculate;
 
@@ -203,6 +205,11 @@ class PricesProvider extends ChangeNotifier {
       var c = a.toDouble() * b;
       totalAmount = totalAmount + c;
     }
+
+    if (currencyCode == 'AUD' && totalAmount > 150) {
+      Provider.of<CheckOutProvider>(context, listen: false).setFreeShippingTo(true);
+    }
+
     var totalAmountFixed = totalAmount.toStringAsFixed(2);
 
     totalPrice = '$currencySymbol$totalAmountFixed $currencyCode';
@@ -249,7 +256,7 @@ class PricesProvider extends ChangeNotifier {
 
   }
 
-   String getItemPriceForTile(String itemNumber) {
+  String getItemPriceForTile(String itemNumber) {
      switch (itemNumber) {
        case '1':
          return priceItem1;
@@ -276,5 +283,35 @@ class PricesProvider extends ChangeNotifier {
          break;
 
      }
+
    }
+
+  void applyDiscountToTotalPrice() {
+      var a = totalPrice.substring(1, totalPrice.length - 4);
+      var b = double.parse(a);
+      var c = b * 0.9;
+      totalPrice = '$currencySymbol${c.toStringAsFixed(2)} $currencyCode';
+      notifyListeners();
+  }
+
+  void setTotalPriceForCheckOutSummary(bool freeShipping, bool standardShipping, bool expressShipping) {
+    var a = totalPrice.substring(1, totalPrice.length - 4);
+    var checkTotal = int.parse(a);
+    if (freeShipping != true) {
+      if (expressShipping == true) {
+        checkTotal = checkTotal + 15;
+      }
+      if (standardShipping == true) {
+        checkTotal = checkTotal + 9;
+      }
+      if (freeShipping == false && standardShipping == false) {
+        //standard shipping costs will be added when no shipping details are provided
+        checkTotal = checkTotal + 9;
+      }
+    }
+    totalPriceForCheckOutSummary = '$currencyCode${checkTotal.toStringAsFixed(2)} $currencyCode';
+    notifyListeners();
+  }
+
+
 }
