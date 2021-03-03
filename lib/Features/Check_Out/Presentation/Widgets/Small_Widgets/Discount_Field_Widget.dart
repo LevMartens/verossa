@@ -5,13 +5,13 @@ import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 
 import '../../Check_Out_Provider.dart';
 
-class SummaryDiscount extends StatefulWidget {
+class DiscountField extends StatefulWidget {
 
   @override
-  _SummaryDiscountState createState() => _SummaryDiscountState();
+  _DiscountFieldState createState() => _DiscountFieldState();
 }
 
-class _SummaryDiscountState extends State<SummaryDiscount> {
+class _DiscountFieldState extends State<DiscountField> {
 
 
   final _textController = TextEditingController();

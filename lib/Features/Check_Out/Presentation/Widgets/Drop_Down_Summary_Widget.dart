@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Injection_Container.dart' as di;
-import 'Small_Widgets/Summary_Discount_Widget.dart';
+import 'Small_Widgets/Discount_Field_Widget.dart';
 import 'Small_Widgets/Summary_Subtotal_Widget.dart';
 import 'Small_Widgets/Summary_Total_Widget.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
-import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Discount_Widget.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Discount_Field_Widget.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Subtotal_Widget.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Total_Widget.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
@@ -129,7 +129,7 @@ class _InputPageState extends State<DDSummary> with SingleTickerProviderStateMix
                 Column(
                   children: summaryDDItems,
                 ),
-                SummaryDiscount(),
+                DiscountField(),
                 Divider(
                   indent: 15 ,
                   endIndent: 15,

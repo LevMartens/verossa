@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
-import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
+
 
 class ContactTextFormFields extends StatefulWidget {
   @override
@@ -18,9 +18,6 @@ class _ContactTextFormFieldsState extends State<ContactTextFormFields> {
   Widget build(BuildContext context) {
 
     Map<String,String> currentUserDetailsMap = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
-    bool freeShipping = Provider.of<CheckOutProvider>(context, listen: true).freeShipping;
-    bool standardShipping = Provider.of<CheckOutProvider>(context, listen: true).standardShipping;
-    String totalPriceForSummary = Provider.of<PricesProvider>(context, listen: true).totalPriceForCheckOutSummary;
 
     return Column(children: [
       Padding(
