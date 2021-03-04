@@ -28,16 +28,16 @@ class _InputPageState extends State<DDSummary> with SingleTickerProviderStateMix
 
   _InputPageState({this.summaryDDItems});
 
-  bool orderSummaryIsClosed;
+  bool orderSummaryIsClosed = true;
   double containerHeightForSummary;
-  String showOrHideSummary;
+  String showOrHideSummary = 'Show order summary';
   AnimationController rotationController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    containerHeightForSummary = 234 + (summaryDDItems.length).toDouble() * 86;
     rotationController = AnimationController(duration: const Duration(milliseconds: 100), vsync: this);
   }
 

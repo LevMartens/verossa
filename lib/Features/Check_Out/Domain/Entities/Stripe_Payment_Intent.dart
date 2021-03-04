@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class PaymentIntent extends Equatable {
+class StripePaymentIntent extends Equatable {
 
   final String status;
   final String stripeAccount;
   final String clientSecret;
 
-  PaymentIntent({
+  StripePaymentIntent({
     @required this.status,
     @required this.stripeAccount,
     @required this.clientSecret,

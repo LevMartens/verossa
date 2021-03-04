@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
+import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Old_Architecture/View/AppBar+Drawers.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';
@@ -44,6 +46,10 @@ class _HomePageState extends State<HomePage> {
     //theWidth = MediaQuery.of(context).size.width;
     double startScroll = kToolbarHeight + MediaQuery.of(context).padding.top;
     checkCartUpdate();
+    int cartBadgeCount =
+        Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
+    cartBadge = cartBadgeCount;
+    di.sl<DidFinishLaunchingWithOptions>().screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       extendBodyBehindAppBar: true,

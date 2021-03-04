@@ -21,13 +21,8 @@ class DidFinishLaunchingWithOptions {
   Future<dynamic> startUp(BuildContext context) async {
 
     return await di.sl<AsyncMemoizer>().runOnce(() async {
-      screenWidth = MediaQuery.of(context).size.width;
 
-      int cartBadgeCount =
-          Provider.of<CartBadgeProvider>(context, listen: true).cartBadgeCount;
-      cartBadge = cartBadgeCount;
 
-      await Provider.of<UserProvider>(context, listen: false).getUserFromFB();
 
       await Provider.of<ItemProvider>(context, listen: false)
           .getCartContents();
@@ -37,6 +32,10 @@ class DidFinishLaunchingWithOptions {
           .getStockLimitFromFS();
       await Provider.of<ItemProvider>(context, listen: false)
           .updateCartAfterStartUp();
+
+
+      print('startup after screenwidth');
+      await Provider.of<UserProvider>(context, listen: false).getUserFromFB();
       return Provider.of<ItemProvider>(context, listen: false)
           .addItemTilesToListAfterStartUp();
     });

@@ -353,6 +353,7 @@ class ItemProvider extends ChangeNotifier {
       print('Error: Fetching Stock data from FS');
     } else {
       stockLimits = newStockLimit;
+      print('getStockLimitFromFS success $stockLimits');
     }
   }
 
@@ -436,6 +437,11 @@ class ItemProvider extends ChangeNotifier {
       }
     }
     return checkoutDDItems;
+  }
+
+  void updateCartAfterOrderConfirmation() {
+    setCartContents(setupMap);
+    cartContentMap = setupMap;
   }
 }
 

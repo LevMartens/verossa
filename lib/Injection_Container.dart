@@ -10,6 +10,12 @@ import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Set_Cart_Badge.dart
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:verossa/Features/Check_Out/Data/Data_Sources/Order_Remote_Data_Source.dart';
+import 'package:verossa/Features/Check_Out/Data/Data_Sources/PayPal_API.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Create_PayPal_Payment.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Get_Access_Token.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Save_Order_To_FireStore.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Stripe_Payment_Processor.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Features/News_Letter_Form/Domain/Use_Cases/Set_Email_To_Mailing_List.dart';
 import 'package:verossa/Core/Util/Input_Converter.dart';
@@ -20,6 +26,15 @@ import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/User_Auth/Domain/Use_Cases/Set_Current_User_Details.dart';
+import 'Features/Check_Out/Data/Data_Sources/StripeAPI.dart';
+import 'Features/Check_Out/Data/Repositories/Order_Repository_Impl.dart';
+import 'Features/Check_Out/Data/Repositories/PayPal_Repository_Impl.dart';
+import 'Features/Check_Out/Data/Repositories/Stripe_Repository_Impl.dart';
+import 'Features/Check_Out/Domain/Repositories/Order_Repository.dart';
+import 'Features/Check_Out/Domain/Repositories/PayPal_Repository.dart';
+import 'Features/Check_Out/Domain/Repositories/Stripe_Repository.dart';
+import 'Features/Check_Out/Domain/Use_Cases/Finalise_PayPal_Payment.dart';
+import 'Features/Check_Out/Presentation/Check_Out_Provider.dart';
 import 'Features/Items/Data/Data_Sources/Cart_Local_Data_Source.dart';
 import 'Features/Items/Data/Data_Sources/Stock_Limit_Remote_Data_Source.dart';
 import 'Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
@@ -44,7 +59,8 @@ import 'package:verossa/Features/Items/Data/Data_Sources/Cart_Local_Data_Source.
 import 'package:verossa/Features/Items/Data/Repositories/Cart_Repository_Impl.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
-
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:http_auth/http_auth.dart';
 import 'Features/User_Auth/Data/Data_Sources/Current_User_Remote_Data_Source.dart';
 import 'Features/User_Auth/Data/Repositories/Current_User_Repository_Impl.dart';
 import 'Features/User_Auth/Domain/Repositories/Current_User_Repository.dart';
@@ -66,6 +82,17 @@ Future<void> init() async {
   sl.registerSingleton(ThemeService.getInstance());
 
   //Providers
+  sl.registerFactory(() => CheckOutProvider(
+    stripePaymentProcessor: sl<StripePaymentProcessor>(),
+    finalisePayPalPayment: sl<FinalisePayPalPayment>(),
+    createPayPalPayment: sl<CreatePayPalPayment>(),
+    saveOrderToFireStore: sl<SaveOrderToFireStore>(),
+    getAccessToken: sl<GetAccessToken>(),
+    inputConverter: sl(),
+    factory: sl<ItemFactory>(),
+  ),
+  );
+
   sl.registerFactory(() => UserProvider(
     getCurrentUserDetails: sl<GetCurrentUserDetails>(),
     setCurrentUserDetails: sl<SetCurrentUserDetails>(),
@@ -121,9 +148,31 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SetCurrentUserDetails(sl<CurrentUserRepository>()));
   sl.registerLazySingleton(() => GetCurrentUserDetails(sl<CurrentUserRepository>()));
   sl.registerLazySingleton(() => GetUser(sl<CurrentUserRepository>()));
-
+  sl.registerLazySingleton(() => StripePaymentProcessor(sl<StripeRepository>()));
+  sl.registerLazySingleton(() => SaveOrderToFireStore(sl<OrderRepository>()));
+  sl.registerLazySingleton(() => GetAccessToken(sl<PayPalRepository>()));
+  sl.registerLazySingleton(() => CreatePayPalPayment(sl<PayPalRepository>()));
+  sl.registerLazySingleton(() => FinalisePayPalPayment(sl<PayPalRepository>()));
 
   // Repository
+  sl.registerLazySingleton<OrderRepository>(
+        () => OrderRepositoryImpl(
+      remoteDataSource: sl<OrderRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+  sl.registerLazySingleton<PayPalRepository>(
+        () => PayPalRepositoryImpl(
+      paypalAPI: sl<PayPalAPI>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+  sl.registerLazySingleton<StripeRepository>(
+        () => StripeRepositoryImpl(
+      stripeAPI: sl<StripeAPI>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
   sl.registerLazySingleton<CartBadgeRepository>(
         () => CartBadgeRepositoryImpl(
       localDataSource: sl<CartBadgeLocalDataSource>(),
@@ -167,6 +216,15 @@ Future<void> init() async {
   );
 
   // Data sources
+  sl.registerLazySingleton<PayPalAPI>(
+        () => PayPalAPIImpl(basicAuthClient: sl(), client: sl()),
+  );
+  sl.registerLazySingleton<OrderRemoteDataSource>(
+        () => OrderRemoteDataSourceImpl(firestore: sl()),
+  );
+  sl.registerLazySingleton<StripeAPI>(
+        () => StripeAPIImpl(client: sl(), remoteConfig: sl()),
+  );
   sl.registerLazySingleton<CurrentUserRemoteDataSource>(
         () => CurrentUserRemoteDataSourceImpl(firestore: sl(), auth: sl()),
   );
@@ -200,9 +258,17 @@ Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   final fireBaseFireStore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  final RemoteConfig remoteConfig = await RemoteConfig.instance;
+  final BasicAuthClient basicAuthClient = BasicAuthClient(remoteConfig.getString('PayPal_Client_ID'), remoteConfig.getString('PayPal_Secret_Key'));
+
+  sl.registerLazySingleton(() => basicAuthClient);
+  sl.registerLazySingleton(() => remoteConfig);
   sl.registerLazySingleton(() => fireBaseFireStore);
   sl.registerLazySingleton(() => auth);
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => DataConnectionChecker());
+
+
 }
+

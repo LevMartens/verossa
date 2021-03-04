@@ -6,8 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:verossa/Core/Util/DialogToDismiss.dart';
 import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Injection_Container.dart' as di;
+import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
+import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 
 import '../Check_Out_Provider.dart';
+import '../PayPal_WebView.dart';
 
 class PaymentOptions extends StatefulWidget {
   @override
@@ -25,16 +28,22 @@ class _PaymentOptionsState extends State<PaymentOptions> {
   bool applePaySelected = false;
   bool googlePaySelected = false;
   bool paypalSelected = false;
+  bool _loading = false;
   @override
   Widget build(BuildContext context) {
-    double extendSliver = Provider.of<CheckOutProvider>(context, listen: true).extentSliver;
-    bool allFormsAreCompleted = Provider.of<CheckOutProvider>(context, listen: true).allFormsAreCompleted;
+    double extendSliver =
+        Provider.of<CheckOutProvider>(context, listen: true).extentSliver;
+    bool allFormsAreCompleted =
+        Provider.of<CheckOutProvider>(context, listen: true)
+            .allFormsAreCompleted;
+    String totalPrice = Provider.of<PricesProvider>(context, listen: true)
+        .totalPriceForCheckOutSummary;
     return Column(
       children: [
         Container(
           alignment: Alignment.centerLeft,
           height: creditCardSelected == true ? 540 : 280,
-          width: di.sl<DidFinishLaunchingWithOptions>().screenWidth -30,
+          width: di.sl<DidFinishLaunchingWithOptions>().screenWidth - 30,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
               border: Border(
@@ -53,14 +62,13 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                   top: BorderSide(
                     color: Colors.brown[100],
                     width: 1,
-                  )
-              )
-          ),
+                  ))),
           child: Column(
             //crossAxisAlignment:  CrossAxisAlignment.start,
             children: [
               CheckboxListTile(
-                  title: Text('Credit card', style: TextStyle(fontWeight: FontWeight.w500)),
+                  title: Text('Credit card',
+                      style: TextStyle(fontWeight: FontWeight.w500)),
                   value: creditCardSelected,
                   activeColor: Colors.black54,
                   onChanged: (value) {
@@ -70,202 +78,224 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                       paypalSelected = false;
                       creditCardSelected = value;
                       if (value == true) {
-                        Provider.of<CheckOutProvider>(context, listen: false).extendSliverWith(extendSliver + 235);
-                        Provider.of<CheckOutProvider>(context, listen: false).notifyCheckOutListeners();
+                        Provider.of<CheckOutProvider>(context, listen: false)
+                            .extendSliverWith(extendSliver + 235);
+                        Provider.of<CheckOutProvider>(context, listen: false)
+                            .notifyCheckOutListeners();
                       } else {
-                        Provider.of<CheckOutProvider>(context, listen: false).extendSliverWith(extendSliver - 235);
-                        Provider.of<CheckOutProvider>(context, listen: false).notifyCheckOutListeners();
+                        Provider.of<CheckOutProvider>(context, listen: false)
+                            .extendSliverWith(extendSliver - 235);
+                        Provider.of<CheckOutProvider>(context, listen: false)
+                            .notifyCheckOutListeners();
                       }
                     });
-                  }
-              ),
+                  }),
               Divider(
                 color: Colors.brown[100],
                 thickness: 1,
               ),
-              Container(child: creditCardSelected == false ? Container() : Container(
-                height: 260,
-                width: 800,
-                color: Colors.transparent,
-                child: Form(
-                  key: _form,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          child: TextFormField(
-                            controller: _textControllerForCredNumber,
-                            decoration: const InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(7)),
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
+              Container(
+                child: creditCardSelected == false
+                    ? Container()
+                    : Container(
+                        height: 260,
+                        width: 800,
+                        color: Colors.transparent,
+                        child: Form(
+                          key: _form,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15.0, top: 5.0, bottom: 5),
+                                child: Container(
+                                  width: 300,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: _textControllerForCredNumber,
+                                    decoration: const InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7)),
+                                        borderSide: BorderSide(
+                                          color: Colors.black12,
+                                        ),
+                                      ),
+                                      labelText: 'Card number',
+                                      labelStyle: TextStyle(
+                                        color: Colors.black38,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please enter your card number here';
+                                      }
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ),
-                              labelText: 'Card number',
-                              labelStyle: TextStyle(
-                                color: Colors.black38,
-                                fontSize: 14,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter your card number here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          child: TextFormField(
-                            controller: _textControllerForCredName,
-                            decoration: const InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(7)),
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15.0, top: 5.0, bottom: 5),
+                                child: Container(
+                                  width: 300,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: _textControllerForCredName,
+                                    decoration: const InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7)),
+                                        borderSide: BorderSide(
+                                          color: Colors.black12,
+                                        ),
+                                      ),
+                                      labelText: 'Name on card',
+                                      labelStyle: TextStyle(
+                                        color: Colors.black38,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please enter your name here';
+                                      }
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ),
-                              labelText: 'Name on card',
-                              labelStyle: TextStyle(
-                                color: Colors.black38,
-                                fontSize: 14,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter your name here';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              child: TextFormField(
-                                controller: _textControllerForCredExpM,
-                                decoration: const InputDecoration(
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide(
-                                      color: Colors.black12,
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15.0, top: 5.0, bottom: 5),
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      child: TextFormField(
+                                        controller: _textControllerForCredExpM,
+                                        decoration: const InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(7)),
+                                            borderSide: BorderSide(
+                                              color: Colors.black12,
+                                            ),
+                                          ),
+                                          labelText: 'Expiration month (MM)',
+                                          labelStyle: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter your expiration month here';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
-                                  labelText: 'Expiration month (MM)',
-                                  labelStyle: TextStyle(
-                                    color: Colors.black38,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter your expiration month here';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              child: TextFormField(
-                                controller: _textControllerForCredExpY,
-                                decoration: const InputDecoration(
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide(
-                                      color: Colors.black12,
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15.0, top: 5.0, bottom: 5),
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      child: TextFormField(
+                                        controller: _textControllerForCredExpY,
+                                        decoration: const InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(7)),
+                                            borderSide: BorderSide(
+                                              color: Colors.black12,
+                                            ),
+                                          ),
+                                          labelText: 'Expiration year (YY)',
+                                          labelStyle: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter your expiration year here';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
-                                  labelText: 'Expiration year (YY)',
-                                  labelStyle: TextStyle(
-                                    color: Colors.black38,
-                                    fontSize: 14,
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15.0, top: 5.0, bottom: 5),
+                                child: Container(
+                                  width: 300,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: _textControllerForCredSec,
+                                    decoration: const InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7)),
+                                        borderSide: BorderSide(
+                                          color: Colors.black12,
+                                        ),
+                                      ),
+                                      labelText: 'Security code',
+                                      labelStyle: TextStyle(
+                                        color: Colors.black38,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please enter your security code here';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter your expiration year here';
-                                  }
-                                  return null;
-                                },
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          child: TextFormField(
-                            controller: _textControllerForCredSec,
-                            decoration: const InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(7)),
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
-                                ),
+                              SizedBox(
+                                height: 4,
                               ),
-                              labelText: 'Security code',
-                              labelStyle: TextStyle(
-                                color: Colors.black38,
-                                fontSize: 14,
+                              Divider(
+                                color: Colors.brown[100],
+                                thickness: 1,
                               ),
-                            ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter your security code here';
-                              }
-                              return null;
-                            },
+                            ],
                           ),
                         ),
                       ),
-                      SizedBox(height: 4,),
-                      Divider(
-                        color: Colors.brown[100],
-                        thickness: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ),),
+              ),
               CheckboxListTile(
                   title: Container(
                       alignment: Alignment.centerLeft,
                       height: 40,
                       width: 70,
-                      child: SvgPicture.asset('images/Apple_Pay_Mark_RGB_041619.svg', alignment: Alignment.centerLeft,)),
+                      child: SvgPicture.asset(
+                        'images/Apple_Pay_Mark_RGB_041619.svg',
+                        alignment: Alignment.centerLeft,
+                      )),
                   value: applePaySelected,
                   activeColor: Colors.black54,
                   onChanged: (value) {
@@ -286,7 +316,10 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                       alignment: Alignment.centerLeft,
                       height: 40,
                       width: 40,
-                      child: SvgPicture.asset('images/Google_Pay-Logo.wine.svg', alignment: Alignment.centerLeft,)),
+                      child: SvgPicture.asset(
+                        'images/Google_Pay-Logo.wine.svg',
+                        alignment: Alignment.centerLeft,
+                      )),
                   value: googlePaySelected,
                   activeColor: Colors.black54,
                   onChanged: (value) {
@@ -307,7 +340,10 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                       alignment: Alignment.centerLeft,
                       height: 40,
                       width: 40,
-                      child: SvgPicture.asset('images/PayPal.svg', alignment: Alignment.centerLeft,)),
+                      child: SvgPicture.asset(
+                        'images/PayPal.svg',
+                        alignment: Alignment.centerLeft,
+                      )),
                   value: paypalSelected,
                   activeColor: Colors.black54,
                   onChanged: (value) {
@@ -319,7 +355,8 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                     });
                   }),
             ],
-          ),),
+          ),
+        ),
         SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15),
@@ -337,71 +374,95 @@ class _PaymentOptionsState extends State<PaymentOptions> {
                 if (allFormsAreCompleted == true) {
                   if (creditCardSelected == true) {
                     if (_form.currentState.validate()) {
+                      setState(() {
+                        _loading = true;
+                      });
                       var cardNumber = _textControllerForCredNumber.text;
                       var expMonth = _textControllerForCredExpM.text;
                       var expYear = _textControllerForCredExpY.text;
                       var cvc = _textControllerForCredSec.text;
                       var nameOnCard = _textControllerForCredName.text;
-                      var response = await Provider.of<CheckOutProvider>(context, listen: false).payWithCreditCard(cardNumber, expMonth, expYear, cvc, nameOnCard);
+                      var response = await Provider.of<CheckOutProvider>(
+                              context,
+                              listen: false)
+                          .payWithCreditCard(cardNumber, expMonth, expYear, cvc,
+                              nameOnCard, totalPrice, context);
 
-                      if (response == 'Error') {
+                      if (response != 'Great Success') {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => ShowDialogToDismiss(
-                                title: 'Error',
-                                content:
-                                'It is not possible to pay with this card. Please try again with a different card',
-                                buttonText: 'CLOSE'));
+                            builder: (BuildContext context) =>
+                                ShowDialogToDismiss(
+                                    title: 'Error',
+                                    content: response,
+                                    buttonText: 'CLOSE'));
+                        setState(() {
+                          _loading = false;
+                        });
+                      } else {
+                        Provider.of<ItemProvider>(context, listen: false)
+                            .updateCartAfterOrderConfirmation();
+                        Navigator.of(context)
+                            .pushReplacementNamed('orderConfirmationPage');
                       }
                     }
                   }
+
                   if (paypalSelected == true) {
-                    var u = subtotalForCheckout.substring(
-                        1, cartSubtotal.length - 4);
+                    await Provider.of<CheckOutProvider>(context, listen: false)
+                        .createPaypalPayment(context);
+
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            PaypalPayment(
-                              itemName: 'Verossa Prints',
-                              itemPrice: '$u',
-                              itemQuantity: 1,
-                              standardShipping: standardShipping,
-                              onFinish: (number) async {
-                                // payment done
-                                print('order id: ' + number);
-                              },
-                            ),
+                        builder: (BuildContext context) => PaypalWebView(),
                       ),
                     );
                   }
-                  if (applePaySelected == true) {
-                    checkIfNativePayReady();
+
+                  if (applePaySelected | googlePaySelected == true ) {
+                    var response = await Provider.of<CheckOutProvider>(context,
+                            listen: false)
+                        .payWithApplePay(context);
+                    if (response != 'Great Success') {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              ShowDialogToDismiss(
+                                  title: 'Error',
+                                  content: response,
+                                  buttonText: 'CLOSE'));
+                      setState(() {
+                        _loading = false;
+                      });
+                    } else {
+                      Provider.of<ItemProvider>(context, listen: false)
+                          .updateCartAfterOrderConfirmation();
+                      Navigator.of(context)
+                          .pushReplacementNamed('orderConfirmationPage');
+                    }
                   }
-                  if (googlePaySelected == true) {
-                    checkIfNativePayReady();
-                  }
-                  orderNumber = randomNumber.nextInt(10000);
-                } else {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => ShowDialogToDismiss(
-                          title: 'Please fill in the shipping details',
-                          content:
-                          '',
-                          buttonText: 'CLOSE'));
+
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => ShowDialogToDismiss(
+                            title: 'Please fill in the shipping details',
+                            content:
+                            '',
+                            buttonText: 'CLOSE'));
 
 
                 }
-
-
-
-
               },
-              child: Text(
-                'PAY NOW',
-                style: TextStyle(
-                    color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
-              ),
+              child: _loading == false
+                  ? Text(
+                      'PAY NOW',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300),
+                    )
+                  : CircularProgressIndicator(),
             ),
           ),
         ),

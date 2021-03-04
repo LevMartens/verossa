@@ -296,7 +296,7 @@ class PricesProvider extends ChangeNotifier {
 
   void setTotalPriceForCheckOutSummary(bool freeShipping, bool standardShipping, bool expressShipping) {
     var a = totalPrice.substring(1, totalPrice.length - 4);
-    var checkTotal = int.parse(a);
+    var checkTotal = double.parse(a);
     if (freeShipping != true) {
       if (expressShipping == true) {
         checkTotal = checkTotal + 15;
@@ -309,7 +309,7 @@ class PricesProvider extends ChangeNotifier {
         checkTotal = checkTotal + 9;
       }
     }
-    totalPriceForCheckOutSummary = '$currencyCode${checkTotal.toStringAsFixed(2)} $currencyCode';
+    totalPriceForCheckOutSummary = '$currencySymbol${checkTotal.toStringAsFixed(2)} $currencyCode';
     notifyListeners();
   }
 

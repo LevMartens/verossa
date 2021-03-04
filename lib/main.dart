@@ -24,6 +24,7 @@ import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dar
 
 import 'Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'Core/Util/Stateful_Wrapper.dart';
+import 'Features/Check_Out/Presentation/Check_Out_Provider.dart';
 import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Presentation/Prices_Provider.dart';
 import 'Features/Items/Presentation/Item_Provider.dart';
@@ -49,8 +50,8 @@ import 'View/Themes/Light_Theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await di.init();
   await ThemeManager.initialise();
+  await di.init();
   runApp(Webshop());
 }
 
@@ -75,13 +76,15 @@ class Webshop extends StatelessWidget {
               create: (context) => di.sl<NewsLetterProvider>()),
           ChangeNotifierProvider<UserProvider>(
               create: (context) => di.sl<UserProvider>()),
+          ChangeNotifierProvider<CheckOutProvider>(
+              create: (context) => di.sl<CheckOutProvider>()),
 
 
           ChangeNotifierProvider<DrawerProvider>(
               create: (context) => DrawerProvider()),
         ],
-        child: Consumer4<DrawerProvider, PricesProvider, ItemProvider, UserProvider>(
-            builder: (context, exchangeRateProvider, providerMyDC, itemPV, userPV, child) =>
+        child: Consumer5<DrawerProvider, PricesProvider, ItemProvider, UserProvider, CheckOutProvider>(
+            builder: (context, exchangeRateProvider, providerMyDC, itemPV, userPV, checkPV, child) =>
                 ThemeBuilder(
                   defaultThemeMode: ThemeMode.light,
                   darkTheme: ThemeData(),

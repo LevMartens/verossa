@@ -106,5 +106,10 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<Map<String,String>> returnCurrentUserDetailsMap() async {
+
+    return currentUserDetailsMap;
+  }
+
 
 }

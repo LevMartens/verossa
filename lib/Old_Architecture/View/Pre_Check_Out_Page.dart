@@ -47,16 +47,13 @@ double totalCost = 10.0;
 double tip = 1.0;
 double tax = 0.0;
 double taxPercent = 0.2;
-String secret = 'sk_test_51HaWL0DNMiEsQiX2ERExuL0FP0OuhH60LKA3sY9lxxZBd0XGJFzoINrc5oe6lDN8BdEVicpNpugmo8Aww86pdGIn00RnjKb1yU';
+
 int amount = 0;
 bool showSpinner = false;
 String url ='https://us-central1-demostripe-b9557.cloudfunctions.net/StripePI';
 String apiBase = 'https://api.stripe.com';
 String paymentApiUrl = '$apiBase';
-Map<String, String> headers = {
-  'Authorization': 'Bearer $secret',
-  'Content_Type': 'application/x-www-form-urlencoded'
-};
+
 
 
  CreditCard testCard;
@@ -157,7 +154,7 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-
+    double extendSliver = Provider.of<CheckOutProvider>(context, listen: true).extentSliver;
     bool discountApplied = Provider.of<CheckOutProvider>(context, listen: true).discountApplied;
     bool freeShipping = Provider.of<CheckOutProvider>(context, listen: true).freeShipping;
     bool standardShipping = Provider.of<CheckOutProvider>(context, listen: true).standardShipping;
@@ -165,7 +162,7 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
     String totalPriceForSummary = Provider.of<PricesProvider>(context, listen: true).totalPriceForCheckOutSummary;
     User currentUser = Provider.of<UserProvider>(context, listen: true).currentUser;
     Map<String,String> currentUserDetailsMap = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
-    double extendSliver = Provider.of<CheckOutProvider>(context, listen: true).extentSliver;
+
 
 
 
@@ -260,112 +257,11 @@ class _InputPageState extends State<PreCheckOut> with SingleTickerProviderStateM
     }
 
 
-    Future<void> createPaymentMethod() async {
-      StripePayment.setStripeAccount(null);
-      tax = ((totalCost * taxPercent) * 100).ceil() / 100;
-      amount = ((totalCost + tip + tax) * 100).toInt();
-      print('amount in pence/cent which will be charged = $amount');
-      //step 1: add card
-      PaymentMethod paymentMethod = PaymentMethod();
-
-      paymentMethod = await StripePayment.paymentRequestWithCardForm(
-        CardFormPaymentRequest(),
-      ).then((PaymentMethod paymentMethod) {
-        return paymentMethod;
-      }).catchError((e) {
-        print('Errore Card: ${e.toString()}');
-      });
-      paymentMethod != null
-          ? processPaymentAsDirectCharge(paymentMethod)
-          : showDialog(
-          context: context,
-          builder: (BuildContext context) => ShowDialogToDismiss(
-              title: 'Error',
-              content:
-              'It is not possible to pay with this card. Please try again with a different card',
-              buttonText: 'CLOSE'));
-    }
-    Future<void> createPaymentMethodNative() async {
-      print('started NATIVE payment...');
-
-      StripePayment.setStripeAccount(null);
-
-      var u = subtotalForCheckout.substring(1, cartSubtotal.length - 4);
-
-
-      List<ApplePayItem> items = [];
-
-      items.add(ApplePayItem(
-        label: 'Demo Order',
-        amount: '$u',
-      ));
-
-      // if (tip != 0.0)
-      //   items.add(ApplePayItem(
-      //     label: 'Tip',
-      //     amount: tip.toString(),
-      //   ));
-      // if (taxPercent != 0.0) {
-      //   tax = ((totalCost * taxPercent) * 100).ceil() / 100;
-      //   items.add(ApplePayItem(
-      //     label: 'Tax',
-      //     amount: tax.toString(),
-      //   ));
-      //}
-
-      items.add(ApplePayItem(
-        label: 'Verossa Valey',
-        amount: '$u',
-      ));
-
-
-      print('amount which will be charged = $u');
-
-      // Add card.
-      PaymentMethod paymentMethod = PaymentMethod();
-
-      Token token = await StripePayment.paymentRequestWithNativePay(
-        androidPayOptions: AndroidPayPaymentRequest(
-          totalPrice: '$u',
-          currencyCode: 'AUD',
-        ),
-
-        applePayOptions: ApplePayPaymentOptions(
-          countryCode: 'AU',
-          currencyCode: 'AUD',
-          items: items,
-        ),
-      );
-
-      paymentMethod = await StripePayment.createPaymentMethod(
-        PaymentMethodRequest(
-          card: CreditCard(
-            token: token.tokenId,
-          ),
-        ),
-      );
-
-
-      paymentMethod != null
-          ? processPaymentAsDirectCharge(paymentMethod)
-          : showDialog(
-          context: context,
-          builder: (BuildContext context) => ShowDialogToDismiss(
-              title: 'Error',
-              content:
-              'It is not possible to pay with this card. Please try again with a different card',
-              buttonText: 'CLOSE'));
-    }
 
 
 
-    void checkIfNativePayReady() async {
-      print('started to check if native pay ready');
-      bool deviceSupportNativePay = await StripePayment.deviceSupportsNativePay();
-      bool isNativeReady = await StripePayment.canMakeNativePayPayments(
-          ['american_express', 'visa', 'maestro', 'master_card']
-      );
-      deviceSupportNativePay && isNativeReady ? createPaymentMethodNative() : createPaymentMethod();  }
+
+
 
     final formKeyShip = _mountRoute == ModalRoute.of(context)
         ? _formKeyForShip
