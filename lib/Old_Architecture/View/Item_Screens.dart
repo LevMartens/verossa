@@ -11,7 +11,7 @@ import 'package:share/share.dart';
 import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import '../../View/Pages/Contact_Us_Page.dart';
 import '../../View/Pages/About_Us_Page.dart';
-import 'ReturnsPolicy_Page.dart';
+import '../../View/Pages/Returns_Policy_Page.dart';
 import 'Shipping_Page.dart';
 
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';

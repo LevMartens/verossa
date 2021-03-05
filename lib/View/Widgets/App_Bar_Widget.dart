@@ -1,18 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:verossa/Old_Architecture/Model/Items_For_SearchDelegate.dart';
-import 'package:badges/badges.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
-import 'package:provider/provider.dart';
-import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
-import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Widget.dart';
 
-import 'package:verossa/Injection_Container.dart' as di;
-
-import '../../Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
 
 class VerossaAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -42,7 +31,6 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
   Widget build(BuildContext context) {
 
     return AppBar(
-
               leading: IconButton(
                 icon: Icon(
                   Icons.menu,
@@ -59,7 +47,6 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                         color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
-
                 ],
               ),
               actions: <Widget>[
@@ -71,7 +58,6 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
                       },
                       child: Row(
                         children: [
-
                           Padding(
                             padding: EdgeInsets.only(left: 0.0),
                             child: CartBadgeWidget(),
@@ -95,16 +81,8 @@ class _VerossaAppBarState extends State<VerossaAppBar> {
               ],
               titleSpacing: 0.0,
               backgroundColor: Theme.of(context).secondaryHeaderColor,
-
             );
   }
 }
 
 
-
-// ChangeNotifierProvider<CartBadgeProvider>(
-// create: (context) => di.sl<CartBadgeProvider>(),
-// child: Consumer<CartBadgeProvider>(
-// builder: (context, provider, child) =>
-
-//));

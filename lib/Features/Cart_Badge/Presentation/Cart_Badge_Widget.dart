@@ -7,7 +7,7 @@ import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
-import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
+import 'package:verossa/View/Pages/Personal_Page.dart';
 
 import 'package:verossa/Injection_Container.dart' as di;
 

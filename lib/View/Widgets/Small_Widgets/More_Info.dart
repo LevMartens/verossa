@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:verossa/View/Pages/About_Us_Page.dart';
 import 'package:verossa/View/Pages/Contact_Us_Page.dart';
-import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
+import 'package:verossa/View/Pages/Returns_Policy_Page.dart';
 import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 
 class MoreInfo extends StatelessWidget {

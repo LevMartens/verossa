@@ -9,7 +9,7 @@ import '../Model/Global_Variables.dart';
 import '../Controller/Global_Methods.dart';
 import 'package:provider/provider.dart';
 import '../Controller/Drawer_Provider.dart';
-import 'Personal_Page.dart';
+import '../../View/Pages/Personal_Page.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 
 
