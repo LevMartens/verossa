@@ -1,22 +1,16 @@
-import 'package:stripe_payment/stripe_payment.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../Model/Global_Variables.dart';
+import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
+import '../../../Old_Architecture/Model/Global_Variables.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:verossa/Old_Architecture/Controller/PaypalPayment.dart';
-import 'dart:math';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
 
 
-///NEXT: The email works but gets caught in spamfilters
-///When home button is pressed reset cart in global variables and sharedpref, and firebase stock needs to be updated and deduct the items
-/// template id:   d-fdf6eefcc4f745daa8a467446f596d3e
-/// API KEY: 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
-/// 'australia-southeast1'
+
+
 
 class OrderConfirmation extends StatefulWidget {
   final List<Container> dropdownMenuItems;
@@ -102,7 +96,8 @@ class _InputPageState extends State<OrderConfirmation> {
   @override
   Widget build(BuildContext context) {
 
-
+    Map<String,String> userDetails = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
+    Provider.of<CheckOutProvider>(context, listen: false).sendEmail(userDetails['firstName'],userDetails['email']);
 
 
     return Scaffold(
