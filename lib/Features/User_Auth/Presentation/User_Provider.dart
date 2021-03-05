@@ -23,6 +23,8 @@ class UserProvider extends ChangeNotifier {
   User currentUser;
   Map<String,String> currentUserDetailsMap = {};
   bool currentlyOnResetPassword = false;
+  bool currentlyOnChangeDetails = false;
+  double containerHeightForPersonalPage = 580;
 
   UserProvider({
     @required GetUser getUser,
@@ -42,6 +44,9 @@ class UserProvider extends ChangeNotifier {
   void resetPassword(String email) {
     auth.sendPasswordResetEmail(email: email);
   }
+  void setContainerHeightPersonalPage(double height) {
+   containerHeightForPersonalPage = height;
+  }
 
   Future<String> loginUser(String email, String password) async {
     try {
@@ -58,6 +63,10 @@ class UserProvider extends ChangeNotifier {
 
   void setCurrentlyOnResetPasswordTo(bool bool) {
     currentlyOnResetPassword = bool;
+    notifyListeners();
+  }
+  void setCurrentlyOnChangeDetailsTo(bool bool) {
+    currentlyOnChangeDetails = bool;
     notifyListeners();
   }
 
