@@ -1,103 +1,50 @@
+import 'dart:math';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
-import '../../../Old_Architecture/Model/Global_Variables.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
+import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
 
-
-
-
-
 class OrderConfirmation extends StatefulWidget {
-  final List<Container> dropdownMenuItems;
-
-  OrderConfirmation({this.dropdownMenuItems});
-
   @override
-  _InputPageState createState() =>
-      _InputPageState(dropdownMenuItems: dropdownMenuItems);
+  _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<OrderConfirmation> {
-   List<Container> dropdownMenuItems;
-   //int orderNumber;
+
+   int orderNumber;
   String totalPrice;
   String currentDate;
   String deliveryDate;
-  String emailBody;
-
-
-
-  sendEmail() async {
-
-    var body = json.encode({
-      'personalizations': [{'to':[{'email':'$email'}], "dynamic_template_data": {
-        "subject": "Verossa: Order confirmation ",
-        "name":"$firstName",
-        "text": "$emailBody"
-      }}],
-      'from': {"email":"levmartens@gmail.com","name":"Lev Martens"},
-      "reply_to":{"email":"levmartens@gmail.com","name":"Lev Martens"},
-
-      "template_id": "d-fdf6eefcc4f745daa8a467446f596d3e"
-    });
-
-    try {
-      var response = await http.post(Uri.https("https://api.sendgrid.com","/v3/mail/send"),
-          headers: {
-          'Authorization': 'Bearer ' + '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',
-           'Content-Type': 'application/json',
-
-          },
-        body: body
-
-          );
-      print('$response');
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
-
-  }
-
-
-  _InputPageState({this.dropdownMenuItems});
 
    final _scrollController = ScrollController(keepScrollOffset: false);
 
   @override
   void initState() {
-    // print('random Number: ${randomNumber.nextInt(10000)}');
-    // orderNumber = randomNumber.nextInt(10000);
+    super.initState();
+    orderNumber = new Random().nextInt(1000);
     String now = new DateTime.now().toString();
     var dateParse = DateTime.parse(now);
     currentDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
     deliveryDate = "${dateParse.day + 5}-${dateParse.month}-${dateParse.year}";
-    print('This is current date: $currentDate');
-    emailBody = 'Thank you for your order with order number $orderNumber. In this email, you can read what to expect and the expected delivery date. As soon as your order is on it\'s way, we\'ll send you a notification.';
-    sendEmail();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
 
   }
-
-
-
-
 
 
   @override
   Widget build(BuildContext context) {
 
+    String totalPrice  = Provider.of<PricesProvider>(context, listen: true).totalPriceForCheckOutSummary;
     Map<String,String> userDetails = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
-    Provider.of<CheckOutProvider>(context, listen: false).sendEmail(userDetails['firstName'],userDetails['email']);
+    String firstName = userDetails['firstName'];
+    String email = userDetails['email'];
+    String lastName = userDetails['lastName'];
+    String address = userDetails['address'];
+    String place = userDetails['place'];
+    String country = userDetails['country'];
+    Provider.of<CheckOutProvider>(context, listen: false).sendEmail(firstName,email);
 
 
     return Scaffold(
@@ -111,59 +58,11 @@ class _InputPageState extends State<OrderConfirmation> {
                 color: Colors.white70,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
                     SizedBox(
                       height: 50,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Center(
-                              child: Text(
-                                'VERØSSA',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    letterSpacing: 4,
-                                    fontFamily: 'Cormorant',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 30),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                'VALLEY',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    letterSpacing: 4,
-                                    fontFamily: 'Cormorant',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 30),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                'PHOTOGRAPHY',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    letterSpacing: 4,
-                                    fontFamily: 'Cormorant',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    VerossaLogo(),
                     SizedBox(height: 45),
                     Center(child: Icon(Icons.check_circle_outline, size: 75, color: Colors.green,)),
                     SizedBox(height: 15),
@@ -182,7 +81,7 @@ class _InputPageState extends State<OrderConfirmation> {
                     SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.only(left: 25.0),
-                      child: Text('Your order of $subtotalForCheckout at Verossa.co has been confirmed. A confirmation has been sent to you at $email.'),
+                      child: Text('Your order of $totalPrice at Verossa.co has been confirmed. A confirmation has been sent to you at $email.'),
                     ),
                     SizedBox(height: 30),
                     Padding(
@@ -199,13 +98,12 @@ class _InputPageState extends State<OrderConfirmation> {
                           Text('Address', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
                           SizedBox(height: 5),
                           Text('$firstName $lastName'),
-                          Text('$street'),
+                          Text('$address'),
                           Text('$place'),
                           Text('$country'),
                         ],
                       ),
                     ),
-                    //SizedBox(height: 50),
                     Center(
                       child: Image(
                         height: 150,
@@ -213,7 +111,6 @@ class _InputPageState extends State<OrderConfirmation> {
                         image: AssetImage('images/VerossaSmallLogo.jpg'),
                       ),
                     ),
-                    //SizedBox(height: 50),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15),
                       child: Container(
@@ -225,17 +122,10 @@ class _InputPageState extends State<OrderConfirmation> {
                             Radius.circular(4.0),
                           ),
                         ),
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () async {
 
-
-
-
-
-                            Navigator.of(context).pushReplacementNamed('homePage');
-
-
-
+                            Navigator.of(context).pushReplacementNamed('/');
 
                           },
                           child: Text(
@@ -246,15 +136,6 @@ class _InputPageState extends State<OrderConfirmation> {
                         ),
                       ),
                     ),
-
-
-
-
-
-
-
-
-
                   ],
                 ),
               ),

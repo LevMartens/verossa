@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../Model/Global_Variables.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
-import 'AboutUs_Page.dart';
+import '../../View/Pages/About_Us_Page.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'AppBar+Drawers.dart';
 import '../Controller/Global_Methods.dart';
-import 'ContactUs_Page.dart';
+import '../../View/Pages/Contact_Us_Page.dart';
 import 'ReturnsPolicy_Page.dart';
 
 import 'package:verossa/View/Widgets/App_Bar_Widget.dart';

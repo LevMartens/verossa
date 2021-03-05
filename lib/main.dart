@@ -5,23 +5,22 @@ import 'package:provider/provider.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:verossa/Features/Prices/Domain/Entities/Exchange_Rates.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
-import 'package:verossa/Old_Architecture/View/ContactUs_Page.dart';
-import 'package:verossa/Old_Architecture/View/Customer_Login_Screen.dart';
+import 'package:verossa/View/Pages/Contact_Us_Page.dart';
+import 'package:verossa/View/Pages/Customer_Login_Page.dart';
 import 'package:verossa/Old_Architecture/View/Item_Screens.dart';
 import 'package:verossa/Old_Architecture/Controller/Drawer_Provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
+import 'package:verossa/View/Pages/Checkout/Check_Out_Page.dart';
 import 'package:verossa/View/Pages/Home/HomePage.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
-import 'package:verossa/Old_Architecture/View/AboutUs_Page.dart';
+import 'package:verossa/View/Pages/About_Us_Page.dart';
 import 'package:verossa/Old_Architecture/View/ReturnsPolicy_Page.dart';
 import 'package:verossa/Old_Architecture/View/Shipping_Page.dart';
 import 'package:verossa/Old_Architecture/View/Personal_Page.dart';
-import 'package:verossa/Old_Architecture/View/Thank_You_For_Order_Page.dart';
-import 'package:verossa/Old_Architecture/View/Create_Account_Screen.dart';
+import 'package:verossa/View/Pages/Checkout/Order_Confirmation_Page.dart';
+import 'package:verossa/View/Pages/Create_Account_Page.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
-
 import 'Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'Core/Util/Stateful_Wrapper.dart';
 import 'Features/Check_Out/Presentation/Check_Out_Provider.dart';
@@ -137,7 +136,7 @@ class Webshop extends StatelessWidget {
                           'ReturnsPolicy': (_) => ReturnsPolicy(),
                           'Shipping': (_) => Shipping(),
                           'personalPage': (_) => PersonalPage(),
-                          'preCheckout': (_) => PreCheckOut(),
+                          'preCheckout': (_) => CheckOutPage(),
                           'orderConfirmationPage': (_) => OrderConfirmation(),
                           'ItemPage1': (_) =>
                               ItemPage(itemModel: di.sl<ItemFactory>().item1),

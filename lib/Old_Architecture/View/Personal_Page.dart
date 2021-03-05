@@ -4,13 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Old_Architecture/Model/NewsLetterForms.dart';
 import 'package:verossa/Old_Architecture/Model/Personal_Page_Form.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Free_Shipping_Banner_Widget.dart';
+import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
 import 'AppBar+Drawers.dart';
 import '../Model/Global_Variables.dart';
 import '../Controller/Global_Methods.dart';
-import 'ContactUs_Page.dart';
+import '../../View/Pages/Contact_Us_Page.dart';
 import 'ReturnsPolicy_Page.dart';
 import 'Shipping_Page.dart';
-import 'AboutUs_Page.dart';
+import '../../View/Pages/About_Us_Page.dart';
 import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -281,40 +283,9 @@ class _InputPageState extends State<PersonalPage> {
                 color: Colors.white70,
                 child: Column(children: <Widget>[
                   SizedBox(height: startScroll),
-                  Container(
-                    child: Center(
-                      child: Text(
-                        'FREE SHIPPING ON ORDERS OVER \$150',
-                        style: TextStyle(
-                            color: Colors.white60,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    color: Colors.black,
-                    height: 25,
-                    width: 900,
-                  ),
+                  FreeShippingBanner(),
                   SizedBox(height: 20,),
-                  Column(
-                    children: [
-                      Container(
-                        child: Center(
-                          child: Text('VERØSSA', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
-                        ),
-                      ),
-                      Container(
-                        child: Center(
-                          child: Text('VALLEY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 35),),
-                        ),
-                      ),
-                      Container(
-
-                        child: Center(
-                          child: Text('PHOTOGRAPHY', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 4,fontFamily: 'Cormorant',fontWeight: FontWeight.w600, fontSize: 20),),
-                        ),
-                      ),
-                    ],
-                  ),
+                  VerossaLogo(),
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(top: 40.0, bottom: 0.0),
@@ -327,8 +298,7 @@ class _InputPageState extends State<PersonalPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 15),
-                  SizedBox(height: 10),
+                  SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0, bottom: 0.0),
                     child: Opacity(
@@ -403,6 +373,7 @@ class _InputPageState extends State<PersonalPage> {
                   SizedBox(
                     height: 100,
                   ),
+
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Padding(

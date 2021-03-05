@@ -22,6 +22,7 @@ class UserProvider extends ChangeNotifier {
 
   User currentUser;
   Map<String,String> currentUserDetailsMap = {};
+  bool currentlyOnResetPassword = false;
 
   UserProvider({
     @required GetUser getUser,
@@ -37,6 +38,28 @@ class UserProvider extends ChangeNotifier {
         getUser = getUser,
         getCurrentUserDetails = getCurrentUserDetails,
         setCurrentUserDetails = setCurrentUserDetails;
+
+  void resetPassword(String email) {
+    auth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<String> loginUser(String email, String password) async {
+    try {
+      final user = await auth.signInWithEmailAndPassword(email: email, password: password);
+      if (user != null) {
+        getCurrentUserDetailsFromFB();
+       return 'Great Success';
+      } else {
+      return 'Failed to login';}
+    } catch (e){
+      return '$e';
+      }
+  }
+
+  void setCurrentlyOnResetPasswordTo(bool bool) {
+    currentlyOnResetPassword = bool;
+    notifyListeners();
+  }
 
   Future<void> getUserFromFB() async  {
     currentUser = auth.currentUser;

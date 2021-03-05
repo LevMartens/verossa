@@ -1,3 +1,4 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Create_PayPal_Paymen
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Finalise_PayPal_Payment.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Get_Access_Token.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Save_Order_To_FireStore.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/SendGrid_Email_Sender.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Stripe_Payment_Processor.dart';
 import 'dart:async';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
@@ -22,11 +24,13 @@ import 'package:verossa/Core/Use_Cases/Use_Case.dart';
 class CheckOutProvider extends ChangeNotifier {
   final CreatePayPalPayment createPayPalPayment;
   final FinalisePayPalPayment finalisePayPalPayment;
+  final SendGridEmailSender sendGridEmailSender;
   final GetAccessToken getAccessToken;
   final StripePaymentProcessor stripePaymentProcessor;
   final SaveOrderToFireStore saveOrderToFireStore;
   final ItemFactory factory;
   final InputConverter inputConverter;
+  final RemoteConfig remoteConfig;
   bool discountApplied;
   bool freeShipping;
   bool standardShipping;
@@ -47,13 +51,17 @@ class CheckOutProvider extends ChangeNotifier {
   CheckOutProvider({
     @required this.factory,
     @required this.inputConverter,
+    @required this.sendGridEmailSender,
     @required this.stripePaymentProcessor,
+    @required this.remoteConfig,
     @required this.getAccessToken,
     @required this.saveOrderToFireStore,
     @required this.finalisePayPalPayment,
     @required this.createPayPalPayment,
   })  : assert(factory != null),
         assert(getAccessToken != null),
+        assert(sendGridEmailSender != null),
+        assert(remoteConfig != null),
         assert(stripePaymentProcessor != null),
         assert(saveOrderToFireStore != null),
         assert(createPayPalPayment != null),
@@ -402,5 +410,14 @@ class CheckOutProvider extends ChangeNotifier {
 
     saveOrderToFireStore(
         Params(map: map, orderNumber: orderNumber, date: date));
+  }
+  void setupStripe() {
+    StripePayment.setOptions(
+        StripeOptions(publishableKey: remoteConfig.getString('Stripe_Publishable_Key'), merchantId: "Test", androidPayMode: 'test'));
+  }
+
+  void sendEmail(String name, String email) {
+    final emailBody = remoteConfig.getString('Payment_Confirmation_Email_Body');
+    sendGridEmailSender(Params(fullName: name, email: email, emailBody: emailBody));
   }
 }

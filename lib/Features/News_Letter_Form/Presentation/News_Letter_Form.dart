@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import 'package:form_validator/form_validator.dart';
-
 import 'News_Letter_Provider.dart';
 
 class NewsLetterForm extends StatefulWidget {
-
-
   final GlobalKey<ScaffoldState> scaffoldKey;
   NewsLetterForm({this.scaffoldKey});
   @override
@@ -20,22 +17,13 @@ class _NewsLetterFormState extends State<NewsLetterForm> {
   final GlobalKey<ScaffoldState> scaffoldKey;
   _NewsLetterFormState({this.scaffoldKey});
 
-
-  // static GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
-  // ModalRoute _mountRoute;
   final textController = TextEditingController();
   final validate = ValidationBuilder().email('please enter a valid email').build();
 
-  @override
-  void didChangeDependencies() {
-    //_mountRoute ??= ModalRoute.of(context);
-    super.didChangeDependencies();
-  }
 
   @override
   void dispose() {
     super.dispose();
-    //_formKey5.currentState?.dispose();
     textController.dispose();
   }
 
@@ -49,10 +37,6 @@ class _NewsLetterFormState extends State<NewsLetterForm> {
 
   @override
   Widget build(BuildContext context) {
-
-    // final formKey = _mountRoute == ModalRoute.of(context)
-    //     ? _formKey5
-    //     : GlobalKey<FormState>();//Key('hack-to-dispose-of-will-pop-callback');
 
     return ChangeNotifierProvider<NewsLetterProvider>(
       create: (context) => di.sl<NewsLetterProvider>(),
@@ -119,7 +103,6 @@ class _NewsLetterFormState extends State<NewsLetterForm> {
             child: TextButton(
               onPressed: () {
 
-
                 print('validation: ${validate(textController.text)}');
                  if (validate(textController.text) == null) {
                    print('validation null');
@@ -130,7 +113,6 @@ class _NewsLetterFormState extends State<NewsLetterForm> {
                       .showSnackBar(SnackBar(content: Text('Successfully subscribed :)', textAlign: TextAlign.center,)));
 
                   textController.text = '';
-
 
                  }
               },

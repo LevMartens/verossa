@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:verossa/Old_Architecture/Controller/Global_Methods.dart';
 import 'package:verossa/Old_Architecture/View/Item_Tiles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:verossa/Old_Architecture/View/Pre_Check_Out_Page.dart';
+import 'package:verossa/View/Pages/Checkout/Check_Out_Page.dart';
 import 'package:badges/badges.dart';
 import 'dart:math';
 
@@ -229,9 +229,9 @@ Widget subtotal(String totalAmount, BuildContext context) {
                     userLoggedIn = false;
                   }
 
-                  Navigator.pushReplacement(context, new MaterialPageRoute(
-                      builder: (context) =>
-                          PreCheckOut(summaryDDItems: dropdownItems, userIsLoggedIn: userLoggedIn, )));
+                  // Navigator.pushReplacement(context, new MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         CheckOutPage(summaryDDItems: dropdownItems, userIsLoggedIn: userLoggedIn, )));
 
                 },
                 child: Text(

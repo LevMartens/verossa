@@ -4,7 +4,7 @@ import 'package:verossa/Core/Error/Failures.dart';
 import 'package:verossa/Core/Error/Exceptions.dart';
 import 'package:verossa/Core/Network/Network_Info.dart';
 import 'package:verossa/Features/Check_Out/Data/Data_Sources/PayPal_API.dart';
-import 'package:verossa/Features/Check_Out/Data/Data_Sources/StripeAPI.dart';
+import 'package:verossa/Features/Check_Out/Data/Data_Sources/Stripe_API.dart';
 import 'package:verossa/Features/Check_Out/Domain/Entities/AccessToken.dart';
 import 'package:verossa/Features/Check_Out/Domain/Entities/PayPal_Payment_Confirmation.dart';
 import 'package:verossa/Features/Check_Out/Domain/Entities/PayPal_Payment_Intent.dart';

@@ -33,6 +33,9 @@ class Params extends Equatable {
   final String orderNumber;
   final String date;
   final String totalPrice;
+  final String fullName;
+  final String email;
+  final String emailBody;
 
 
   Params({
@@ -44,8 +47,11 @@ class Params extends Equatable {
      this.orderNumber,
      this.date,
      this.totalPrice,
+     this.fullName,
+     this.email,
+     this.emailBody,
   });
 
   @override
-  List<Object> get props => [transaction, executeUrl, accessToken, payerID,map, orderNumber, date, totalPrice];
+  List<Object> get props => [transaction, executeUrl, accessToken, payerID,map, orderNumber, date, totalPrice, fullName, email, emailBody];
 }

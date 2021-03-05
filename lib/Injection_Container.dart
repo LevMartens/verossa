@@ -15,6 +15,7 @@ import 'package:verossa/Features/Check_Out/Data/Data_Sources/PayPal_API.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Create_PayPal_Payment.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Get_Access_Token.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Save_Order_To_FireStore.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/SendGrid_Email_Sender.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Stripe_Payment_Processor.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Features/News_Letter_Form/Domain/Use_Cases/Set_Email_To_Mailing_List.dart';
@@ -26,12 +27,15 @@ import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/User_Auth/Domain/Use_Cases/Set_Current_User_Details.dart';
-import 'Features/Check_Out/Data/Data_Sources/StripeAPI.dart';
+import 'Features/Check_Out/Data/Data_Sources/SendGrid_API.dart';
+import 'Features/Check_Out/Data/Data_Sources/Stripe_API.dart';
 import 'Features/Check_Out/Data/Repositories/Order_Repository_Impl.dart';
 import 'Features/Check_Out/Data/Repositories/PayPal_Repository_Impl.dart';
+import 'Features/Check_Out/Data/Repositories/SendGrid_Repository_Impl.dart';
 import 'Features/Check_Out/Data/Repositories/Stripe_Repository_Impl.dart';
 import 'Features/Check_Out/Domain/Repositories/Order_Repository.dart';
 import 'Features/Check_Out/Domain/Repositories/PayPal_Repository.dart';
+import 'Features/Check_Out/Domain/Repositories/SendGrid_Repository.dart';
 import 'Features/Check_Out/Domain/Repositories/Stripe_Repository.dart';
 import 'Features/Check_Out/Domain/Use_Cases/Finalise_PayPal_Payment.dart';
 import 'Features/Check_Out/Presentation/Check_Out_Provider.dart';
@@ -86,7 +90,9 @@ Future<void> init() async {
     stripePaymentProcessor: sl<StripePaymentProcessor>(),
     finalisePayPalPayment: sl<FinalisePayPalPayment>(),
     createPayPalPayment: sl<CreatePayPalPayment>(),
+    sendGridEmailSender: sl<SendGridEmailSender>(),
     saveOrderToFireStore: sl<SaveOrderToFireStore>(),
+    remoteConfig: sl<RemoteConfig>(),
     getAccessToken: sl<GetAccessToken>(),
     inputConverter: sl(),
     factory: sl<ItemFactory>(),
@@ -153,6 +159,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetAccessToken(sl<PayPalRepository>()));
   sl.registerLazySingleton(() => CreatePayPalPayment(sl<PayPalRepository>()));
   sl.registerLazySingleton(() => FinalisePayPalPayment(sl<PayPalRepository>()));
+  sl.registerLazySingleton(() => SendGridEmailSender(sl<SendGridRepository>()));
 
   // Repository
   sl.registerLazySingleton<OrderRepository>(
@@ -214,8 +221,17 @@ Future<void> init() async {
       networkInfo: sl<NetworkInfo>(),
     ),
   );
+  sl.registerLazySingleton<SendGridRepository>(
+        () => SendGridRepositoryImpl(
+          sendGridAPI: sl<SendGridAPI>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
 
   // Data sources
+  sl.registerLazySingleton<SendGridAPI>(
+        () => SendGridAPIImpl(client: sl(), remoteConfig: sl()),
+  );
   sl.registerLazySingleton<PayPalAPI>(
         () => PayPalAPIImpl(basicAuthClient: sl(), client: sl()),
   );

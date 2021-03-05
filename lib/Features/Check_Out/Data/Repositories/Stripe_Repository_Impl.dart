@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:verossa/Core/Error/Failures.dart';
 import 'package:verossa/Core/Error/Exceptions.dart';
 import 'package:verossa/Core/Network/Network_Info.dart';
-import 'package:verossa/Features/Check_Out/Data/Data_Sources/StripeAPI.dart';
+import 'package:verossa/Features/Check_Out/Data/Data_Sources/Stripe_API.dart';
 import 'package:verossa/Features/Check_Out/Domain/Entities/Stripe_Payment_Intent.dart';
 import 'package:verossa/Features/Check_Out/Domain/Repositories/Stripe_Repository.dart';
 import 'package:verossa/Features/Items/Data/Data_Sources/Stock_Limit_Remote_Data_Source.dart';
