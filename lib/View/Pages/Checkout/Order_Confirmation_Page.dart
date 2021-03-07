@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
-import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
+import 'package:verossa/Features/User/Presentation/User_Provider.dart';
 
 class OrderConfirmation extends StatefulWidget {
   @override

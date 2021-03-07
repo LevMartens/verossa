@@ -15,7 +15,7 @@ import 'package:verossa/Features/Items/Presentation/Item_Factory.dart';
 import 'package:meta/meta.dart';
 import 'package:verossa/Core/Util/Input_Converter.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
-import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
+import 'package:verossa/Features/User/Presentation/User_Provider.dart';
 import 'dart:math';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:verossa/Core/Use_Cases/Use_Case.dart';

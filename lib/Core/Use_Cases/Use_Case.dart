@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-
 import 'package:verossa/Core/Error/Failures.dart';
 
 abstract class UseCase<Type, Params> {

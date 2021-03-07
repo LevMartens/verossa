@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
+import 'package:verossa/Features/User/Presentation/User_Provider.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
 
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
+import 'package:verossa/Features/User/Presentation/User_Provider.dart';
 import 'package:verossa/View/Widgets/Bottom_Section_Widget.dart';
 import 'package:verossa/View/Widgets/Left_Drawer_Widget.dart';
 import 'package:verossa/View/Widgets/Right_Drawer_Widget.dart';

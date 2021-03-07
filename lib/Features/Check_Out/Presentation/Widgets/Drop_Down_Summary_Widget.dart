@@ -10,7 +10,8 @@ import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart'
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Discount_Field_Widget.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Subtotal_Widget.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Summary_Total_Widget.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
+import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
+
 
 
 class DDSummary extends StatefulWidget {
@@ -45,7 +46,7 @@ class _InputPageState extends State<DDSummary> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
 
-
+  String totalPrice = Provider.of<PricesProvider>(context, listen: true).totalPriceForCheckOutSummary;
 
     return Column(
       children: [
@@ -98,7 +99,7 @@ class _InputPageState extends State<DDSummary> with SingleTickerProviderStateMix
                     turns: Tween(begin: 0.0, end: 0.5).animate(rotationController),
                     child: Icon(Icons.keyboard_arrow_down)),
                 Spacer(),
-                Text(subtotalForCheckout,
+                Text(totalPrice,
                   style: TextStyle(fontSize: 17),
                 ),
                 SizedBox(width: 10),

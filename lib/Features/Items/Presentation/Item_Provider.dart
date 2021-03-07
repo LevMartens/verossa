@@ -306,7 +306,6 @@ class ItemProvider extends ChangeNotifier {
         stringKeyStockLimits['$itemID']) {
       itemCount = stringKeyStockLimits['$itemID'];
     }
-
     /// Add item to Cart
     var a = stringKeyCartContent['$itemID'] + itemCount;
     stringKeyCartContent['$itemID'] = a;
@@ -329,7 +328,6 @@ class ItemProvider extends ChangeNotifier {
     /// Update Cart Badge
     Provider.of<CartBadgeProvider>(context, listen: false)
         .updateCartBadgeCountWith(cartContent);
-
     /// Remove Tile
     if (stringKeyCartContent['$itemID'] == 0) {
       currentItemTilesList.remove(itemTilesMap['$itemID']);
@@ -337,7 +335,6 @@ class ItemProvider extends ChangeNotifier {
         currentItemTilesList.removeLast();
       }
     }
-
     /// Recalculate total
     await Provider.of<PricesProvider>(context, listen: false)
         .setCurrencyForTotalTo(context);
@@ -353,7 +350,6 @@ class ItemProvider extends ChangeNotifier {
       print('Error: Fetching Stock data from FS');
     } else {
       stockLimits = newStockLimit;
-      print('getStockLimitFromFS success $stockLimits');
     }
   }
 

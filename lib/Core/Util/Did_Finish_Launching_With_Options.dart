@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
 import 'package:verossa/Features/Prices/Presentation/Prices_Provider.dart';
-import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
+import 'package:verossa/Features/User/Presentation/User_Provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
-import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
+
 
 
 var cartBadge = 0;
@@ -22,8 +22,6 @@ class DidFinishLaunchingWithOptions {
 
     return await di.sl<AsyncMemoizer>().runOnce(() async {
 
-
-
       await Provider.of<ItemProvider>(context, listen: false)
           .getCartContents();
       await Provider.of<PricesProvider>(context, listen: false)
@@ -32,9 +30,6 @@ class DidFinishLaunchingWithOptions {
           .getStockLimitFromFS();
       await Provider.of<ItemProvider>(context, listen: false)
           .updateCartAfterStartUp();
-
-
-      print('startup after screenwidth');
       await Provider.of<UserProvider>(context, listen: false).getUserFromFB();
       return Provider.of<ItemProvider>(context, listen: false)
           .addItemTilesToListAfterStartUp();

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Check_Out_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Model.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:verossa/View/Pages/Checkout/Check_Out_Page.dart';
 import 'Prices_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';

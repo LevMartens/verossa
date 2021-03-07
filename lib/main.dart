@@ -19,10 +19,10 @@ import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dar
 import 'Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'Core/Util/Stateful_Wrapper.dart';
 import 'Features/Check_Out/Presentation/Check_Out_Provider.dart';
-import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
+import 'Features/News_Letter_Subscription/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Presentation/Prices_Provider.dart';
 import 'Features/Items/Presentation/Item_Provider.dart';
-import 'Features/User_Auth/Presentation/User_Provider.dart';
+import 'Features/User/Presentation/User_Provider.dart';
 import 'View/Pages/Item/Item_Page.dart';
 import 'View/Themes/Dark_Theme.dart';
 import 'View/Themes/Light_Theme.dart';

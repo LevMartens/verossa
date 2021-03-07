@@ -18,7 +18,7 @@ import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Save_Order_To_FireSt
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/SendGrid_Email_Sender.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Stripe_Payment_Processor.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
-import 'package:verossa/Features/News_Letter_Form/Domain/Use_Cases/Set_Email_To_Mailing_List.dart';
+import 'package:verossa/Features/News_Letter_Subscription/Domain/Use_Cases/Set_Email_To_Mailing_List.dart';
 import 'package:verossa/Core/Util/Input_Converter.dart';
 import 'package:verossa/Features/Cart_Badge/Data/Data_Sources/Cart_Badge_Local_Data_Source.dart';
 import 'package:verossa/Features/Cart_Badge/Data/Repositories/Cart_Badge_Repository_Impl.dart';
@@ -26,7 +26,7 @@ import 'package:verossa/Features/Cart_Badge/Domain/Repositories/Cart_Badge_Repos
 import 'package:verossa/Features/Cart_Badge/Domain/Use_Cases/Get_Cart_Badge.dart';
 import 'package:verossa/Features/Cart_Badge/Presentation/Cart_Badge_Provider.dart';
 import 'package:verossa/Features/Items/Presentation/Item_Provider.dart';
-import 'package:verossa/Features/User_Auth/Domain/Use_Cases/Set_Current_User_Details.dart';
+import 'package:verossa/Features/User/Domain/Use_Cases/Set_Current_User_Details.dart';
 import 'Features/Check_Out/Data/Data_Sources/SendGrid_API.dart';
 import 'Features/Check_Out/Data/Data_Sources/Stripe_API.dart';
 import 'Features/Check_Out/Data/Repositories/Order_Repository_Impl.dart';
@@ -48,10 +48,10 @@ import 'Features/Items/Domain/Repositories/Stock_Limit_Repository.dart';
 import 'Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart';
 import 'Features/Items/Domain/Use_Cases/Get_Stock_Limit.dart';
 import 'Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
-import 'Features/News_Letter_Form/Data/Data_Sources/News_Letter_Remote_Data_Source.dart';
-import 'Features/News_Letter_Form/Data/Repositories/News_Letter_Repository_Impl.dart';
-import 'Features/News_Letter_Form/Domain/Repositories/News_Letter_Repository.dart';
-import 'Features/News_Letter_Form/Presentation/News_Letter_Provider.dart';
+import 'Features/News_Letter_Subscription/Data/Data_Sources/News_Letter_Remote_Data_Source.dart';
+import 'Features/News_Letter_Subscription/Data/Repositories/News_Letter_Repository_Impl.dart';
+import 'Features/News_Letter_Subscription/Domain/Repositories/News_Letter_Repository.dart';
+import 'Features/News_Letter_Subscription/Presentation/News_Letter_Provider.dart';
 import 'Features/Prices/Data/Data_Sources/Currency_Remote_Data_Source.dart';
 import 'Features/Prices/Data/Repositories/Currency_Repository_Impl.dart';
 import 'Features/Prices/Domain/Use_Cases/Get_Exchange_Rates.dart';
@@ -65,12 +65,12 @@ import 'package:verossa/Features/Items/Domain/Use_Cases/Get_Items_From_Cart.dart
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Item_To_Cart.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:http_auth/http_auth.dart';
-import 'Features/User_Auth/Data/Data_Sources/Current_User_Remote_Data_Source.dart';
-import 'Features/User_Auth/Data/Repositories/Current_User_Repository_Impl.dart';
-import 'Features/User_Auth/Domain/Repositories/Current_User_Repository.dart';
-import 'Features/User_Auth/Domain/Use_Cases/Get_Current_User_Details.dart';
-import 'Features/User_Auth/Domain/Use_Cases/Get_User.dart';
-import 'Features/User_Auth/Presentation/User_Provider.dart';
+import 'Features/User/Data/Data_Sources/Current_User_Remote_Data_Source.dart';
+import 'Features/User/Data/Repositories/Current_User_Repository_Impl.dart';
+import 'Features/User/Domain/Repositories/Current_User_Repository.dart';
+import 'Features/User/Domain/Use_Cases/Get_Current_User_Details.dart';
+import 'Features/User/Domain/Use_Cases/Get_User.dart';
+import 'Features/User/Presentation/User_Provider.dart';
 
 final sl = GetIt.instance;
 

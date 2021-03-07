@@ -5,7 +5,7 @@ import 'package:verossa/Core/Util/Did_Finish_Launching_With_Options.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Contact_TextFormFields_Widget.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Shipping_Method_Widget.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Shipping_TextFormFields_Widget.dart';
-import 'package:verossa/Features/User_Auth/Presentation/User_Provider.dart';
+import 'package:verossa/Features/User/Presentation/User_Provider.dart';
 import 'package:verossa/Injection_Container.dart' as di;
 import '../Check_Out_Provider.dart';
 

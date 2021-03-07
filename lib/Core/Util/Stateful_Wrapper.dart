@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:async/async.dart';
+
 
 class StatefulWrapper extends StatefulWidget {
-
   final Function onInit;
   final Widget child;
   const StatefulWrapper({@required this.onInit, @required this.child});
@@ -11,8 +10,6 @@ class StatefulWrapper extends StatefulWidget {
 }
 
 class _StatefulWrapperState extends State<StatefulWrapper> {
-
-
 
   @override
   void initState() {

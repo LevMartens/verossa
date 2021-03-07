@@ -8,9 +8,8 @@ import 'package:verossa/Features/Check_Out/Presentation/Widgets/Payment_Options_
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/Small_Widgets/Discount_Field_Widget.dart';
 import 'package:verossa/Features/Check_Out/Presentation/Widgets/CheckOut_Details_From_Widget.dart';
 import 'package:verossa/View/Widgets/Small_Widgets/Verossa_Logo.dart';
-import '../../../Old_Architecture/Model/Global_Variables.dart';
-import 'package:verossa/Old_Architecture/Model/Global_Variables.dart';
 import 'package:verossa/Injection_Container.dart' as di;
+import 'package:verossa/Features/User/Presentation/User_Provider.dart';
 
 
 class CheckOutPage extends StatefulWidget {
@@ -44,12 +43,13 @@ class _InputPageState extends State<CheckOutPage> with SingleTickerProviderState
   @override
   Widget build(BuildContext context) {
     double extendSliver = Provider.of<CheckOutProvider>(context, listen: true).extentSliver;
+    Map<String,String> userDetails = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
-            itemExtent: street != null ? 1080 + extendSliver : 1680 + extendSliver,
+            itemExtent: userDetails['address'] != null ? 1080 + extendSliver : 1680 + extendSliver,
             delegate: SliverChildListDelegate([
               Container(
                 color: Colors.white70,
