@@ -21,7 +21,7 @@ class _SummarySubtotalState extends State<SummarySubtotal> {
     String totalPrice = Provider.of<PricesProvider>(context, listen: true).totalPrice;
 
     return Container(
-      height: discountApplied == true ? 80 : 60,
+      height: discountApplied == true ? 90 : 80,
       child: Column(
         children: [
           SizedBox(height: 5,),

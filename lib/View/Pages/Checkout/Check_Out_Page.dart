@@ -49,7 +49,7 @@ class _InputPageState extends State<CheckOutPage> with SingleTickerProviderState
         controller: _scrollController,
         slivers: [
           SliverFixedExtentList(
-            itemExtent: userDetails['address'] != null ? 1080 + extendSliver : 1680 + extendSliver,
+            itemExtent: userDetails['address'] != null ? 1100 + extendSliver : 1700 + extendSliver,
             delegate: SliverChildListDelegate([
               Container(
                 color: Colors.white70,

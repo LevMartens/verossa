@@ -290,7 +290,12 @@ class PricesProvider extends ChangeNotifier {
       var a = totalPrice.substring(1, totalPrice.length - 4);
       var b = double.parse(a);
       var c = b * 0.9;
+
+      var d = totalPriceForCheckOutSummary.substring(1, totalPrice.length - 4);
+      var e = double.parse(d);
+      var f = e * 0.9;
       totalPrice = '$currencySymbol${c.toStringAsFixed(2)} $currencyCode';
+      totalPriceForCheckOutSummary = '$currencySymbol${f.toStringAsFixed(2)} $currencyCode';
       notifyListeners();
   }
 

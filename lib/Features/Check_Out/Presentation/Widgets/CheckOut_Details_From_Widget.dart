@@ -50,13 +50,6 @@ class _CheckOutDetailsFormState extends State<CheckOutDetailsForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ContactTextFormFields(),
-          Divider(
-            indent: 15 ,
-            endIndent: 15,
-            color: Colors.brown[100],
-            thickness: 1,
-          ),
           ShippingTextFormFields(),
           Divider(
             indent: 15 ,

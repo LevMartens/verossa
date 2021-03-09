@@ -22,7 +22,7 @@ class _SummaryTotalState extends State<SummaryTotal> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 15.0, top:7),
+                  padding: const EdgeInsets.only(left: 15.0, top:15),
                   child: Container(
                     child: Text('Total', style: TextStyle(fontSize: 17), ),
                   ),
@@ -35,7 +35,10 @@ class _SummaryTotalState extends State<SummaryTotal> {
             ],
           ),
           Spacer(),
-          Text(totalPriceForSummary, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 23),),
+          Padding(
+            padding: const EdgeInsets.only(top: 22.0),
+            child: Text(totalPriceForSummary, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 23),),
+          ),
           SizedBox(width: 15,)
 
         ],

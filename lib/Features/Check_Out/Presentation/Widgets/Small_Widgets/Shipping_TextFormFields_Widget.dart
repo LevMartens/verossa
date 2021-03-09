@@ -19,11 +19,122 @@ class _ShippingTextFormFieldsState extends State<ShippingTextFormFields> {
   final textControllerForShipState = TextEditingController();
   final textControllerForShipPostcode = TextEditingController();
   final textControllerForShipEmail = TextEditingController();
+  final textControllerForShipFistName = TextEditingController();
+  final textControllerForShipLastName = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Map<String,String> currentUserDetailsMap = Provider.of<UserProvider>(context, listen: true).currentUserDetailsMap;
 
     return Column(children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 13),
+        child: Row(
+          children: [
+            Text('Contact', style: TextStyle(fontWeight: FontWeight.w300),),
+            Spacer(),
+            GestureDetector(
+              onTap: () {
+                currentUserDetailsMap['address'] = null;
+                currentUserDetailsMap['email'] = null;
+                Provider.of<CheckOutProvider>(context, listen: false).setAllFormsAreCompleted(false);
+                Provider.of<CheckOutProvider>(context, listen: false).setContainerHeightWhenUserLoggedInAndFormShowing(800);
+                Provider.of<UserProvider>(context, listen: false).temporaryChangeInUserDetails(currentUserDetailsMap);
+                Provider.of<CheckOutProvider>(context, listen: false).notifyCheckOutListeners();
+              },
+              child: currentUserDetailsMap['email'] != null ? Text('Change') : Container(),
+            )
+          ],
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(left: 15.0, top: 6, right: 15),
+        child: GestureDetector(
+          child: currentUserDetailsMap['email'] != null ? Text('${currentUserDetailsMap['firstName']} ${currentUserDetailsMap['lastName']} / ${currentUserDetailsMap['email']}') : Form(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
+                  child: Container(
+                    width: 300,
+                    height: 50,
+                    child: TextFormField(
+                      maxLines: 1,
+                      controller: textControllerForShipFistName,
+                      autofillHints: [AutofillHints.givenName],
+                      decoration: const InputDecoration(
+                        hintText: 'First name',
+                        hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(7)),
+                          borderSide: BorderSide(
+                            color: Colors.black12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
+                  child: Container(
+                    width: 300,
+                    height: 50,
+                    child: TextFormField(
+                      maxLines: 1,
+                      controller: textControllerForShipLastName,
+                      autofillHints: [AutofillHints.familyName],
+                      decoration: const InputDecoration(
+                        hintText: 'Last name',
+                        hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(7)),
+                          borderSide: BorderSide(
+                            color: Colors.black12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
+                  child: Container(
+                    width: 300,
+                    height: 50,
+                    child: TextFormField(
+                      maxLines: 1,
+                      controller: textControllerForShipEmail,
+                      autofillHints: [AutofillHints.email],
+                      decoration: const InputDecoration(
+                        hintText: 'Email',
+                        hintStyle: TextStyle(color: Colors.black26, fontSize: 12),
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(7)),
+                          borderSide: BorderSide(
+                            color: Colors.black12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      Divider(
+        indent: 15 ,
+        endIndent: 15,
+        color: Colors.brown[100],
+        thickness: 1,
+      ),
       Padding(
         padding: const EdgeInsets.only(left: 15, right: 15, top: 13),
         child: Row(
@@ -46,7 +157,7 @@ class _ShippingTextFormFieldsState extends State<ShippingTextFormFields> {
         padding: const EdgeInsets.only(left: 15.0, top: 6, right: 15),
         child: GestureDetector(
             child: currentUserDetailsMap['address'] != null ?
-            Text('${currentUserDetailsMap['apartment']} ${currentUserDetailsMap['address']}, ${currentUserDetailsMap['place']}, ${currentUserDetailsMap['postcode']}, ${currentUserDetailsMap['state']}')
+            Text('${currentUserDetailsMap['address']}, ${currentUserDetailsMap['place']}, ${currentUserDetailsMap['postcode']}, ${currentUserDetailsMap['state']}')
                 : Container(
               height: 440,
               width: 400,
@@ -219,24 +330,31 @@ class _ShippingTextFormFieldsState extends State<ShippingTextFormFields> {
                                  .setContainerHeightWhenUserLoggedInAndFormShowing(620);
                              currentUserDetailsMap['address'] =
                                  textControllerForShipAddress.text;
+
+                             if (textControllerForShipApartment.text == null) {currentUserDetailsMap['apartment'] = ''; } else {
                              currentUserDetailsMap['apartment'] =
-                                 textControllerForShipApartment.text;
+                                 textControllerForShipApartment.text; }
+
                              currentUserDetailsMap['place'] =
                                  textControllerForShipSuburb.text;
                              currentUserDetailsMap['country'] =
                                  textControllerForShipCountry.text;
                              currentUserDetailsMap['state'] =
                                  textControllerForShipState.text;
-                             currentUserDetailsMap['state'] =
+                             currentUserDetailsMap['postcode'] =
                                  textControllerForShipPostcode.text;
                              currentUserDetailsMap['email'] =
                                  textControllerForShipEmail.text;
+                             currentUserDetailsMap['firstName'] =
+                                 textControllerForShipFistName.text;
+                             currentUserDetailsMap['lastName'] =
+                                 textControllerForShipLastName.text;
                              Provider.of<UserProvider>(context, listen: false)
                                  .temporaryChangeInUserDetails(
                                  currentUserDetailsMap);
-                             Provider.of<UserProvider>(context, listen: false)
-                                 .setCurrentUserDetailsToFB(
-                                 currentUserDetailsMap);
+                             // Provider.of<UserProvider>(context, listen: false)
+                             //     .setCurrentUserDetailsToFB(
+                             //     currentUserDetailsMap);
                              Provider.of<CheckOutProvider>(context, listen: false)
                                  .notifyCheckOutListeners();
                            }

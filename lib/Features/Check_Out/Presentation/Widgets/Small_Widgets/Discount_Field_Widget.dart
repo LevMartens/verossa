@@ -30,7 +30,7 @@ class _DiscountFieldState extends State<DiscountField> {
             Padding(
               padding: const EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5),
               child: Container(
-                width: 300,
+                width: 280,
                 height: 50,
                 child: TextFormField(
                   maxLines: 1,
@@ -62,6 +62,7 @@ class _DiscountFieldState extends State<DiscountField> {
                 onPressed: () {
 
                   if (_textController.text == discountCode) {
+                    _textController.text = '';
                     Provider.of<CheckOutProvider>(context, listen: false).setDiscountApplied(true);
                     Provider.of<PricesProvider>(context, listen: false).applyDiscountToTotalPrice();
                   }
