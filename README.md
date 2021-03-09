@@ -14,12 +14,16 @@ The checkout page has an order summary, the option to use a discount code as wel
 Users can login in or create an account with firebase auth. The account details will be shared across the app so the user doesn’t have to fill in their details when making a purchase and they can keep track of their order history.
 
 ## Usage
-<img width="200" height="400" alt="sc11" src="https://user-images.githubusercontent.com/73681740/110415914-e5225d00-80e6-11eb-9854-1273eb5d2a9e.png"> &nbsp;&nbsp;&nbsp;&nbsp; <img width="200" height="400" alt="adding" src="https://user-images.githubusercontent.com/73681740/110416016-169b2880-80e7-11eb-9590-af7d783e2e0e.png">
+<img width="190" height="380" alt="sc11" src="https://user-images.githubusercontent.com/73681740/110415914-e5225d00-80e6-11eb-9854-1273eb5d2a9e.png"> &nbsp;&nbsp;&nbsp;&nbsp; <img width="190" height="380" alt="adding" src="https://user-images.githubusercontent.com/73681740/110416016-169b2880-80e7-11eb-9590-af7d783e2e0e.png"> &nbsp;&nbsp;&nbsp;&nbsp;<img width="190" height="380" alt="sc2" src="https://user-images.githubusercontent.com/73681740/110416765-62020680-80e8-11eb-8513-0ca002f6365b.png">&nbsp;&nbsp;&nbsp;&nbsp;<img width="190" height="380" alt="sc3" src="https://user-images.githubusercontent.com/73681740/110416899-9c6ba380-80e8-11eb-85e1-65200d8d655c.png">
 
 
 
-## videos
-![Currency Picker](https://user-images.githubusercontent.com/73681740/110407766-8f46b880-80d8-11eb-93c2-7ae121ce2dfb.mp4) &nbsp;&nbsp;&nbsp;&nbsp; ![Adding An Item](https://user-images.githubusercontent.com/73681740/110416209-624dd200-80e7-11eb-8802-0ddbf94816fc.mp4)
+
+
+# videos
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+![Currency Picker](https://user-images.githubusercontent.com/73681740/110407766-8f46b880-80d8-11eb-93c2-7ae121ce2dfb.mp4) &nbsp;&nbsp;&nbsp;&nbsp; ![Adding An Item](https://user-images.githubusercontent.com/73681740/110416209-624dd200-80e7-11eb-8802-0ddbf94816fc.mp4) &nbsp;&nbsp;&nbsp;&nbsp; ![Check Out](https://user-images.githubusercontent.com/73681740/110416412-cc667700-80e7-11eb-8702-96b347592378.mp4) &nbsp;&nbsp;&nbsp;&nbsp;![Adding Discount](https://user-images.githubusercontent.com/73681740/110416669-354def00-80e8-11eb-86ca-1cbd2f4636c0.mp4)
 
 
 
