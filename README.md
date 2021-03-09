@@ -1,9 +1,8 @@
 # About The Project
 
+<img width="314" alt="currencyPicker" src="https://user-images.githubusercontent.com/73681740/110408367-860a1b80-80d9-11eb-9c85-65c6c3ace6d3.png">
 
-
-
-[![Currency Picker]()](https://user-images.githubusercontent.com/73681740/110407766-8f46b880-80d8-11eb-93c2-7ae121ce2dfb.mp4)
+[![Currency Picker Video]()](https://user-images.githubusercontent.com/73681740/110407766-8f46b880-80d8-11eb-93c2-7ae121ce2dfb.mp4)
 
 
 ### Verossa Valley Webshop App
