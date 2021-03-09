@@ -1,8 +1,6 @@
-# About The Project
+## About The Project
 
-<img width="314" alt="currencyPicker" src="https://user-images.githubusercontent.com/73681740/110408367-860a1b80-80d9-11eb-9c85-65c6c3ace6d3.png">
 
-[![Currency Picker Video]()](https://user-images.githubusercontent.com/73681740/110407766-8f46b880-80d8-11eb-93c2-7ae121ce2dfb.mp4)
 
 
 ### Verossa Valley Webshop App
@@ -14,6 +12,16 @@ Every page has a currency picker that updates all prices on the app to the chose
 The checkout page has an order summary, the option to use a discount code as well as select express or standard shipping. On the checkout page the user is asked to fill in their contact details and address unless they have previously made a purchase or are logged into their account in which the app will autofill the data. When an order is made, all the purchase information is uploaded to firebase which allows the store owner to ship the product/s and keep track of orders.
 
 Users can login in or create an account with firebase auth. The account details will be shared across the app so the user doesn’t have to fill in their details when making a purchase and they can keep track of their order history.
+
+## Usage
+<img width="200" height="400" alt="sc11" src="https://user-images.githubusercontent.com/73681740/110415914-e5225d00-80e6-11eb-9854-1273eb5d2a9e.png"> &nbsp;&nbsp;&nbsp;&nbsp; <img width="200" height="400" alt="adding" src="https://user-images.githubusercontent.com/73681740/110416016-169b2880-80e7-11eb-9590-af7d783e2e0e.png">
+
+
+
+## videos
+![Currency Picker](https://user-images.githubusercontent.com/73681740/110407766-8f46b880-80d8-11eb-93c2-7ae121ce2dfb.mp4) &nbsp;&nbsp;&nbsp;&nbsp; ![Adding An Item](https://user-images.githubusercontent.com/73681740/110416209-624dd200-80e7-11eb-8802-0ddbf94816fc.mp4)
+
+
 
 
 
