@@ -14,9 +14,9 @@ import 'package:verossa/Features/Check_Out/Data/Data_Sources/Order_Remote_Data_S
 import 'package:verossa/Features/Check_Out/Data/Data_Sources/PayPal_API.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Create_PayPal_Payment.dart';
 import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Get_Access_Token.dart';
-import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Save_Order_To_FireStore.dart';
-import 'package:verossa/Features/Check_Out/Domain/Use_Cases/SendGrid_Email_Sender.dart';
-import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Stripe_Payment_Processor.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Save_Order.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Send_Email.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Process_Stripe_Payment.dart';
 import 'package:verossa/Features/Items/Domain/Use_Cases/Set_Stock_Limit.dart';
 import 'package:verossa/Features/News_Letter_Subscription/Domain/Use_Cases/Set_Email_To_Mailing_List.dart';
 import 'package:verossa/Core/Util/Input_Converter.dart';

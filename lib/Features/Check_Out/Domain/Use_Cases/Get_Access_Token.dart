@@ -7,8 +7,7 @@ import 'package:verossa/Features/Check_Out/Domain/Entities/AccessToken.dart';
 import 'package:verossa/Features/Check_Out/Domain/Entities/Stripe_Payment_Intent.dart';
 import 'package:verossa/Features/Check_Out/Domain/Repositories/PayPal_Repository.dart';
 import 'package:verossa/Features/Check_Out/Domain/Repositories/Stripe_Repository.dart';
-
-import 'Save_Order_To_FireStore.dart';
+import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Save_Order.dart';
 
 class GetAccessToken implements UseCase<AccessToken, NoParams> {
   final PayPalRepository repository;
