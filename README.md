@@ -51,3 +51,12 @@ Users can login in or create an account with firebase auth. The account details 
 
 
 
+### videos
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+![Currency Picker](https://user-images.githubusercontent.com/73681740/110407766-8f46b880-80d8-11eb-93c2-7ae121ce2dfb.mp4) &nbsp;&nbsp;&nbsp;&nbsp; ![Adding An Item](https://user-images.githubusercontent.com/73681740/110416209-624dd200-80e7-11eb-8802-0ddbf94816fc.mp4) &nbsp;&nbsp;&nbsp;&nbsp; ![Check Out](https://user-images.githubusercontent.com/73681740/110416412-cc667700-80e7-11eb-8702-96b347592378.mp4) &nbsp;&nbsp;&nbsp;&nbsp;![Adding Discount](https://user-images.githubusercontent.com/73681740/110416669-354def00-80e8-11eb-86ca-1cbd2f4636c0.mp4)
+
+
+
+
+

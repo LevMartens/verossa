@@ -8,10 +8,10 @@ import 'Finalise_PayPal_Payment.dart';
 
 
 
-class SaveOrderToFireStore implements SetUseCase<Order, Params> {
+class SaveOrder implements SetUseCase<Order, Params> {
   final OrderRepository repository;
 
-  SaveOrderToFireStore(this.repository);
+  SaveOrder(this.repository);
 
 
 

@@ -24,10 +24,10 @@ import 'package:verossa/Core/Use_Cases/Use_Case.dart';
 class CheckOutProvider extends ChangeNotifier {
   final CreatePayPalPayment createPayPalPayment;
   final FinalisePayPalPayment finalisePayPalPayment;
-  final SendGridEmailSender sendGridEmailSender;
+  final SendEmail sendGridEmailSender;
   final GetAccessToken getAccessToken;
   final StripePaymentProcessor stripePaymentProcessor;
-  final SaveOrderToFireStore saveOrderToFireStore;
+  final SaveOrder saveOrderToFireStore;
   final ItemFactory factory;
   final InputConverter inputConverter;
   final RemoteConfig remoteConfig;

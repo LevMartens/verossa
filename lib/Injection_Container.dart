@@ -90,8 +90,8 @@ Future<void> init() async {
     stripePaymentProcessor: sl<StripePaymentProcessor>(),
     finalisePayPalPayment: sl<FinalisePayPalPayment>(),
     createPayPalPayment: sl<CreatePayPalPayment>(),
-    sendGridEmailSender: sl<SendGridEmailSender>(),
-    saveOrderToFireStore: sl<SaveOrderToFireStore>(),
+    sendGridEmailSender: sl<SendEmail>(),
+    saveOrderToFireStore: sl<SaveOrder>(),
     remoteConfig: sl<RemoteConfig>(),
     getAccessToken: sl<GetAccessToken>(),
     inputConverter: sl(),
@@ -155,11 +155,11 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCurrentUserDetails(sl<CurrentUserRepository>()));
   sl.registerLazySingleton(() => GetUser(sl<CurrentUserRepository>()));
   sl.registerLazySingleton(() => StripePaymentProcessor(sl<StripeRepository>()));
-  sl.registerLazySingleton(() => SaveOrderToFireStore(sl<OrderRepository>()));
+  sl.registerLazySingleton(() => SaveOrder(sl<OrderRepository>()));
   sl.registerLazySingleton(() => GetAccessToken(sl<PayPalRepository>()));
   sl.registerLazySingleton(() => CreatePayPalPayment(sl<PayPalRepository>()));
   sl.registerLazySingleton(() => FinalisePayPalPayment(sl<PayPalRepository>()));
-  sl.registerLazySingleton(() => SendGridEmailSender(sl<SendGridRepository>()));
+  sl.registerLazySingleton(() => SendEmail(sl<SendGridRepository>()));
 
   // Repository
   sl.registerLazySingleton<OrderRepository>(

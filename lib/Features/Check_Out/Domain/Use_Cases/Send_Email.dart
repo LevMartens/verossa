@@ -4,10 +4,10 @@ import 'package:verossa/Features/Check_Out/Domain/Use_Cases/Finalise_PayPal_Paym
 
 
 
-class SendGridEmailSender implements SetUseCase<Type, Params> {
+class SendEmail implements SetUseCase<Type, Params> {
   final SendGridRepository repository;
 
-  SendGridEmailSender(this.repository);
+  SendEmail(this.repository);
 
   @override
   Future<void> call(Params params) async {
