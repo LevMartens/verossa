@@ -3,7 +3,7 @@
 
 ### Verossa Valley Webshop App
 
-Verossa Valley is a fully fledged demo webshop app that depicts a fictional brand selling photographs and prints. The webshop app is completely functional and works like a real webshop however the payment process is in sandbox mode. The design is made by me with inspiration from other webshops. 
+Verossa Valley is a fully fledged webshop app that depicts a fictional brand selling photographs and prints. The webshop app is completely functional and works like a real webshop however the payment process is in sandbox mode. The design is made by me with inspiration from other webshops. 
 
 ### Build With
 * Flutter  
